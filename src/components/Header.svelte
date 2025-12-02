@@ -1,13 +1,10 @@
 <script>
-	// shadow, plain, line, bubble
-	import wordmark from "$svg/wordmark-shadow.svg";
+	const title = "Bean to Bar";
 </script>
 
 <header>
-	<div class="wordmark">
-		<a href="https://pudding.cool" aria-label="The Pudding" target="_self"
-			>{@html wordmark}</a
-		>
+	<div class="wordmark" aria-label={title}>
+		<span>{title}</span>
 	</div>
 </header>
 
@@ -19,13 +16,9 @@
 		transform: rotate(-4deg);
 	}
 
-	.wordmark a {
-		border: none;
+	.wordmark span {
 		display: block;
 		color: var(--color-fg);
-	}
-
-	.wordmark a:hover {
-		background-color: transparent;
+		border: none;
 	}
 </style>

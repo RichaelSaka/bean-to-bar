@@ -40,6 +40,13 @@
 	--1s: 1ms;
 }
 
+body {
+	min-height: 100vh;
+	margin: 0;
+	background: radial-gradient(circle at top, #6b3b1f 0, #3f2313 45%, #1b1009 100%);
+	color: rgba(255, 248, 240, 0.94);
+}
+
 /* dark theme */
 /* @media screen and (prefers-color-scheme:dark) {
 	:root {

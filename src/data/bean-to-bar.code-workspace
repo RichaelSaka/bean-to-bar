@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "bean-to-bar",
+			"path": "../.."
+		},
+		{
+			"path": "../../../Downloads/romance-covers-new-main"
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"anthropic.claude-code"
+		]
+	}
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "cadbury",
+    "name": "Cadbury Dairy Milk",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "logo": "/assets/conglomerates/home-brand-Mondelēz.png",
+    "bar": "/assets/chocolate-bars/Cadburry dairy milk.png",
+    "price": 3.29
+  },
+  {
+    "id": "ferrero",
+    "name": "Ferrero Rocher",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "logo": "/assets/conglomerates/home-brand-ferrero.png",
+    "bar": "/assets/chocolate-bars/Ferrero Rocher.png",
+    "price": 8.97
+  },
+  {
+    "id": "hersheys",
+    "name": "Hershy's Bar",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "logo": "/assets/conglomerates/home-brand-hersheys.png",
+    "bar": "/assets/chocolate-bars/Hershy's Bar.png",
+    "price": 1.29
+  },
+  {
+    "id": "kinder",
+    "name": "Kinder",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "logo": "/assets/conglomerates/home-brand-ferrero.png",
+    "bar": "/assets/chocolate-bars/Kinder.png",
+    "price": 1.39
+  },
+  {
+    "id": "kitkat",
+    "name": "KitKat",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "logo": "/assets/conglomerates/home-brandNestle.png",
+    "bar": "/assets/chocolate-bars/KitKat.png",
+    "price": 2.89
+  },
+  {
+    "id": "lindt",
+    "name": "Lindt",
+    "parent": "Lindt & Spruengli",
+    "parent_pretty": "Lindt & Spruengli",
+    "logo": "/assets/conglomerates/home-brand-lindor.png",
+    "bar": "/assets/chocolate-bars/Lindt.png",
+    "price": 2.49
+  },
+  {
+    "id": "mm",
+    "name": "M&M",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "logo": "/assets/conglomerates/home-brand-Mars.png",
+    "bar": "/assets/chocolate-bars/M&M.png",
+    "price": 1.29
+  },
+  {
+    "id": "milka",
+    "name": "Milka",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "logo": "/assets/conglomerates/home-brand-Mondelēz.png",
+    "bar": "/assets/chocolate-bars/Milka.png",
+    "price": 1.39
+  },
+  {
+    "id": "milky-way",
+    "name": "Milky Way",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "logo": "/assets/conglomerates/home-brand-Mars.png",
+    "bar": "/assets/chocolate-bars/Milky Way.png",
+    "price": 1.19
+  },
+  {
+    "id": "nutella",
+    "name": "Nutella",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "logo": "/assets/conglomerates/home-brand-ferrero.png",
+    "bar": "/assets/chocolate-bars/Nutella.png",
+    "price": 4.97
+  },
+  {
+    "id": "oreo",
+    "name": "Oreo",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "logo": "/assets/conglomerates/home-brand-Mondelēz.png",
+    "bar": "/assets/chocolate-bars/Oreo.png",
+    "price": 1.29
+  },
+  {
+    "id": "reeses",
+    "name": "Reese's",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "logo": "/assets/conglomerates/home-brand-hersheys.png",
+    "bar": "/assets/chocolate-bars/Reese's.png",
+    "price": 1.79
+  },
+  {
+    "id": "snickers",
+    "name": "Snickers",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "logo": "/assets/conglomerates/home-brand-Mars.png",
+    "bar": "/assets/chocolate-bars/Snickers.png",
+    "price": 1.29
+  },
+  {
+    "id": "toblerone",
+    "name": "Toblerone",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "logo": "/assets/conglomerates/home-brand-Mondelēz.png",
+    "bar": "/assets/chocolate-bars/Toblerone.png",
+    "price": 3.99
+  },
+  {
+    "id": "twix",
+    "name": "Twix",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "logo": "/assets/conglomerates/home-brand-Mars.png",
+    "bar": "/assets/chocolate-bars/Twix.png",
+    "price": 2.39
+  }
+]

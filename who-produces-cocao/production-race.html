@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Cocoa Production - The Race</title>
+  <link rel="stylesheet" href="production-race.css">
+</head>
+<body>
+  <!-- Hero -->
+  <section class="hero" id="heroSection">
+    <div class="hero-inner">
+      <div class="big-number-container" id="bigNumberContainer">
+        <div class="big-number" id="globalProduction">0</div>
+        <div class="subtitle">Tonnes of global cocoa harvested in 2023</div>
+        <div class="subtitle secondary">Two countries provide most of it.</div>
+      </div>
+      <button class="cta-button" id="startStoryButton">Start the story ▸</button>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <main class="story hidden" id="storyContainer">
+    <div class="story-layout">
+      <div class="viz-shell">
+        <svg id="bubbleViz"></svg>
+        <div class="viz-overlay" id="vizPrompt"></div>
+      </div>
+      <aside class="story-panel">
+        <p class="step-count" id="stepCounter">Step 1 of 4</p>
+        <h2 class="story-headline" id="storyHeadline">Where does chocolate come from?</h2>
+        <p class="story-copy" id="storyCopy">
+          Before you take your next bite, consider the supply chain. Each circle on the left is a country, sized by its cocoa harvest in 2023.
+        </p>
+        <div class="story-actions">
+          <button class="cta-button" id="nextStepButton">Next ▸</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="timeline-controls hidden" id="timelineControls">
+      <div class="timeline-label">
+        <span id="yearLabel">Year: 1963</span>
+      </div>
+      <input type="range" id="yearSlider" min="1963" max="2023" value="1963" step="1">
+      <p class="timeline-caption">Drag the slider to see the year.</p>
+    </div>
+  </main>
+
+  <div class="tooltip hidden" id="tooltip">
+    <div class="tooltip-country" id="tooltipCountry"></div>
+    <div class="tooltip-production" id="tooltipProduction"></div>
+    <div class="tooltip-share" id="tooltipShare"></div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="production-race.js"></script>
+</body>
+</html>
+
+
+
