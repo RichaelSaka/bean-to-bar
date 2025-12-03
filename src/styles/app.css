@@ -8,7 +8,22 @@
 	/* font */
 	--sans: "Atlas Grotesk", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: "Tiempos Text", Iowan Old Style, Times New Roman, Times, serif;
+	--display: "Playfair Display", "Times New Roman", serif;
 	--mono: Menlo, Consolas, Monaco, monospace;
+
+	/* Chocolate theme colors */
+	--chocolate-dark: #1a1308;
+	--chocolate-medium: #352610;
+	--chocolate-light: #5c3a21;
+	--chocolate-accent: #8b5a2b;
+	--gold: #e1b058;
+	--gold-light: #f0d090;
+	--gold-dark: #c49a38;
+	--cream: rgba(255, 248, 240, 0.94);
+	--cream-muted: rgba(255, 248, 240, 0.75);
+	--cream-faint: rgba(255, 248, 240, 0.5);
+	--card-bg: rgba(10, 6, 4, 0.96);
+	--card-border: rgba(255, 224, 189, 0.35);
 
 	/* z-index */
 	--z-bottom: -100;
@@ -17,42 +32,51 @@
 	--z-overlay: 1000;
 
 	/* presets (used in reset.css) */
-	--border-radius: 2px;
+	--border-radius: 8px;
 	--font-body: var(--serif);
 	--font-form: var(--sans);
-	--color-bg: var(--color-white);
-	--color-fg: var(--color-gray-900);
-	--color-primary: var(--color-black);
-	--color-link: var(--color-black);
-	--color-link-hover: var(--color-black);
-	--color-focus: var(--color-red);
-	--color-mark: var(--color-yellow);
-	--color-selection: var(--color-gray-300);
-	--color-border: var(--color-gray-300);
-	--color-button-bg: var(--color-gray-300);
-	--color-button-fg: var(--color-gray-900);
-	--color-button-hover: var(--color-gray-400);
-	--color-input-bg: var(--color-gray-50);
-	--color-input-fg: var(--color-gray-900);
-	--color-placeholder: var(--color-gray-500);
+	--color-bg: var(--chocolate-dark);
+	--color-fg: var(--cream);
+	--color-primary: var(--gold);
+	--color-link: var(--gold);
+	--color-link-hover: var(--gold-light);
+	--color-focus: var(--gold);
+	--color-mark: var(--gold);
+	--color-selection: var(--chocolate-light);
+	--color-border: var(--card-border);
+	--color-button-bg: var(--chocolate-light);
+	--color-button-fg: var(--cream);
+	--color-button-hover: var(--chocolate-accent);
+	--color-input-bg: var(--chocolate-medium);
+	--color-input-fg: var(--cream);
+	--color-placeholder: var(--cream-muted);
 
 	/* "1" second duration */
 	--1s: 1ms;
+
+	/* Spacing */
+	--section-padding: clamp(3rem, 8vw, 6rem);
 }
 
 body {
 	min-height: 100vh;
 	margin: 0;
 	background: linear-gradient(180deg, #352610 0%, #1a1308 50%, #0d0a04 100%);
-	color: rgba(255, 248, 240, 0.94);
+	color: var(--cream);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-/* dark theme */
-/* @media screen and (prefers-color-scheme:dark) {
-	:root {
-		
-	}
-} */
+/* Smooth scrolling */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+	background: var(--chocolate-light);
+	color: var(--cream);
+}
 
 @media screen and (prefers-reduced-motion: no-preference) {
 	:root {
@@ -60,16 +84,36 @@ body {
 	}
 }
 
+@media screen and (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--display);
+	font-weight: 600;
+	line-height: 1.2;
+	color: var(--cream);
+}
+
 h1 {
-	font-size: var(--48px, 48px);
+	font-size: clamp(2.5rem, 8vw, var(--48px, 48px));
 }
 
 h2 {
-	font-size: var(--36px, 36px);
+	font-size: clamp(1.75rem, 5vw, var(--36px, 36px));
 }
 
 h3 {
-	font-size: var(--28px, 28px);
+	font-size: clamp(1.25rem, 3vw, var(--28px, 28px));
 }
 
 h4 {
@@ -84,8 +128,78 @@ h6 {
 	font-size: var(--20px, 20px);
 }
 
+/* Links */
+a {
+	color: var(--gold);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--gold-light);
+}
+
+a:focus-visible {
+	outline: 2px solid var(--gold);
+	outline-offset: 2px;
+}
+
+/* Buttons base styling */
+button {
+	font-family: var(--sans);
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+button:focus-visible {
+	outline: 2px solid var(--gold);
+	outline-offset: 2px;
+}
+
+button:active:not(:disabled) {
+	transform: translateY(1px);
+}
+
+/* Images */
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* SVG */
 svg {
 	display: block;
 	width: 100%;
 	height: auto;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerate {
+	transform: translate3d(0, 0, 0);
+	-webkit-transform: translate3d(0, 0, 0);
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+}
+
+/* Utility classes */
+.text-gold {
+	color: var(--gold);
+}
+
+.text-cream {
+	color: var(--cream);
+}
+
+.text-muted {
+	color: var(--cream-muted);
+}
+
+/* Section divider */
+.section-divider {
+	width: 100%;
+	max-width: 200px;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, var(--gold), transparent);
+	margin: 2rem auto;
+	border: none;
 }

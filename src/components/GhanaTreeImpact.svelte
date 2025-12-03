@@ -67,7 +67,7 @@
 					data: valuesK,
 					backgroundColor: function(context) {
 						const ctx = context.chart.ctx;
-						const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+						const gradient = ctx.createLinearGradient(0, 0, 0, 400);
 						gradient.addColorStop(0, 'rgba(62, 39, 35, 0.9)');
 						gradient.addColorStop(0.4, 'rgba(109, 76, 65, 0.7)');
 						gradient.addColorStop(0.7, 'rgba(141, 110, 99, 0.5)');
@@ -78,15 +78,15 @@
 					borderWidth: 4,
 					fill: true,
 					tension: 0.4,
-					pointRadius: 8,
+					pointRadius: 6,
 					pointBackgroundColor: function(context) {
 						const value = context.parsed?.y ?? 0;
 						return getChocolateColor(value, Math.max(...valuesK));
 					},
 					pointBorderColor: '#3E2723',
-					pointBorderWidth: 3,
-					pointHoverRadius: 12,
-					pointHoverBorderWidth: 4
+					pointBorderWidth: 2,
+					pointHoverRadius: 10,
+					pointHoverBorderWidth: 3
 				}]
 			},
 			options: {
@@ -117,21 +117,21 @@
 				scales: {
 					x: {
 						grid: {
-							color: 'rgba(141, 110, 99, 0.1)'
+							color: 'rgba(141, 110, 99, 0.2)'
 						},
 						ticks: {
 							color: '#3E2723',
-							font: { size: 11, weight: 'bold' }
+							font: { size: 12, weight: 'bold' }
 						}
 					},
 					y: {
 						beginAtZero: true,
 						grid: {
-							color: 'rgba(141, 110, 99, 0.1)'
+							color: 'rgba(141, 110, 99, 0.2)'
 						},
 						ticks: {
 							color: '#3E2723',
-							font: { size: 11, weight: 'bold' },
+							font: { size: 12, weight: 'bold' },
 							callback: function(value) {
 								return value + 'k';
 							}
@@ -140,7 +140,7 @@
 							display: true,
 							text: 'Hectares Lost (thousands)',
 							color: '#3E2723',
-							font: { size: 12, weight: 'bold' }
+							font: { size: 14, weight: 'bold' }
 						}
 					}
 				},
@@ -161,7 +161,7 @@
 					data: cumulativeValues,
 					backgroundColor: function(context) {
 						const ctx = context.chart.ctx;
-						const gradient = ctx.createLinearGradient(0, 350, 0, 0);
+						const gradient = ctx.createLinearGradient(0, 400, 0, 0);
 						gradient.addColorStop(0, 'rgba(188, 170, 164, 0.4)');
 						gradient.addColorStop(0.3, 'rgba(141, 110, 99, 0.6)');
 						gradient.addColorStop(0.6, 'rgba(109, 76, 65, 0.8)');
@@ -172,14 +172,14 @@
 					borderWidth: 4,
 					fill: true,
 					tension: 0.1,
-					pointRadius: 7,
+					pointRadius: 5,
 					pointBackgroundColor: '#6D4C41',
 					pointBorderColor: '#FFF8E1',
-					pointBorderWidth: 3,
-					pointHoverRadius: 11,
+					pointBorderWidth: 2,
+					pointHoverRadius: 9,
 					pointHoverBackgroundColor: '#3E2723',
 					pointHoverBorderColor: '#FFF8E1',
-					pointHoverBorderWidth: 4
+					pointHoverBorderWidth: 3
 				}]
 			},
 			options: {
@@ -210,21 +210,21 @@
 				scales: {
 					x: {
 						grid: {
-							color: 'rgba(141, 110, 99, 0.1)'
+							color: 'rgba(141, 110, 99, 0.2)'
 						},
 						ticks: {
 							color: '#3E2723',
-							font: { size: 11, weight: 'bold' }
+							font: { size: 12, weight: 'bold' }
 						}
 					},
 					y: {
 						beginAtZero: true,
 						grid: {
-							color: 'rgba(141, 110, 99, 0.1)'
+							color: 'rgba(141, 110, 99, 0.2)'
 						},
 						ticks: {
 							color: '#3E2723',
-							font: { size: 11, weight: 'bold' },
+							font: { size: 12, weight: 'bold' },
 							callback: function(value) {
 								return value + 'k';
 							}
@@ -233,7 +233,7 @@
 							display: true,
 							text: 'Total Cumulative Loss (thousands)',
 							color: '#3E2723',
-							font: { size: 12, weight: 'bold' }
+							font: { size: 14, weight: 'bold' }
 						}
 					}
 				}
@@ -243,7 +243,7 @@
 		// Create mountains
 		if (mountainContainer) {
 			const maxValue = Math.max(...yearlyData.values);
-			const maxHeight = 280;
+			const maxHeight = 350;
 
 			yearlyData.labels.forEach((year, i) => {
 				const value = yearlyData.values[i];
@@ -275,59 +275,63 @@
 	});
 </script>
 
-<section class="ghana-impact-section" aria-label="Ghana tree cover loss analysis">
-	<div class="container">
-		<div class="main-layout">
-			<div class="visualizations">
-				<!-- Viz 1: Melting Chocolate River (Annual Loss) -->
-				<div class="viz-card">
-					<h2 class="viz-title">The Melting Forest River</h2>
-					<p class="viz-description">Watch how forest loss flows through the years - deeper colors show heavier losses. Hover to see tree count conversions.</p>
-					<div class="canvas-wrapper">
-						<canvas bind:this={riverCanvas}></canvas>
-					</div>
-				</div>
-
-				<!-- Viz 2: Stacking Chocolate (Cumulative) -->
-				<div class="viz-card">
-					<h2 class="viz-title">The Growing Stack</h2>
-					<p class="viz-description">Each layer adds to the total - see how deforestation builds up over time</p>
-					<div class="canvas-wrapper">
-						<canvas bind:this={stackCanvas}></canvas>
-					</div>
-				</div>
-
-				<!-- Viz 3: Chocolate Bar Mountains (Peaks & Valleys) -->
-				<div class="viz-card">
-					<h2 class="viz-title">The Chocolate Mountains</h2>
-					<p class="viz-description">Tallest peaks mark the worst years - hover over each mountain to explore</p>
-					<div class="mountain-range" bind:this={mountainContainer}></div>
+<div class="ghana-impact-wrapper">
+	<!-- Section 1: Annual Loss -->
+	<section class="viz-section">
+		<div class="section-inner">
+			<div class="text-content">
+				<h2 class="viz-title">The Melting Forest River</h2>
+				<p class="viz-description">Watch how forest loss flows through the years. Deeper colors show heavier losses.</p>
+			</div>
+			<div class="viz-card">
+				<div class="canvas-wrapper">
+					<canvas bind:this={riverCanvas}></canvas>
 				</div>
 			</div>
-
-			<div class="sidebar">
-				<div class="summary-card">
-					<h3>Quick Facts</h3>
-					<div class="stat-item">
-						<div class="stat-label">Total Loss (2001-2022)</div>
-						<div class="stat-value">1.58M hectares</div>
-					</div>
-					<div class="stat-item">
-						<div class="stat-label">Worst Year</div>
-						<div class="stat-value">2018 (152K ha)</div>
-					</div>
-					<div class="stat-item">
-						<div class="stat-label">Best Year</div>
-						<div class="stat-value">2004 (18K ha)</div>
-					</div>
-					<div class="stat-item">
-						<div class="stat-label">Average Annual Loss</div>
-						<div class="stat-value">72K hectares</div>
-					</div>
+			<div class="scroll-cue">
+				<span class="scroll-text">Hover to explore</span>
+				<div class="scroll-arrow">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 19V5M5 12l7-7 7 7"/>
+					</svg>
 				</div>
+			</div>
+		</div>
+	</section>
 
-				<div class="legend-card">
-					<h4>Color Guide</h4>
+	<!-- Section 2: Cumulative Loss -->
+	<section class="viz-section">
+		<div class="section-inner">
+			<div class="text-content">
+				<h2 class="viz-title">The Growing Stack</h2>
+				<p class="viz-description">Each layer adds to the total. See how deforestation builds up over time. By 2022, Ghana had lost over 1.58 million hectares of tree cover since 2001.</p>
+			</div>
+			<div class="viz-card">
+				<div class="canvas-wrapper">
+					<canvas bind:this={stackCanvas}></canvas>
+				</div>
+			</div>
+			<div class="scroll-cue">
+				<span class="scroll-text">Hover to explore</span>
+				<div class="scroll-arrow">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 19V5M5 12l7-7 7 7"/>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 3: Year by Year Comparison -->
+	<section class="viz-section">
+		<div class="section-inner">
+			<div class="text-content">
+				<h2 class="viz-title">The Chocolate Mountains</h2>
+				<p class="viz-description">Tallest peaks mark the worst years. 2018 was the deadliest with 152,000 hectares lost.</p>
+			</div>
+			<div class="viz-card mountain-card">
+				<div class="mountain-range" bind:this={mountainContainer}></div>
+				<div class="legend-row">
 					<div class="legend-item">
 						<div class="legend-color high"></div>
 						<span>High Loss (100K+ ha)</span>
@@ -343,100 +347,121 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
+</div>
 
 <style>
-	.ghana-impact-section {
-		font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
-		padding: 2rem;
-		background: none;
-		position: relative;
-		color: rgba(255, 248, 240, 0.94);
-		overflow-x: hidden;
+	.ghana-impact-wrapper {
 		width: 100%;
-		height: 100%;
 	}
 
-	.container {
-		max-width: 1400px;
-		margin: 0 auto;
-		position: relative;
-		z-index: 1;
-		height: 100%;
-	}
-
-	.main-layout {
-		display: grid;
-		grid-template-columns: 1fr 280px;
-		gap: 1.5rem;
-		height: 100%;
-	}
-
-	.visualizations {
+	.viz-section {
+		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
-		overflow-y: auto;
-		max-height: calc(100vh - 120px);
-		padding-right: 0.5rem;
+		justify-content: center;
+		padding: 4rem 2rem;
 	}
 
-	.viz-card {
-		background: rgba(255, 255, 255, 0.98);
-		border-radius: 12px;
-		padding: 1.5rem;
-		box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
-		border: 2px solid rgba(141, 110, 99, 0.4);
-		transition: transform 0.3s ease, box-shadow 0.3s ease;
-		flex-shrink: 0;
+	.section-inner {
+		max-width: 1000px;
+		margin: 0 auto;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
 	}
 
-	.viz-card:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 15px 40px rgba(62, 39, 35, 0.25);
+	.text-content {
+		text-align: center;
 	}
 
 	.viz-title {
 		font-family: 'Playfair Display', 'Times New Roman', serif;
-		color: #3E2723;
-		font-size: 1.4rem;
-		margin-bottom: 0.4rem;
-		font-weight: 600;
+		color: rgba(255, 248, 240, 0.96);
+		font-size: clamp(1.8rem, 4vw, 2.5rem);
+		margin: 0 0 1rem 0;
+		line-height: 1.3;
 	}
 
 	.viz-description {
-		color: #6D4C41;
-		margin-bottom: 1rem;
-		font-size: 0.95rem;
-		line-height: 1.5;
+		color: rgba(255, 248, 240, 0.85);
+		font-size: clamp(1rem, 2vw, 1.2rem);
+		line-height: 1.7;
+		margin: 0;
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.scroll-cue {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 2rem;
+		animation: bounce 2s infinite;
+	}
+
+	.scroll-text {
+		color: rgba(255, 248, 240, 0.6);
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.scroll-arrow {
+		color: rgba(225, 176, 88, 0.7);
+	}
+
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(8px);
+		}
+		60% {
+			transform: translateY(4px);
+		}
+	}
+
+	.viz-card {
+		background: rgba(255, 255, 255, 0.98);
+		border-radius: 16px;
+		padding: 2rem;
+		box-shadow: 0 15px 40px rgba(62, 39, 35, 0.2);
+		border: 2px solid rgba(141, 110, 99, 0.3);
 	}
 
 	.canvas-wrapper {
 		position: relative;
-		height: 280px;
+		height: 400px;
+	}
+
+	.mountain-card {
+		padding: 2rem 2rem 1rem;
 	}
 
 	.mountain-range {
 		position: relative;
-		height: 320px;
+		height: 400px;
 		display: flex;
 		align-items: flex-end;
 		justify-content: space-around;
-		padding: 20px 10px;
-		background: linear-gradient(to top, rgba(188, 170, 164, 0.3) 0%, transparent 100%);
+		padding: 20px 10px 40px;
+		background: linear-gradient(to top, rgba(188, 170, 164, 0.2) 0%, transparent 100%);
 		border-radius: 10px;
-		gap: 2px;
+		gap: 4px;
 	}
 
 	:global(.mountain) {
 		position: relative;
-		width: 28px;
-		min-width: 20px;
+		width: 36px;
+		min-width: 24px;
 		background: linear-gradient(145deg, #8D6E63, #6D4C41);
 		border-radius: 6px 6px 0 0;
 		cursor: pointer;
-		transition: all 0.3s ease;
 		box-shadow: 0 4px 10px rgba(62, 39, 35, 0.3);
 	}
 
@@ -447,29 +472,28 @@
 
 	:global(.mountain-label) {
 		position: absolute;
-		bottom: -22px;
+		bottom: -28px;
 		left: 50%;
 		transform: translateX(-50%);
-		font-size: 0.6rem;
-		color: rgba(255, 248, 240, 0.85);
+		font-size: 0.7rem;
+		color: #6D4C41;
 		font-weight: bold;
 		white-space: nowrap;
 	}
 
 	:global(.mountain-value) {
 		position: absolute;
-		top: -28px;
+		top: -32px;
 		left: 50%;
 		transform: translateX(-50%);
 		background: #3E2723;
 		color: white;
-		padding: 4px 8px;
-		border-radius: 5px;
-		font-size: 0.7rem;
+		padding: 6px 10px;
+		border-radius: 6px;
+		font-size: 0.8rem;
 		font-weight: bold;
 		white-space: nowrap;
 		opacity: 0;
-		transition: opacity 0.3s ease;
 		z-index: 10;
 	}
 
@@ -477,91 +501,24 @@
 		opacity: 1;
 	}
 
-	.sidebar {
+	.legend-row {
 		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		position: sticky;
-		top: 2rem;
-		height: fit-content;
-	}
-
-	.summary-card {
-		background: linear-gradient(145deg, rgba(109, 76, 65, 0.95), rgba(93, 64, 55, 0.95));
-		border-radius: 12px;
-		padding: 1.25rem;
-		color: white;
-		box-shadow: 0 8px 20px rgba(62, 39, 35, 0.3);
-		border: 1px solid rgba(255, 224, 189, 0.2);
-	}
-
-	.summary-card h3 {
-		font-family: 'Playfair Display', 'Times New Roman', serif;
-		font-size: 1.2rem;
-		margin-bottom: 0.75rem;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-		padding-bottom: 0.5rem;
-		color: rgba(255, 248, 240, 0.96);
-	}
-
-	.stat-item {
-		margin-bottom: 0.75rem;
-		padding: 0.6rem;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 8px;
-		transition: background 0.3s ease;
-	}
-
-	.stat-item:last-child {
-		margin-bottom: 0;
-	}
-
-	.stat-item:hover {
-		background: rgba(255, 255, 255, 0.18);
-	}
-
-	.stat-label {
-		font-size: 0.8rem;
-		opacity: 0.85;
-		margin-bottom: 0.2rem;
-	}
-
-	.stat-value {
-		font-size: 1.1rem;
-		font-weight: bold;
-		color: rgba(255, 248, 240, 0.96);
-	}
-
-	.legend-card {
-		background: rgba(255, 255, 255, 0.95);
-		border-radius: 12px;
-		padding: 1.25rem;
-		box-shadow: 0 5px 15px rgba(62, 39, 35, 0.15);
-		border: 1px solid rgba(188, 170, 164, 0.5);
-	}
-
-	.legend-card h4 {
-		font-family: 'Playfair Display', 'Times New Roman', serif;
-		color: #3E2723;
-		margin-bottom: 0.75rem;
-		font-size: 1rem;
+		justify-content: center;
+		gap: 2rem;
+		margin-top: 1.5rem;
+		flex-wrap: wrap;
 	}
 
 	.legend-item {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.legend-item:last-child {
-		margin-bottom: 0;
 	}
 
 	.legend-item span {
 		color: #3E2723;
 		font-weight: 500;
-		font-size: 0.85rem;
+		font-size: 0.9rem;
 	}
 
 	.legend-color {
@@ -583,59 +540,39 @@
 		background: #A1887F;
 	}
 
-	@media (max-width: 1100px) {
-		.main-layout {
-			grid-template-columns: 1fr;
-		}
-
-		.sidebar {
-			flex-direction: row;
-			position: static;
-		}
-
-		.summary-card,
-		.legend-card {
-			flex: 1;
-		}
-
-		.visualizations {
-			max-height: none;
-			overflow-y: visible;
-		}
-	}
-
-	@media (max-width: 640px) {
-		.ghana-impact-section {
-			padding: 1rem;
-		}
-
-		.sidebar {
-			flex-direction: column;
+	@media (max-width: 768px) {
+		.viz-section {
+			padding: 3rem 1rem;
 		}
 
 		.viz-card {
-			padding: 1rem;
-		}
-
-		.viz-title {
-			font-size: 1.2rem;
+			padding: 1.5rem;
 		}
 
 		.canvas-wrapper {
-			height: 220px;
+			height: 300px;
 		}
 
 		.mountain-range {
-			height: 250px;
+			height: 300px;
 		}
 
 		:global(.mountain) {
-			width: 12px;
+			width: 14px;
 			min-width: 10px;
 		}
 
 		:global(.mountain-label) {
-			font-size: 0.5rem;
+			font-size: 0.55rem;
+			bottom: -24px;
+		}
+
+		.legend-row {
+			gap: 1rem;
+		}
+
+		.legend-item span {
+			font-size: 0.8rem;
 		}
 	}
 </style>

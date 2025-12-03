@@ -98,13 +98,6 @@
     "image": "/assets/Chocolate-Shelf/Hersheys/Kisses.png"
   },
   {
-    "id": "hershey-kitkat",
-    "name": "KitKat",
-    "parent": "Hershey",
-    "parent_pretty": "The Hershey Company",
-    "image": "/assets/Chocolate-Shelf/Hersheys/KitKat.png"
-  },
-  {
     "id": "hershey-lilys",
     "name": "Lily's",
     "parent": "Hershey",

@@ -19,7 +19,7 @@
   },
   {
     "id": "hersheys",
-    "name": "Hershy's Bar",
+    "name": "Hershey's Bar",
     "parent": "Hershey",
     "parent_pretty": "The Hershey Company",
     "logo": "/assets/conglomerates/home-brand-hersheys.png",

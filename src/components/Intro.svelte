@@ -166,6 +166,17 @@
 				</button>
 			{/each}
 		</section>
+
+		{#if selectedId}
+			<div class="scroll-cue">
+				<span class="scroll-text">Scroll to explore</span>
+				<div class="scroll-arrow">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 5v14M5 12l7 7 7-7"/>
+					</svg>
+				</div>
+			</div>
+		{/if}
 	</div>
 </section>
 
@@ -223,7 +234,7 @@
 	}
 
 	.intro__choices {
-		margin-top: 3rem;
+		margin-top: 0.25rem;
 		width: 100vw;
 		margin-left: 50%;
 		transform: translateX(-50%);
@@ -233,7 +244,7 @@
 		justify-content: flex-start;
 		overflow-x: auto;
 		padding-inline: 1.5rem;
-		padding-bottom: 1.5rem;
+		padding-bottom: 0.5rem;
 		scroll-snap-type: x mandatory;
 		-webkit-overflow-scrolling: touch;
 		scrollbar-width: none; /* Firefox */
@@ -320,6 +331,39 @@
 
 		.intro__choices {
 			gap: 0.5rem;
+		}
+	}
+
+	/* Scroll cue */
+	.scroll-cue {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 0.10rem;
+		animation: bounce 2s infinite;
+	}
+
+	.scroll-text {
+		color: rgba(255, 248, 240, 0.6);
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.scroll-arrow {
+		color: rgba(225, 176, 88, 0.7);
+	}
+
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(8px);
+		}
+		60% {
+			transform: translateY(4px);
 		}
 	}
 </style>

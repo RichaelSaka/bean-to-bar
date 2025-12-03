@@ -24,12 +24,14 @@
     data,
     rows = 4,
     onhover,
-    highlightName
+    highlightName,
+    highlightParent
   }: {
     data: ChocolateBar[];
     rows?: number;
     onhover?: (event: HoverEvent) => void;
     highlightName?: string;
+    highlightParent?: string;
   } = $props();
 
   // Tooltip state
@@ -47,7 +49,12 @@
 
   // Normalize name for comparison (remove special chars, lowercase)
   function normalizeName(name: string): string {
-    return name.toLowerCase().replace(/['']/g, '').replace(/[^a-z0-9]/g, ' ').trim();
+    return name.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
   // Check if two chocolate names match
@@ -57,17 +64,40 @@
     const n1First = n1.split(' ')[0];
     const n2First = n2.split(' ')[0];
 
+    // Compare without any spaces (handles "KitKat" vs "Kit Kat")
+    const n1NoSpace = n1.replace(/\s+/g, '');
+    const n2NoSpace = n2.replace(/\s+/g, '');
+
+    // Check if one name starts with the other (handles "M&M" vs "M&M's")
+    const startsWithMatch = n1NoSpace.startsWith(n2NoSpace) || n2NoSpace.startsWith(n1NoSpace);
+
+    // Only match if first words are the same and have reasonable length
+    if (n1First.length < 3 || n2First.length < 3) {
+      return n1 === n2 || n1NoSpace === n2NoSpace || startsWithMatch;
+    }
+
     return n1 === n2 ||
-           n1.startsWith(n2First) ||
-           n2.startsWith(n1First) ||
-           n1First === n2First;
+           n1First === n2First ||
+           n1NoSpace === n2NoSpace;
   }
 
   // this will be set once the layout mounts
   let wallH = $state<number | undefined>(undefined);
 
-  // group chocolates by conglomerate
-  let parentGroups = $derived(groups(data, (d) => d.parent));
+  // group chocolates by conglomerate, with highlighted parent first
+  let parentGroups = $derived.by(() => {
+    const grouped = groups(data, (d) => d.parent);
+    if (!highlightParent) return grouped;
+
+    // Sort so highlighted parent comes first
+    return [...grouped].sort((a, b) => {
+      const aIsHighlighted = a[0].toLowerCase() === highlightParent.toLowerCase();
+      const bIsHighlighted = b[0].toLowerCase() === highlightParent.toLowerCase();
+      if (aIsHighlighted && !bIsHighlighted) return -1;
+      if (!aIsHighlighted && bIsHighlighted) return 1;
+      return 0;
+    });
+  });
 
   // how many rows of shelves/bars we actually draw
   let effectiveRows = $derived(wallH && wallH > 550 ? 5 : rows);
@@ -107,7 +137,8 @@
         <div class="group-column">
           <!-- conglomerate label -->
           <div class="group-label" style={`width:${match.chunkWidth}px;`}>
-            {bars[0]?.parent_pretty || parent}
+            <span class="group-name">{bars[0]?.parent_pretty || parent}</span>
+            <span class="group-count">{bars.length} brands</span>
           </div>
 
           <!-- this wrapper defines wallH; shelves + bars share it -->
@@ -133,7 +164,7 @@
             <!-- shelves drawn behind bars, same height/rows -->
             <div class="shelves">
               {#if wallH}
-                {#each shelves as shelf}
+                {#each shelves as _shelf}
                   <Rack
                     shelfW={match.chunkWidth}
                     wallH={wallH}
@@ -188,14 +219,27 @@
 
   .group-label {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    white-space: nowrap;
+    padding: 0.5rem 0 1rem;
+    pointer-events: none;
+  }
+
+  .group-name {
     font-size: 1rem;
     color: rgba(255, 248, 240, 0.9);
     letter-spacing: 0.08em;
     font-weight: 600;
     text-transform: uppercase;
-    white-space: nowrap;
-    padding: 0.5rem 0 1rem;
-    pointer-events: none;
+  }
+
+  .group-count {
+    font-size: 0.75rem;
+    color: rgba(255, 248, 240, 0.5);
+    letter-spacing: 0.05em;
+    font-weight: 400;
   }
 
   /* single source of truth for the wall height */
