@@ -3,7 +3,7 @@
 	import ChocolateShelf from "$components/ChocolateShelf.svelte";
 	import chocolateData from "$data/chocolate-shelf-data.json";
 	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
-	import CocoaProductionRace from "$components/CocoaProductionRace.svelte";
+	import CocoaProducers from "$components/CocoaProducers.svelte";
 	import ChocolateIncomeShare from "$components/ChocolateIncomeShare.svelte";
 	import GhanaTreeImpact from "$components/GhanaTreeImpact.svelte";
 
@@ -59,16 +59,6 @@
 			showViz: "production"
 		},
 		{
-			text: `Who Gets What From Your ${currency.format(price)} Chocolate Bar?`,
-			copy: `Every time you buy ${brand} for ${currency.format(price)}, the money doesn't flow evenly. Farmers often take home the smallest share of the final price. This visualization breaks down who earns what from your chocolate bar.`,
-			showViz: "income"
-		},
-		{
-			text: `A Bar Full of Inequality`,
-			copy: `Most profits go to manufacturers and retailersfar from the farms where cocoa starts. This imbalance shapes farmer incomes and pressures them to grow more cocoa just to survive.`,
-			showViz: "income"
-		},
-		{
 			text: `More Cocoa, More Land`,
 			copy: `When farmers earn little, they often need to grow more cocoa to make ends meet. The fastest way is clearing more landwhich puts forests at risk.`,
 			showViz: "income"
@@ -82,6 +72,11 @@
 			text: `What Your Chocolate Choice Connects To`,
 			copy: `A single chocolate bar links to corporations, farmers, global trade, and forests. Understanding this journey helps us appreciate the people and ecosystems behind the sweets we enjoy.`,
 			showViz: "environment"
+		},
+		{
+			text: `A Bar Full of Inequality`,
+			copy: `Most profits go to manufacturers and retailersfar from the farms where cocoa starts. This imbalance shapes farmer incomes and pressures them to grow more cocoa just to survive.`,
+			showViz: "income"
 		}
 	];
 
@@ -135,9 +130,9 @@
 			<CocoaStepsSwiper />
 		</div>
 
-		<!-- Cocoa production race -->
+		<!-- Cocoa producers visualization -->
 		<div class="viz-layer" class:active={currentViz === "production"}>
-			<CocoaProductionRace />
+			<CocoaProducers />
 		</div>
 
 		<!-- Income share treemap -->

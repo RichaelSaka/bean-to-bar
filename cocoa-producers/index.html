@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Cocoa Production - The Scrollytelling Race</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="story" id="storyContainer">
+    <div class="story-layout">
+      <div class="viz-shell">
+        <!-- Bubble chart visualization container -->
+        <svg id="bubbleViz" class="viz-content"></svg>
+        <!-- Map visualization container (hidden by default) -->
+        <div id="mapViz" class="viz-content hidden">
+          <div id="map-container">
+            <svg id="world-map"></svg>
+          </div>
+          <div class="map-controls">
+            <button class="control-btn" id="zoom-in">+</button>
+            <button class="control-btn" id="zoom-out">−</button>
+            <button class="control-btn" id="reset-view">⟲</button>
+          </div>
+          <div class="map-year-slider" id="map-year-slider">
+            <div class="map-year-display" id="map-year-display">Year: 2023</div>
+            <input type="range" id="map-year-input" min="1961" max="2023" value="2023">
+          </div>
+          <div class="map-info-panel" id="map-info-panel">
+            <button class="close-btn" id="close-info">×</button>
+            <div class="info-header">
+              <div class="flag" id="country-flag">🌍</div>
+              <div class="country-name" id="country-name">Select a Country</div>
+            </div>
+            <div class="data-grid" id="data-grid"></div>
+          </div>
+          <div class="map-legend">
+            <div class="legend-title">Continents</div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #e8b962;"></div>
+              <span>Africa</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #f47b8f;"></div>
+              <span>South America</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #5b9fd9;"></div>
+              <span>Asia</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #6fc9a8;"></div>
+              <span>North America</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #4bc4d4;"></div>
+              <span>Oceania</span>
+            </div>
+          </div>
+        </div>
+        <div class="viz-overlay" id="vizPrompt"></div>
+      </div>
+      
+      <div class="narrative-scroller" id="narrativeScroller">
+        <aside class="story-panel story-step intro-panel" id="intro-panel">
+          <p class="step-count">Introduction</p>
+          <div class="big-number-container" id="bigNumberContainer">
+            <div class="big-number" id="globalProduction">0</div>
+            <div class="subtitle">Tons of global cocoa harvested in 2023</div>
+            <div class="subtitle secondary">Two countries provide most of it.</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="tooltip hidden" id="tooltip">
+    <div class="tooltip-country" id="tooltipCountry"></div>
+    <div class="tooltip-production" id="tooltipProduction"></div>
+    <div class="tooltip-share" id="tooltipShare"></div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
