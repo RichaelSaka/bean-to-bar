@@ -1,236 +1,123 @@
-# Svelte Starter
+# Bean to Bar
 
-**NOTE**: This uses Svelte 5 and is under active migration (not all features will work). For the less adventurous, use the [previous version](https://github.com/the-pudding/svelte-starter) (with Svelte 4).
+![Bean to Bar - Interactive Chocolate Data Story](static/assets/Intro-Shot.png)
 
-This [starter template](https://github.com/the-pudding/svelte-starter) aims to quickly scaffold a [SvelteKit](https://kit.svelte.dev/) project, designed around data-driven, visual stories at [The Pudding](https://pudding.cool).
+An interactive data visualization exploring the hidden journey of your chocolate — from cocoa farms in West Africa to the corporate empires behind your favorite candy bars.
 
-### Notes
-* _Do not use or reproduce The Pudding logos or fonts without written permission._
-* _Prettier Formatting: Disable any text editor Prettier extensions to take advantage of the built-in rules._
+## About
+
+**Bean to Bar** tells the story of chocolate through data. Discover who really owns the brands you love, follow the journey from cocoa pod to wrapped bar, explore global production patterns, and understand the economic realities facing cocoa farmers.
 
 ### Features
 
-- [ArchieML](http://archieml.org/) for micro-CMS powered by Google Docs and Sheets
-- [Lucide Icons](https://lucide.dev/) for simple/easy svg icons
-- [Style Dictionary](https://amzn.github.io/style-dictionary/) for CSS/JS style parity
-- [Runed](https://runed.dev/docs) for svelte5 rune utilities
-- CSV, JSON, and SVG imports
-- SSR static-hosted builds by default
+- **Interactive chocolate selection** — Pick your favorite bar and follow its story
+- **Corporate ownership visualization** — See how a handful of conglomerates control most chocolate brands
+- **Bean to bar journey** — Swipe through the chocolate-making process with illustrated and real-world photos
+- **Global cocoa production map** — Explore which countries produce the world's cocoa
+- **Income breakdown** — Understand how little of your chocolate bar's price reaches farmers
+- **Environmental impact** — Visualize tree cover loss in Ghana's cocoa-growing regions
 
-## Quickstart
-#### From Scratch
-* Click the green `Use this template` button above.
-* Alternatively: `npx degit the-pudding/svelte-starter my-project`
+## Getting Started
 
-#### Pre-existing Project
-* clone the repo
+### Prerequisites
 
-#### Installation
-* In your local repo run `pnpm install` or `npm install`
+- [Node.js](https://nodejs.org/) >= 18.20.4
+- npm or pnpm
 
-## Development
+### Installation
 
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/bean-to-bar.git
+cd bean-to-bar
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+### Development
+
+Start the development server:
 ```bash
 npm run dev
 ```
 
-Change the script in `package.json` to `"dev": "svelte-kit dev --host"` to test on your local network on a different device.
+The app will be available at `http://localhost:5173`
 
-## Deploy
-Check out the `Makefile` for specific tasks.
+### Build
 
-### Staging (on Github)
-```bash
-npm run staging
-```
-
-### Production (on AWS for pudding.cool)
-```bash
-npm run prodution
-```
-
-### Manual
+Create a production build:
 ```bash
 npm run build
 ```
-This generates a directory called `build` with the statically rendered app.
 
-### Password-Protected
-To create a password-protected build:
-
-Make sure you have a `.env` file in your root with a value of `PASSWORD=yourpassword` 
+Preview the production build:
 ```bash
-make protect
+npm run preview
 ```
 
-Then run either `make github` or `make pudding`.
+## Tech Stack
 
-## Style
+### Framework
+- **[SvelteKit](https://kit.svelte.dev/)** — Full-stack web framework
+- **[Svelte 5](https://svelte.dev/)** — Component framework with runes
 
-There are a few stylesheets included by default in `src/styles`. Refer to them in `app.css`, the place for applying global styles.
+### Visualization & UI
+- **[D3.js](https://d3js.org/)** — Data manipulation and visualization utilities
+- **[Chart.js](https://www.chartjs.org/)** — Charting library for environmental data visualizations
+- **[Swiper](https://swiperjs.com/)** — Touch slider for the bean-to-bar journey
+- **[Lucide Icons](https://lucide.dev/)** — SVG icon library
 
-For variable parity in both CSS and JS, modify files in the `properties` folder using the [Style Dictionary](https://amzn.github.io/style-dictionary/) API.
+### Styling
+- **CSS Custom Properties** — Chocolate-themed design tokens
+- **PostCSS + Autoprefixer** — CSS processing
 
-Run `npm run style` to regenerate the style dictionary.
+### Data
+- **[TopoJSON](https://github.com/topojson/topojson)** — Geographic data for maps
 
-#### Some css utility classes in reset.css
-* `.sr-only`: makes content invisible available for screen reader
-* `.text-outline`: adds a psuedo stroke to text element
+## Data Sources
 
-### Custom Fonts
-For locally hosted fonts, simply add the font to the `static/assets` folder and include a reference in `src/styles/font.css`, making sure the url starts with `"assets/..."`.
+- **[FAOSTAT](https://www.fao.org/faostat/en/#data/QCL)** — Cocoa production statistics
+- **[Global Forest Watch](https://www.globalforestwatch.org/dashboards/country/GHA/)** — Ghana tree cover loss data
+- **[Observatory of Economic Complexity](https://oec.world)** — Cocoa trade data
+- **[Chocolate Scorecard](https://www.chocolatescorecard.com/scorecards)** — Industry ethical practices
 
-## Google Docs and Sheets
+## Project Structure
 
-* Create a Google Doc or Sheet
-* Click `Share` -> `Advanced` -> `Change...` -> `Anyone with this link`
-* In the address bar, grab the ID - eg. "...com/document/d/**1IiA5a5iCjbjOYvZVgPcjGzMy5PyfCzpPF-LnQdCdFI0**/edit"
-* paste in the ID above into `google.config.js`, and set the filepath to where you want the file saved
-* If you want to do a Google Sheet, be sure to include the `gid` value in the url as well
-
-Running `npm run gdoc` at any point (even in new tab while server is running) will fetch the latest from all Docs and Sheets.
-
-## Structural Overview
-
-### Pages
-The `src/routes` directory contains pages for your app. For a single-page app (most cases) you don't have to modify anything in here. `+page.svelte` represents the root page, think of it as the `index.html` file. It is prepopulated with a few things like metadata and font preloading. It also includes a reference to a blank slate component `src/components/Index.svelte`. This is the file you want to really start in for your app.
-
-### Embedding Data
-For smaller datasets, it is often great to embed the data into the HTML file. If you want to use data as-is, you can use normal import syntax (e.g., `import data from "$data/file.csv"`). If you are working with data but you want to preserve the original or clean/parse just what you need to use in the browser to optimize the front-end payload, you can load it via `+page.server.js`, do some work on it, and return just what you need. This is passed automatically to `+page.svelte` and accessible in any component with `getContext("data")`.
-
-
-## Pre-loaded helpers
-
-### Components
-
-Located in `src/components`.
-
-```js
-// Usage
-import Example from "$components/Example.svelte";
+```
+bean-to-bar/
+├── src/
+│   ├── components/       # Svelte components
+│   │   ├── Index.svelte          # Main app entry
+│   │   ├── TitlePage.svelte      # Landing page with animated carousel
+│   │   ├── Intro.svelte          # Chocolate bar selection
+│   │   ├── ChocolateScrollyStory.svelte  # Main story container
+│   │   ├── ChocolateShelf.svelte # Corporate ownership shelf
+│   │   ├── CocoaStepsSwiper.svelte # Bean to bar journey
+│   │   ├── CocoaProducers.svelte # Production bubble chart
+│   │   ├── ChocolateIncomeShare.svelte # Income breakdown
+│   │   ├── GhanaTreeImpact.svelte # Environmental charts
+│   │   └── Footer.svelte         # Site footer
+│   ├── data/             # JSON data files
+│   ├── styles/           # Global CSS
+│   └── routes/           # SvelteKit routes
+├── static/
+│   └── assets/           # Images and static files
+└── package.json
 ```
 
-* `Footer.svelte`: Pudding recirculation and social links.
-* `Header.svelte`: Pudding masthead.
+## Team
 
-### Helper Components
+- **Nhaomi** — Favorite chocolate: Cadbury
+- **Richael** — Favorite chocolate: Kinder Eggs
+- **Wini** — Favorite chocolate: Twix
 
-Located in `src/components/helpers`.
+## License
 
-```js
-// Usage
-import Example from "$components/helpers/Example.svelte";
-```
+This project was created for educational purposes to raise awareness about the chocolate industry's impact on cocoa farmers and the environment.
 
-*Available*
-* `Scrolly.svelte`: Scrollytelling.
+---
 
-*Need to migrate*
-* `ButtonSet.svelte`: Accessible button group inputs.
-* `Chunk.svelte`: Split text into smaller dom element chunks.
-* `Countdown.svelte`: Countdown timer text.
-* `DarkModeToggle.svelte`: A toggle button for dark mode.
-* `Figure.svelte`: A barebones chart figure component to handle slots.
-* `MotionToggle.svelte`: A toggle button to enable/disable front-end user motion preference.
-* `Range.svelte`: Customizable range slider.
-* `ShareLink.svelte`: Button to share link natively/copy to clipboard.
-* `SortTable.svelte`: Sortable semantic table with customizable props.
-* `Slider.svelte (and Slider.Slide.svelte)`: A slider widget, especially useful for swipe/slide stories.
-* `Tap.svelte`: Edge-of-screen tapping library, designed to integrate with slider.
-* `Tip.svelte`: Button that links to Strip payment link.
-* `Toggle.svelte`: Accessible toggle inputs.
-
-### Headless Components
-
-[bits UI](https://www.bits-ui.com/docs/introduction) comes pre-installed. It is recommended to use these for any UI components.
-
-### Layercake Chart Components
-
-Starter templates for various chart types to be used with [LayerCake](https://layercake.graphics/). Located in `src/components/layercake`.
-
-*Note:* You must install the module `layercake` first.
-
-```js
-// Usage
-import Example from "$components/layercake/Example.svelte";
-```
-
-### Actions
-
-Located in `src/actions`.
-
-```js
-// Usage
-import example from "$actions/action.js";
-```
-
-* `canTab.js`: enable/disable tabbing on child elements.
-* `checkOverlap.js`: Label overlapping detection. Loops through selection of nodes and adds a class to the ones that are overlapping. Once one is hidden it ignores it.
-* `focusTrap.js`: Enable a keyboard focus trap for modals and menus.
-* `keepWithinBox.js`: Offsets and element left/right to stay within parent.
-* `inView.js`: detect when an element enters or exits the viewport.
-* `resize.js`: detect when an element is resized.
-
-### Runes
-
-These are located in `src/runes`. You can put custom ones in `src/runes/misc.js` or create unique files for more complex ones.
-
-```js
-import { example } from "$runes/misc/misc.js";
-```
-
-* `useWindowDimensions`: returns an object `{ width, height }` of the viewport dimensions. It is debounced for performance.
-* `useClipboard`: copy content to clipboard.
-* `useFetcher`: load async data from endpoints (local or external).
-* `useWindowFocus`: determine if the window is in focus or not.
-
-For more preset runes, use [runed](https://runed.dev/docs) which is preloaded. 
-
-### Utils
-
-Located in `src/utils/`.
-
-```js
-// Usage
-import example from "$utils/example.js";
-```
-* `checkScrollDir.js`: Gets the user's scroll direction ("up" or "down")
-* `csvDownload.js`: Converts a flat array of data to CSV content ready to be used as an `href` value for download.
-* `generateId.js`: Generate an alphanumeric id.
-* `loadCsv.js`: Loads and parses a CSV file.
-* `loadImage.js`: Loads an image.
-* `loadJson.js`: Loads and parses a JSON file.
-* `loadPixels.js`: Loads the pixel data of an image via an offscreen canvas.
-* `localStorage.js`: Read and write to local storage.
-* `mapToArray.js`: Convenience function to convert a map to an array.
-* `move.js`: transform translate function shorthand.
-* `transformSvg.js`: Custom transition lets you apply an svg transform property with the in/out svelte transition. Parameters (with defaults):
-* `translate.js`: Convenience function for transform translate css.
-* `urlParams.js`: Get and set url parameters.
-
-## Tips
-
-### Image asset paths
-For `img` tags, use relative paths:
-
-```html
-<img src="assets/demo/test.jpg" />
-```
-
-or use `base` if on a sub route:
-
-```html
-<script>
-	import { base } from "$app/paths";
-</script>
-
-<img src="{base}/assets/demo/test.jpg"  />
-```
-
-For CSS background images, use absolute paths:
-
-```css
-background: url("/assets/demo/test.jpg");
-```
-
-View example code in the preloaded demo.
+*Created with care for cocoa farmers everywhere.*
