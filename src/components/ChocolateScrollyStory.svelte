@@ -2,6 +2,7 @@
 	import Scrolly from "$components/helpers/Scrolly.svelte";
 	import ChocolateShelf from "$components/ChocolateShelf.svelte";
 	import chocolateData from "$data/chocolate-shelf-data.json";
+	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
 	import CocoaProductionRace from "$components/CocoaProductionRace.svelte";
 	import ChocolateIncomeShare from "$components/ChocolateIncomeShare.svelte";
 	import GhanaTreeImpact from "$components/GhanaTreeImpact.svelte";
@@ -43,9 +44,9 @@
 			showViz: "conglomerates"
 		},
 		{
-			text: `But Chocolate Starts Far From the Store Shelf`,
-			copy: `Before brands and ads, chocolate begins as cocoa pods grown in tropical countries. Two countriesGhana and C�te d'Ivoireproduce more than 60% of the world's cocoa. The story changes a lot when we zoom in there.`,
-			showViz: "conglomerates"
+			text: `From Bean to Bar`,
+			copy: `Before brands and ads, chocolate begins as cocoa pods grown in tropical countries. Let's follow the journey from bean to bar—how chocolate is really farmed and made.`,
+			showViz: "bean-to-bar"
 		},
 		{
 			text: `Who Produces the World's Cocoa?`,
@@ -127,6 +128,11 @@
 				onhover={handleShelfHover}
 				highlightName={selectedChocolate?.name}
 			/>
+		</div>
+
+		<!-- Bean to Bar swiper -->
+		<div class="viz-layer bean-to-bar-layer" class:active={currentViz === "bean-to-bar"}>
+			<CocoaStepsSwiper />
 		</div>
 
 		<!-- Cocoa production race -->
@@ -327,6 +333,12 @@
 
 	/* Shelf layer styling */
 	.shelf-layer {
+		display: block;
+		overflow: hidden;
+	}
+
+	/* Bean to bar layer styling */
+	.bean-to-bar-layer {
 		display: block;
 		overflow: hidden;
 	}
