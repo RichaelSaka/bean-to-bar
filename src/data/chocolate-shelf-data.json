@@ -1,0 +1,590 @@
+[
+  {
+    "id": "ferrero-butterfinger",
+    "name": "Butterfinger",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Butterfinger.png"
+  },
+  {
+    "id": "ferrero-crunch",
+    "name": "Crunch",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Crunch.png"
+  },
+  {
+    "id": "ferrero-duplo",
+    "name": "Duplo",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Duplo.png"
+  },
+  {
+    "id": "ferrero-fannie-may",
+    "name": "Fannie May",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Fannie May.png"
+  },
+  {
+    "id": "ferrero-rocher",
+    "name": "Ferrero Rocher",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Ferrero Rocher.png"
+  },
+  {
+    "id": "ferrero-girl-scout-cookies",
+    "name": "Girl Scout Cookies",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Girl Scout Cookies.png"
+  },
+  {
+    "id": "ferrero-kinder-egg",
+    "name": "Kinder Egg",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Kinder Egg.png"
+  },
+  {
+    "id": "ferrero-mon-cheri",
+    "name": "Mon Cheri",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Mon Cheri.png"
+  },
+  {
+    "id": "ferrero-nutella",
+    "name": "Nutella",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Nutella.png"
+  },
+  {
+    "id": "ferrero-raffaello",
+    "name": "Raffaello",
+    "parent": "Ferrero",
+    "parent_pretty": "Ferrero Group",
+    "image": "/assets/Chocolate-Shelf/Ferrero/Raffaello.png"
+  },
+  {
+    "id": "hershey-5th-avenue",
+    "name": "5th Avenue",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/5th avenue.png"
+  },
+  {
+    "id": "hershey-heath",
+    "name": "Heath",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Heath.png"
+  },
+  {
+    "id": "hershey-chocolate",
+    "name": "Hershey's Chocolate",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Hershy's chocolate.png"
+  },
+  {
+    "id": "hershey-kisses",
+    "name": "Kisses",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Kisses.png"
+  },
+  {
+    "id": "hershey-kitkat",
+    "name": "KitKat",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/KitKat.png"
+  },
+  {
+    "id": "hershey-lilys",
+    "name": "Lily's",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Lily's.png"
+  },
+  {
+    "id": "hershey-milk-duds",
+    "name": "Milk Duds",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Milk Duds.png"
+  },
+  {
+    "id": "hershey-mr-goodbar",
+    "name": "Mr. Goodbar",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Mr. Goodbar.png"
+  },
+  {
+    "id": "hershey-nuggets",
+    "name": "Nuggets",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Nuggets.png"
+  },
+  {
+    "id": "hershey-reeses",
+    "name": "Reese's",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Reeses.png"
+  },
+  {
+    "id": "hershey-take5",
+    "name": "Take 5",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Take 5.png"
+  },
+  {
+    "id": "hershey-whoppers",
+    "name": "Whoppers",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Whoppers.png"
+  },
+  {
+    "id": "hershey-whozeewhatzit",
+    "name": "Whozeewhatzit",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/Whozeewhatzit.png"
+  },
+  {
+    "id": "hershey-york",
+    "name": "York",
+    "parent": "Hershey",
+    "parent_pretty": "The Hershey Company",
+    "image": "/assets/Chocolate-Shelf/Hersheys/York.png"
+  },
+  {
+    "id": "lindt-ghirardelli",
+    "name": "Ghirardelli",
+    "parent": "Lindt",
+    "parent_pretty": "Lindt & Sprüngli",
+    "image": "/assets/Chocolate-Shelf/Lindt/Ghirardelli.png"
+  },
+  {
+    "id": "lindt-hofbauer",
+    "name": "Hofbauer",
+    "parent": "Lindt",
+    "parent_pretty": "Lindt & Sprüngli",
+    "image": "/assets/Chocolate-Shelf/Lindt/Hofbauer.png"
+  },
+  {
+    "id": "lindt-lindt",
+    "name": "Lindt",
+    "parent": "Lindt",
+    "parent_pretty": "Lindt & Sprüngli",
+    "image": "/assets/Chocolate-Shelf/Lindt/Lindt.png"
+  },
+  {
+    "id": "lindt-russell-stover",
+    "name": "Russell Stover",
+    "parent": "Lindt",
+    "parent_pretty": "Lindt & Sprüngli",
+    "image": "/assets/Chocolate-Shelf/Lindt/Russell Stover.png"
+  },
+  {
+    "id": "lindt-whitmans",
+    "name": "Whitman's",
+    "parent": "Lindt",
+    "parent_pretty": "Lindt & Sprüngli",
+    "image": "/assets/Chocolate-Shelf/Lindt/Whitmans.png"
+  },
+  {
+    "id": "mars-3musketeers",
+    "name": "3 Musketeers",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/3Musketeers.png"
+  },
+  {
+    "id": "mars-american-heritage",
+    "name": "American Heritage",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/American Heritage.png"
+  },
+  {
+    "id": "mars-balisto",
+    "name": "Balisto",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Balisto.png"
+  },
+  {
+    "id": "mars-bounty",
+    "name": "Bounty",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Bounty.png"
+  },
+  {
+    "id": "mars-celebrations",
+    "name": "Celebrations",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Celebrations.png"
+  },
+  {
+    "id": "mars-conejos",
+    "name": "Conejos",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Conejos.png"
+  },
+  {
+    "id": "mars-dove",
+    "name": "Dove",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Dove.png"
+  },
+  {
+    "id": "mars-ethel-m",
+    "name": "Ethel M",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Ethel M.png"
+  },
+  {
+    "id": "mars-galaxy",
+    "name": "Galaxy",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Galaxy.png"
+  },
+  {
+    "id": "mars-jewels",
+    "name": "Jewels",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Jewels.png"
+  },
+  {
+    "id": "mars-mm",
+    "name": "M&M's",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/M&M.png"
+  },
+  {
+    "id": "mars-maltesers",
+    "name": "Maltesers",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Maltesers.png"
+  },
+  {
+    "id": "mars-milkyway",
+    "name": "Milky Way",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/MilkyWay.png"
+  },
+  {
+    "id": "mars-revels",
+    "name": "Revels",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/REVELS.png"
+  },
+  {
+    "id": "mars-snickers",
+    "name": "Snickers",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Snickers.png"
+  },
+  {
+    "id": "mars-turin",
+    "name": "Turin",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Turin.png"
+  },
+  {
+    "id": "mars-twix",
+    "name": "Twix",
+    "parent": "Mars",
+    "parent_pretty": "Mars, Inc.",
+    "image": "/assets/Chocolate-Shelf/Mars/Twix.png"
+  },
+  {
+    "id": "mondelez-5star",
+    "name": "5 Star",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/5 star.png"
+  },
+  {
+    "id": "mondelez-alpen-gold",
+    "name": "Alpen Gold",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Alpen Gold.png"
+  },
+  {
+    "id": "mondelez-barni",
+    "name": "Barni",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Barni.png"
+  },
+  {
+    "id": "mondelez-belvita",
+    "name": "Belvita",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Belvita.png"
+  },
+  {
+    "id": "mondelez-cadbury",
+    "name": "Cadbury",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Cadbury.png"
+  },
+  {
+    "id": "mondelez-chips-ahoy",
+    "name": "Chips Ahoy",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Chips Ahoy.png"
+  },
+  {
+    "id": "mondelez-choco-croissant",
+    "name": "Choco Croissant",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Choco Croissant.png"
+  },
+  {
+    "id": "mondelez-clif",
+    "name": "Clif",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Clif.png"
+  },
+  {
+    "id": "mondelez-cote-dor",
+    "name": "Côte d'Or",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Cote Dor.png"
+  },
+  {
+    "id": "mondelez-daim",
+    "name": "Daim",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Daim.png"
+  },
+  {
+    "id": "mondelez-enjoy-life",
+    "name": "Enjoy Life",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Enjoy Life.png"
+  },
+  {
+    "id": "mondelez-freia",
+    "name": "Freia",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Freia.png"
+  },
+  {
+    "id": "mondelez-green-blacks",
+    "name": "Green & Black's",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Green Blacks.png"
+  },
+  {
+    "id": "mondelez-hu",
+    "name": "Hu",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/HU.png"
+  },
+  {
+    "id": "mondelez-lacta",
+    "name": "Lacta",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Lacta.png"
+  },
+  {
+    "id": "mondelez-lu",
+    "name": "LU",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Lu chocolate.png"
+  },
+  {
+    "id": "mondelez-marabou",
+    "name": "Marabou",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Marabou.png"
+  },
+  {
+    "id": "mondelez-milka",
+    "name": "Milka",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Milka.png"
+  },
+  {
+    "id": "mondelez-milkado",
+    "name": "Milkado",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Milkado.png"
+  },
+  {
+    "id": "mondelez-oreo",
+    "name": "Oreo",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Oreo.png"
+  },
+  {
+    "id": "mondelez-perfect-snacks",
+    "name": "Perfect Snacks",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Perfect Snacks.png"
+  },
+  {
+    "id": "mondelez-prince",
+    "name": "Prince",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Prince.png"
+  },
+  {
+    "id": "mondelez-suchard",
+    "name": "Suchard",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Suchard.png"
+  },
+  {
+    "id": "mondelez-tates",
+    "name": "Tate's Bake Shop",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Tate's Bake Shop.png"
+  },
+  {
+    "id": "mondelez-toblerone",
+    "name": "Toblerone",
+    "parent": "Mondelez",
+    "parent_pretty": "Mondelēz International",
+    "image": "/assets/Chocolate-Shelf/Mondelēz/Toblerone.png"
+  },
+  {
+    "id": "nestle-aero",
+    "name": "Aero",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Aero.png"
+  },
+  {
+    "id": "nestle-after-eight",
+    "name": "After Eight",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/After Eight.png"
+  },
+  {
+    "id": "nestle-allens-jaffas",
+    "name": "Allen's Jaffas",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Allen's Jaffas.png"
+  },
+  {
+    "id": "nestle-cailler",
+    "name": "Cailler",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Callier.png"
+  },
+  {
+    "id": "nestle-chokito",
+    "name": "Chokito",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Chokito.png"
+  },
+  {
+    "id": "nestle-crunch",
+    "name": "Crunch",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Crunch.png"
+  },
+  {
+    "id": "nestle-garoto",
+    "name": "Garoto",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Garoto.png"
+  },
+  {
+    "id": "nestle-kitkat",
+    "name": "Kit Kat",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Kit Kat.png"
+  },
+  {
+    "id": "nestle-milo",
+    "name": "Milo",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Milo.png"
+  },
+  {
+    "id": "nestle-peppermint-crisp",
+    "name": "Peppermint Crisp",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Peppermint Crisp.png"
+  },
+  {
+    "id": "nestle-perugina",
+    "name": "Perugina",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Perugina.png"
+  },
+  {
+    "id": "nestle-quality-street",
+    "name": "Quality Street",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Quality Steet.png"
+  },
+  {
+    "id": "nestle-rolo",
+    "name": "Rolo",
+    "parent": "Nestle",
+    "parent_pretty": "Nestlé",
+    "image": "/assets/Chocolate-Shelf/Nestle/Rolo.png"
+  }
+]

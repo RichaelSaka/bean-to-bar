@@ -1,12 +1,20 @@
 <script>
 	import Scrolly from "$components/helpers/Scrolly.svelte";
-	import ConglomeratePacking from "$components/ConglomeratePacking.svelte";
+	import ChocolateShelf from "$components/ChocolateShelf.svelte";
+	import chocolateData from "$data/chocolate-shelf-data.json";
 	import CocoaProductionRace from "$components/CocoaProductionRace.svelte";
 	import ChocolateIncomeShare from "$components/ChocolateIncomeShare.svelte";
 	import GhanaTreeImpact from "$components/GhanaTreeImpact.svelte";
 
 	// Props for selected chocolate data
 	let { selectedChocolate = null } = $props();
+
+	// Hover state for shelf (tooltip is now built into ChocolateShelf)
+	let hoveredBar = $state(null);
+
+	function handleShelfHover(event) {
+		hoveredBar = event.detail.bar;
+	}
 
 	let scrollIndex = $state(undefined);
 	let scrollyContainer;
@@ -31,7 +39,7 @@
 		},
 		{
 			text: `One Company, Many Wrappers`,
-			copy: `This clustered bubble chart shows all the brands owned by ${conglomerate}. Different shapes and flavors, but often the same corporation behind them. Understanding this helps us see how just a handful of companies influence pricing, sourcing, and the global chocolate supply chain.`,
+			copy: `This shelf shows all the brands owned by ${conglomerate}. Different shapes and flavors, but often the same corporation behind them. Scroll horizontally to see them all. Understanding this helps us see how just a handful of companies influence pricing, sourcing, and the global chocolate supply chain.`,
 			showViz: "conglomerates"
 		},
 		{
@@ -111,11 +119,14 @@
 			{/if}
 		</div>
 
-		<!-- Conglomerate bubbles -->
-		<div class="viz-layer" class:active={currentViz === "conglomerates"}>
-			<div class="viz-wrapper">
-				<ConglomeratePacking />
-			</div>
+		<!-- Conglomerate shelf -->
+		<div class="viz-layer shelf-layer" class:active={currentViz === "conglomerates"}>
+			<ChocolateShelf
+				data={chocolateData}
+				rows={4}
+				onhover={handleShelfHover}
+				highlightName={selectedChocolate?.name}
+			/>
 		</div>
 
 		<!-- Cocoa production race -->
@@ -312,6 +323,12 @@
 	.step-copy :global(strong) {
 		color: rgba(225, 176, 88, 1);
 		font-weight: 600;
+	}
+
+	/* Shelf layer styling */
+	.shelf-layer {
+		display: block;
+		overflow: hidden;
 	}
 
 	@media (max-width: 768px) {

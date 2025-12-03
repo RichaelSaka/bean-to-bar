@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Intro from "$components/Intro.svelte";
 	import CompanyReveal from "$components/CompanyReveal.svelte";
 </script>
@@ -7,3 +7,7 @@
 	<Intro />
 	<CompanyReveal />
 </svelte:boundary>
+
+<style>
+	/* Styles moved to individual components */
+</style>
