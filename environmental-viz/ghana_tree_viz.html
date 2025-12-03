@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Tree Cover Loss - Chocolate Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #2B140E 0%, #4B2A21 50%, #5C3B30 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+            min-height: 100vh;
+            color: #FBE9E7;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #F8E6CF;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #D7CCC8;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .visualizations {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .viz-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
+            border: 3px solid #8D6E63;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .viz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(62, 39, 35, 0.25);
+        }
+
+        .viz-title {
+            color: #3E2723;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .viz-description {
+            color: #6D4C41;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(145deg, #6D4C41, #5D4037);
+            border-radius: 20px;
+            padding: 1.5rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(62, 39, 35, 0.3);
+        }
+
+        .summary-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .stat-item {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .legend-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(62, 39, 35, 0.15);
+            border: 2px solid #BCAAA4;
+        }
+
+        .legend-card h4 {
+            color: #3E2723;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .legend-item span {
+            color: #3E2723;
+            font-weight: 500;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            border-radius: 5px;
+            border: 2px solid #3E2723;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            height: 350px;
+            margin-top: 1rem;
+        }
+
+        .chocolate-river {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(to bottom, #FFF8E1 0%, #FFECB3 100%);
+            border-radius: 15px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .river-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mountain-range {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 20px;
+            background: linear-gradient(to top, #BCAAA4 0%, transparent 100%);
+            border-radius: 15px;
+        }
+
+        .mountain {
+            position: relative;
+            width: 35px;
+            background: linear-gradient(145deg, #8D6E63, #6D4C41);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(62, 39, 35, 0.3);
+        }
+
+        .mountain:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .mountain-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #F8E6CF;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .mountain-value {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3E2723;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mountain:hover .mountain-value {
+            opacity: 1;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍫 Ghana's Forest Story 🌳</h1>
+            <p class="subtitle">A bittersweet tale of tree cover loss (2001-2022)</p>
+        </div>
+
+        <div class="main-layout">
+            <div class="visualizations">
+                <!-- Viz 1: Melting Chocolate River (Annual Loss) -->
+                <div class="viz-card">
+                    <h2 class="viz-title">🌊 The Melting Forest River</h2>
+                    <p class="viz-description">Watch how forest loss flows through the years - deeper colors show heavier losses. Hover to see tree count conversions (approximately 400-600 trees per hectare).</p>
+                    <div class="canvas-wrapper">
+                        <canvas id="riverCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Viz 2: Stacking Chocolate (Cumulative) -->
+                <div class="viz-card">
+                    <h2 class="viz-title">📦 The Growing Stack</h2>
+                    <p class="viz-description">Each layer adds to the total - see how deforestation builds up over time</p>
+                    <div class="canvas-wrapper">
+                        <canvas id="stackCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Viz 3: Chocolate Bar Mountains (Peaks & Valleys) -->
+                <div class="viz-card">
+                    <h2 class="viz-title">⛰️ The Chocolate Mountains</h2>
+                    <p class="viz-description">Tallest peaks mark the worst years - hover over each mountain to explore</p>
+                    <div class="mountain-range" id="mountainRange"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="summary-card">
+                    <h3>📊 Quick Facts</h3>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Loss (2001-2022)</div>
+                        <div class="stat-value">1.58M hectares</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Worst Year</div>
+                        <div class="stat-value">2018 (152K ha)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Best Year</div>
+                        <div class="stat-value">2004 (18K ha)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Average Annual Loss</div>
+                        <div class="stat-value">72K hectares</div>
+                    </div>
+                </div>
+
+                <div class="legend-card">
+                    <h4>🍫 Color Guide</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3E2723;"></div>
+                        <span>High Loss (100K+ ha)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #6D4C41;"></div>
+                        <span>Medium Loss (50-100K ha)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #A1887F;"></div>
+                        <span>Low Loss (0-50K ha)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const yearlyData = {
+            labels: ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', 
+                     '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', 
+                     '2021', '2022'],
+            values: [43676, 78393, 24946, 17628, 41339, 27143, 40184, 37826, 38256, 19476, 
+                     36202, 36630, 81203, 120207, 57391, 119243, 115332, 151531, 88265, 136614, 
+                     101413, 118644]
+        };
+
+        const valuesK = yearlyData.values.map(v => Math.round(v / 1000));
+
+        // Calculate cumulative
+        let cumulative = 0;
+        const cumulativeValues = yearlyData.values.map(v => {
+            cumulative += v;
+            return Math.round(cumulative / 1000);
+        });
+
+        // Get color based on value
+        function getChocolateColor(value, max) {
+            const normalized = value / max;
+            if (normalized > 0.66) return '#3E2723'; // Dark chocolate
+            if (normalized > 0.33) return '#6D4C41'; // Milk chocolate
+            return '#A1887F'; // Light chocolate
+        }
+
+        // Convert hectares to tree count range (400-600 trees per hectare)
+        function hectaresToTrees(hectares) {
+            const treesMin = Math.round(hectares * 400 / 1000000); // in millions
+            const treesMax = Math.round(hectares * 600 / 1000000); // in millions
+            if (treesMin === treesMax) {
+                return `${treesMin} million trees`;
+            }
+            return `${treesMin}-${treesMax} million trees`;
+        }
+
+        // Chart 1: Melting River (Smooth Area Chart with Gradient)
+        const riverChart = new Chart(document.getElementById('riverCanvas'), {
+            type: 'line',
+            data: {
+                labels: yearlyData.labels,
+                datasets: [{
+                    label: 'Forest Loss (1000 ha)',
+                    data: valuesK,
+                    backgroundColor: function(context) {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+                        gradient.addColorStop(0, 'rgba(62, 39, 35, 0.9)');
+                        gradient.addColorStop(0.4, 'rgba(109, 76, 65, 0.7)');
+                        gradient.addColorStop(0.7, 'rgba(141, 110, 99, 0.5)');
+                        gradient.addColorStop(1, 'rgba(188, 170, 164, 0.3)');
+                        return gradient;
+                    },
+                    borderColor: '#3E2723',
+                    borderWidth: 4,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 8,
+                    pointBackgroundColor: function(context) {
+                        const value = context.parsed.y;
+                        return getChocolateColor(value, Math.max(...valuesK));
+                    },
+                    pointBorderColor: '#3E2723',
+                    pointBorderWidth: 3,
+                    pointHoverRadius: 12,
+                    pointHoverBorderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#3E2723',
+                        titleColor: '#FFF8E1',
+                        bodyColor: '#FFF8E1',
+                        borderColor: '#8D6E63',
+                        borderWidth: 2,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                const hectares = context.parsed.y * 1000; // Convert back from thousands
+                                const trees = hectaresToTrees(hectares);
+                                return [
+                                    'Loss: ' + context.parsed.y + 'k hectares',
+                                    '≈ ' + trees + ' 🌳'
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(141, 110, 99, 0.1)'
+                        },
+                        ticks: {
+                            color: '#3E2723',
+                            font: { size: 11, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(141, 110, 99, 0.1)'
+                        },
+                        ticks: {
+                            color: '#3E2723',
+                            font: { size: 11, weight: 'bold' },
+                            callback: function(value) {
+                                return value + 'k';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Hectares Lost (thousands)',
+                            color: '#3E2723',
+                            font: { size: 12, weight: 'bold' }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+
+        // Chart 2: Stacking Chocolate (Cumulative Area)
+        const stackChart = new Chart(document.getElementById('stackCanvas'), {
+            type: 'line',
+            data: {
+                labels: yearlyData.labels,
+                datasets: [{
+                    label: 'Cumulative Loss (1000 ha)',
+                    data: cumulativeValues,
+                    backgroundColor: function(context) {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 350, 0, 0);
+                        gradient.addColorStop(0, 'rgba(188, 170, 164, 0.4)');
+                        gradient.addColorStop(0.3, 'rgba(141, 110, 99, 0.6)');
+                        gradient.addColorStop(0.6, 'rgba(109, 76, 65, 0.8)');
+                        gradient.addColorStop(1, 'rgba(62, 39, 35, 1)');
+                        return gradient;
+                    },
+                    borderColor: '#3E2723',
+                    borderWidth: 4,
+                    fill: true,
+                    tension: 0.1,
+                    pointRadius: 7,
+                    pointBackgroundColor: '#6D4C41',
+                    pointBorderColor: '#FFF8E1',
+                    pointBorderWidth: 3,
+                    pointHoverRadius: 11,
+                    pointHoverBackgroundColor: '#3E2723',
+                    pointHoverBorderColor: '#FFF8E1',
+                    pointHoverBorderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#6D4C41',
+                        titleColor: '#FFF8E1',
+                        bodyColor: '#FFF8E1',
+                        borderColor: '#3E2723',
+                        borderWidth: 3,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                const hectares = context.parsed.y * 1000; // Convert back from thousands
+                                const trees = hectaresToTrees(hectares);
+                                return [
+                                    'Total: ' + context.parsed.y.toLocaleString() + 'k hectares lost',
+                                    '≈ ' + trees + ' 🌳'
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(141, 110, 99, 0.1)'
+                        },
+                        ticks: {
+                            color: '#3E2723',
+                            font: { size: 11, weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(141, 110, 99, 0.1)'
+                        },
+                        ticks: {
+                            color: '#3E2723',
+                            font: { size: 11, weight: 'bold' },
+                            callback: function(value) {
+                                return value + 'k';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Total Cumulative Loss (thousands)',
+                            color: '#3E2723',
+                            font: { size: 12, weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Chocolate Mountains (Interactive Bars)
+        function createMountains() {
+            const container = document.getElementById('mountainRange');
+            const maxValue = Math.max(...yearlyData.values);
+            const maxHeight = 300;
+            
+            yearlyData.labels.forEach((year, i) => {
+                const value = yearlyData.values[i];
+                const height = (value / maxValue) * maxHeight;
+                const color = getChocolateColor(value, maxValue);
+                
+                const mountain = document.createElement('div');
+                mountain.className = 'mountain';
+                mountain.style.height = height + 'px';
+                mountain.style.background = `linear-gradient(145deg, ${color}, ${adjustBrightness(color, -20)})`;
+                
+                const label = document.createElement('div');
+                label.className = 'mountain-label';
+                label.textContent = year;
+                
+                const valueLabel = document.createElement('div');
+                valueLabel.className = 'mountain-value';
+                valueLabel.textContent = Math.round(value / 1000) + 'k ha';
+                
+                mountain.appendChild(label);
+                mountain.appendChild(valueLabel);
+                container.appendChild(mountain);
+            });
+        }
+
+        function adjustBrightness(color, amount) {
+            const hex = color.replace('#', '');
+            const num = parseInt(hex, 16);
+            const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+            const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+            const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+            return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+        }
+
+        createMountains();
+    </script>
+</body>
+</html>

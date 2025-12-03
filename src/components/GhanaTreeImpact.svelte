@@ -1,613 +1,641 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import Chart from "chart.js/auto";
-  import type { Chart as ChartType } from "chart.js/auto";
+	import { onMount } from "svelte";
+	import Chart from "chart.js/auto";
+	import type { Chart as ChartType } from "chart.js/auto";
 
-  // DOM references
-  let canvas0: HTMLCanvasElement;
-  let canvas1: HTMLCanvasElement;
-  let canvas2: HTMLCanvasElement;
-  let canvas3: HTMLCanvasElement;
-  let canvas4: HTMLCanvasElement;
-  let canvas5: HTMLCanvasElement;
+	// DOM references
+	let riverCanvas: HTMLCanvasElement;
+	let stackCanvas: HTMLCanvasElement;
+	let mountainContainer: HTMLDivElement;
 
-  // Active chart index
-  let activeIndex = $state(0);
+	// Data
+	const yearlyData = {
+		labels: ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+			'2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020',
+			'2021', '2022'],
+		values: [43676, 78393, 24946, 17628, 41339, 27143, 40184, 37826, 38256, 19476,
+			36202, 36630, 81203, 120207, 57391, 119243, 115332, 151531, 88265, 136614,
+			101413, 118644]
+	};
 
-  // Chocolate color palette
-  const chocolateColors = {
-    dark: '#3E2723',
-    milk: '#6D4C41',
-    medium: '#8D6E63',
-    light: '#A1887F',
-    cream: '#BCAAA4'
-  };
+	const valuesK = yearlyData.values.map(v => Math.round(v / 1000));
 
-  // Data
-  const yearlyData = {
-    labels: ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
-             '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020',
-             '2021', '2022'],
-    values: [43676, 78393, 24946, 17628, 41339, 27143, 40184, 37826, 38256, 19476,
-             36202, 36630, 81203, 120207, 57391, 119243, 115332, 151531, 88265, 136614,
-             101413, 118644]
-  };
+	// Calculate cumulative
+	let cumulative = 0;
+	const cumulativeValues = yearlyData.values.map(v => {
+		cumulative += v;
+		return Math.round(cumulative / 1000);
+	});
 
-  const valuesK = yearlyData.values.map(v => Math.round(v / 1000));
+	// Get color based on value
+	function getChocolateColor(value: number, max: number): string {
+		const normalized = value / max;
+		if (normalized > 0.66) return '#3E2723'; // Dark chocolate
+		if (normalized > 0.33) return '#6D4C41'; // Milk chocolate
+		return '#A1887F'; // Light chocolate
+	}
 
-  // Calculate cumulative
-  let cumulative = 0;
-  const cumulativeValues = yearlyData.values.map(v => {
-    cumulative += v;
-    return Math.round(cumulative / 1000);
-  });
+	// Convert hectares to tree count range (400-600 trees per hectare)
+	function hectaresToTrees(hectares: number): string {
+		const treesMin = Math.round(hectares * 400 / 1000000);
+		const treesMax = Math.round(hectares * 600 / 1000000);
+		if (treesMin === treesMax) {
+			return `${treesMin} million trees`;
+		}
+		return `${treesMin}-${treesMax} million trees`;
+	}
 
-  // Period data
-  const periodLabels = ['2001-2005', '2006-2010', '2011-2015', '2016-2020', '2021-2022'];
-  const periodValues = [
-    Math.round((43676 + 78393 + 24946 + 17628 + 41339) / 1000),
-    Math.round((27143 + 40184 + 37826 + 38256 + 19476) / 1000),
-    Math.round((36202 + 36630 + 81203 + 120207 + 57391) / 1000),
-    Math.round((119243 + 115332 + 151531 + 88265 + 136614) / 1000),
-    Math.round((101413 + 118644) / 1000)
-  ];
-  const periodColors = [
-    'rgba(62, 39, 35, 0.9)',
-    'rgba(93, 64, 55, 0.85)',
-    'rgba(141, 110, 99, 0.85)',
-    'rgba(161, 136, 127, 0.8)',
-    'rgba(188, 170, 164, 0.75)'
-  ];
+	function adjustBrightness(color: string, amount: number): string {
+		const hex = color.replace('#', '');
+		const num = parseInt(hex, 16);
+		const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+		const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+		const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+		return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+	}
 
-  // Threshold data
-  const thresholdLabels = ['0%', '10%', '30%', '50%', '75%'];
-  const thresholdValues = [145, 145, 119, 71, 2];
-  const thresholdColors = [
-    '#3E2723',
-    '#5D4037',
-    '#8D6E63',
-    '#A1887F',
-    '#D7CCC8'
-  ];
+	const charts: ChartType[] = [];
 
-  // Peak and valley data
-  const peakValleyLabels = ['2002', '2003', '2004', '2010', '2013', '2014', '2016', '2017', '2018', '2020'];
-  const peakValleyValues = [78, 25, 18, 19, 81, 120, 119, 115, 152, 137];
-  const peakValleyColors = ['#3E2723', '#A1887F', '#A1887F', '#A1887F', '#3E2723', '#3E2723', '#3E2723', '#3E2723', '#3E2723', '#3E2723'];
+	onMount(() => {
+		// Chart 1: Melting River (Smooth Area Chart with Gradient)
+		charts[0] = new Chart(riverCanvas, {
+			type: 'line',
+			data: {
+				labels: yearlyData.labels,
+				datasets: [{
+					label: 'Forest Loss (1000 ha)',
+					data: valuesK,
+					backgroundColor: function(context) {
+						const ctx = context.chart.ctx;
+						const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+						gradient.addColorStop(0, 'rgba(62, 39, 35, 0.9)');
+						gradient.addColorStop(0.4, 'rgba(109, 76, 65, 0.7)');
+						gradient.addColorStop(0.7, 'rgba(141, 110, 99, 0.5)');
+						gradient.addColorStop(1, 'rgba(188, 170, 164, 0.3)');
+						return gradient;
+					},
+					borderColor: '#3E2723',
+					borderWidth: 4,
+					fill: true,
+					tension: 0.4,
+					pointRadius: 8,
+					pointBackgroundColor: function(context) {
+						const value = context.parsed?.y ?? 0;
+						return getChocolateColor(value, Math.max(...valuesK));
+					},
+					pointBorderColor: '#3E2723',
+					pointBorderWidth: 3,
+					pointHoverRadius: 12,
+					pointHoverBorderWidth: 4
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: { display: false },
+					tooltip: {
+						backgroundColor: '#3E2723',
+						titleColor: '#FFF8E1',
+						bodyColor: '#FFF8E1',
+						borderColor: '#8D6E63',
+						borderWidth: 2,
+						padding: 12,
+						displayColors: false,
+						callbacks: {
+							label: function(context) {
+								const hectares = context.parsed.y * 1000;
+								const trees = hectaresToTrees(hectares);
+								return [
+									'Loss: ' + context.parsed.y + 'k hectares',
+									'≈ ' + trees
+								];
+							}
+						}
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							color: 'rgba(141, 110, 99, 0.1)'
+						},
+						ticks: {
+							color: '#3E2723',
+							font: { size: 11, weight: 'bold' }
+						}
+					},
+					y: {
+						beginAtZero: true,
+						grid: {
+							color: 'rgba(141, 110, 99, 0.1)'
+						},
+						ticks: {
+							color: '#3E2723',
+							font: { size: 11, weight: 'bold' },
+							callback: function(value) {
+								return value + 'k';
+							}
+						},
+						title: {
+							display: true,
+							text: 'Hectares Lost (thousands)',
+							color: '#3E2723',
+							font: { size: 12, weight: 'bold' }
+						}
+					}
+				},
+				interaction: {
+					intersect: false,
+					mode: 'index'
+				}
+			}
+		});
 
-  const formatHa = (value: number) => `${Math.round(value)}k ha`;
+		// Chart 2: Stacking Chocolate (Cumulative Area)
+		charts[1] = new Chart(stackCanvas, {
+			type: 'line',
+			data: {
+				labels: yearlyData.labels,
+				datasets: [{
+					label: 'Cumulative Loss (1000 ha)',
+					data: cumulativeValues,
+					backgroundColor: function(context) {
+						const ctx = context.chart.ctx;
+						const gradient = ctx.createLinearGradient(0, 350, 0, 0);
+						gradient.addColorStop(0, 'rgba(188, 170, 164, 0.4)');
+						gradient.addColorStop(0.3, 'rgba(141, 110, 99, 0.6)');
+						gradient.addColorStop(0.6, 'rgba(109, 76, 65, 0.8)');
+						gradient.addColorStop(1, 'rgba(62, 39, 35, 1)');
+						return gradient;
+					},
+					borderColor: '#3E2723',
+					borderWidth: 4,
+					fill: true,
+					tension: 0.1,
+					pointRadius: 7,
+					pointBackgroundColor: '#6D4C41',
+					pointBorderColor: '#FFF8E1',
+					pointBorderWidth: 3,
+					pointHoverRadius: 11,
+					pointHoverBackgroundColor: '#3E2723',
+					pointHoverBorderColor: '#FFF8E1',
+					pointHoverBorderWidth: 4
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: { display: false },
+					tooltip: {
+						backgroundColor: '#6D4C41',
+						titleColor: '#FFF8E1',
+						bodyColor: '#FFF8E1',
+						borderColor: '#3E2723',
+						borderWidth: 3,
+						padding: 12,
+						displayColors: false,
+						callbacks: {
+							label: function(context) {
+								const hectares = context.parsed.y * 1000;
+								const trees = hectaresToTrees(hectares);
+								return [
+									'Total: ' + context.parsed.y.toLocaleString() + 'k hectares lost',
+									'≈ ' + trees
+								];
+							}
+						}
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							color: 'rgba(141, 110, 99, 0.1)'
+						},
+						ticks: {
+							color: '#3E2723',
+							font: { size: 11, weight: 'bold' }
+						}
+					},
+					y: {
+						beginAtZero: true,
+						grid: {
+							color: 'rgba(141, 110, 99, 0.1)'
+						},
+						ticks: {
+							color: '#3E2723',
+							font: { size: 11, weight: 'bold' },
+							callback: function(value) {
+								return value + 'k';
+							}
+						},
+						title: {
+							display: true,
+							text: 'Total Cumulative Loss (thousands)',
+							color: '#3E2723',
+							font: { size: 12, weight: 'bold' }
+						}
+					}
+				}
+			}
+		});
 
-  const charts: ChartType[] = [];
+		// Create mountains
+		if (mountainContainer) {
+			const maxValue = Math.max(...yearlyData.values);
+			const maxHeight = 280;
 
-  function showChart(index: number) {
-    activeIndex = index;
-    // Update the selected chart
-    setTimeout(() => {
-      if (charts[index]) {
-        charts[index].update();
-      }
-    }, 50);
-  }
+			yearlyData.labels.forEach((year, i) => {
+				const value = yearlyData.values[i];
+				const height = (value / maxValue) * maxHeight;
+				const color = getChocolateColor(value, maxValue);
 
-  onMount(() => {
-    // Create gradient for peak/valley chart
-    const peakGradient = canvas5.getContext('2d')!.createLinearGradient(0, 0, 0, 400);
-    peakGradient.addColorStop(0, 'rgba(62, 39, 35, 0.35)');
-    peakGradient.addColorStop(1, 'rgba(189, 163, 150, 0.05)');
+				const mountain = document.createElement('div');
+				mountain.className = 'mountain';
+				mountain.style.height = height + 'px';
+				mountain.style.background = `linear-gradient(145deg, ${color}, ${adjustBrightness(color, -20)})`;
 
-    // Chart 1: Annual Bar Chart
-    charts[0] = new Chart(canvas0, {
-      type: 'bar',
-      data: {
-        labels: yearlyData.labels,
-        datasets: [{
-          label: 'Loss (1000 ha)',
-          data: valuesK,
-          backgroundColor: chocolateColors.medium,
-          borderColor: chocolateColors.dark,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: 'Loss (1000 ha)' }
-          }
-        }
-      }
-    });
+				const label = document.createElement('div');
+				label.className = 'mountain-label';
+				label.textContent = year;
 
-    // Chart 2: Cumulative Area Chart
-    charts[1] = new Chart(canvas1, {
-      type: 'line',
-      data: {
-        labels: yearlyData.labels,
-        datasets: [{
-          label: 'Cumulative Loss (1000 ha)',
-          data: cumulativeValues,
-          backgroundColor: 'rgba(109, 76, 65, 0.3)',
-          borderColor: chocolateColors.dark,
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: 'Cumulative Loss (1000 ha)' }
-          }
-        }
-      }
-    });
+				const valueLabel = document.createElement('div');
+				valueLabel.className = 'mountain-value';
+				valueLabel.textContent = Math.round(value / 1000) + 'k ha';
 
-    // Chart 3: Period Column Chart
-    charts[2] = new Chart(canvas2, {
-      type: 'bar',
-      data: {
-        labels: periodLabels,
-        datasets: [{
-          label: 'Period Loss (1000 ha)',
-          data: periodValues,
-          backgroundColor: periodColors,
-          borderColor: chocolateColors.dark,
-          borderWidth: 1,
-          borderRadius: 8,
-          barPercentage: 0.65
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: 'Loss (1000 ha)' }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const value = typeof context.parsed === 'object' ? context.parsed.y : context.parsed;
-                return formatHa(value);
-              }
-            }
-          }
-        }
-      }
-    });
+				mountain.appendChild(label);
+				mountain.appendChild(valueLabel);
+				mountainContainer.appendChild(mountain);
+			});
+		}
 
-    // Chart 4: Horizontal Bars for Thresholds
-    charts[3] = new Chart(canvas3, {
-      type: 'bar',
-      data: {
-        labels: thresholdLabels,
-        datasets: [{
-          label: 'Loss (1000 ha)',
-          data: thresholdValues,
-          backgroundColor: thresholdColors,
-          borderColor: chocolateColors.dark,
-          borderWidth: 1,
-          borderRadius: 12,
-          barPercentage: 0.55
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: (context) => `${context.label}: ${formatHa(context.parsed.x)}`
-            }
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            title: { display: true, text: 'Loss (1000 ha)' },
-            ticks: {
-              callback: (value) => `${value}k`
-            }
-          }
-        }
-      }
-    });
-
-    // Chart 5: Line Chart with Points
-    charts[4] = new Chart(canvas4, {
-      type: 'line',
-      data: {
-        labels: yearlyData.labels,
-        datasets: [{
-          label: 'Loss (1000 ha)',
-          data: valuesK,
-          backgroundColor: chocolateColors.medium,
-          borderColor: chocolateColors.dark,
-          borderWidth: 3,
-          pointRadius: 5,
-          pointBackgroundColor: chocolateColors.medium,
-          tension: 0.2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: 'Loss (1000 ha)' }
-          }
-        }
-      }
-    });
-
-    // Chart 6: Peak vs Valley Area Line
-    charts[5] = new Chart(canvas5, {
-      type: 'line',
-      data: {
-        labels: peakValleyLabels,
-        datasets: [{
-          label: 'Loss (1000 ha)',
-          data: peakValleyValues,
-          backgroundColor: peakGradient,
-          borderColor: chocolateColors.dark,
-          borderWidth: 2,
-          pointBackgroundColor: peakValleyColors,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            suggestedMax: 160,
-            title: { display: true, text: 'Loss (1000 ha)' },
-            ticks: {
-              stepSize: 40,
-              callback: (value) => `${value}k`
-            }
-          },
-          x: {
-            title: { display: true, text: 'Year' }
-          }
-        }
-      }
-    });
-
-    // Cleanup on unmount
-    return () => {
-      charts.forEach(chart => chart.destroy());
-    };
-  });
+		return () => {
+			charts.forEach(chart => chart?.destroy());
+		};
+	});
 </script>
 
 <section class="ghana-impact-section" aria-label="Ghana tree cover loss analysis">
-  <div class="container">
-    <h1>🌳 Ghana Tree Cover Loss Analysis 🍫</h1>
-    <p class="subtitle">Sweet data, bitter reality: 30% canopy density threshold (2001-2022)</p>
+	<div class="container">
+		<div class="main-layout">
+			<div class="visualizations">
+				<!-- Viz 1: Melting Chocolate River (Annual Loss) -->
+				<div class="viz-card">
+					<h2 class="viz-title">The Melting Forest River</h2>
+					<p class="viz-description">Watch how forest loss flows through the years - deeper colors show heavier losses. Hover to see tree count conversions.</p>
+					<div class="canvas-wrapper">
+						<canvas bind:this={riverCanvas}></canvas>
+					</div>
+				</div>
 
-    <div class="button-container">
-      <button
-        class="chart-button"
-        class:active={activeIndex === 0}
-        on:click={() => showChart(0)}
-      >
-        Annual Loss Timeline
-      </button>
-      <button
-        class="chart-button"
-        class:active={activeIndex === 1}
-        on:click={() => showChart(1)}
-      >
-        Cumulative Loss Growth
-      </button>
-      <button
-        class="chart-button"
-        class:active={activeIndex === 2}
-        on:click={() => showChart(2)}
-      >
-        5-Year Period Totals
-      </button>
-      <button
-        class="chart-button"
-        class:active={activeIndex === 3}
-        on:click={() => showChart(3)}
-      >
-        Threshold Sensitivity
-      </button>
-      <button
-        class="chart-button"
-        class:active={activeIndex === 4}
-        on:click={() => showChart(4)}
-      >
-        Trend Smoother
-      </button>
-      <button
-        class="chart-button"
-        class:active={activeIndex === 5}
-        on:click={() => showChart(5)}
-      >
-        Peaks vs Valleys
-      </button>
-    </div>
+				<!-- Viz 2: Stacking Chocolate (Cumulative) -->
+				<div class="viz-card">
+					<h2 class="viz-title">The Growing Stack</h2>
+					<p class="viz-description">Each layer adds to the total - see how deforestation builds up over time</p>
+					<div class="canvas-wrapper">
+						<canvas bind:this={stackCanvas}></canvas>
+					</div>
+				</div>
 
-    <div class="visuals-layout">
-      <div class="chart-container">
-        <!-- Chart 1: Annual Loss -->
-        <div class="chart-view" class:active={activeIndex === 0}>
-          <h2 class="chart-title">🍫 Annual Tree Cover Loss (2001-2022)</h2>
-          <p class="chart-description">Year-by-year forest loss in thousands of hectares</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas0}></canvas>
-          </div>
-        </div>
+				<!-- Viz 3: Chocolate Bar Mountains (Peaks & Valleys) -->
+				<div class="viz-card">
+					<h2 class="viz-title">The Chocolate Mountains</h2>
+					<p class="viz-description">Tallest peaks mark the worst years - hover over each mountain to explore</p>
+					<div class="mountain-range" bind:this={mountainContainer}></div>
+				</div>
+			</div>
 
-        <!-- Chart 2: Cumulative Loss -->
-        <div class="chart-view" class:active={activeIndex === 1}>
-          <h2 class="chart-title">🍫 Cumulative Forest Loss Over Time</h2>
-          <p class="chart-description">Total accumulated tree cover loss since 2001</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas1}></canvas>
-          </div>
-        </div>
+			<div class="sidebar">
+				<div class="summary-card">
+					<h3>Quick Facts</h3>
+					<div class="stat-item">
+						<div class="stat-label">Total Loss (2001-2022)</div>
+						<div class="stat-value">1.58M hectares</div>
+					</div>
+					<div class="stat-item">
+						<div class="stat-label">Worst Year</div>
+						<div class="stat-value">2018 (152K ha)</div>
+					</div>
+					<div class="stat-item">
+						<div class="stat-label">Best Year</div>
+						<div class="stat-value">2004 (18K ha)</div>
+					</div>
+					<div class="stat-item">
+						<div class="stat-label">Average Annual Loss</div>
+						<div class="stat-value">72K hectares</div>
+					</div>
+				</div>
 
-        <!-- Chart 3: Period Comparison -->
-        <div class="chart-view" class:active={activeIndex === 2}>
-          <h2 class="chart-title">🍫 Loss Trends by 5-Year Periods</h2>
-          <p class="chart-description">Comparing forest loss across different time periods</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas2}></canvas>
-          </div>
-        </div>
-
-        <!-- Chart 4: Threshold Impact -->
-        <div class="chart-view" class:active={activeIndex === 3}>
-          <h2 class="chart-title">🍫 Impact of Canopy Density Threshold (2022)</h2>
-          <p class="chart-description">How different tree density thresholds affect reported loss</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas3}></canvas>
-          </div>
-        </div>
-
-        <!-- Chart 5: Trend Line -->
-        <div class="chart-view" class:active={activeIndex === 4}>
-          <h2 class="chart-title">🍫 Annual Loss Trend Line</h2>
-          <p class="chart-description">Smooth trend showing the pattern of deforestation</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas4}></canvas>
-          </div>
-        </div>
-
-        <!-- Chart 6: Peaks vs Valleys -->
-        <div class="chart-view" class:active={activeIndex === 5}>
-          <h2 class="chart-title">🍫 Peak vs Valley Years</h2>
-          <p class="chart-description">Comparing years with highest and lowest deforestation</p>
-          <div class="canvas-wrapper">
-            <canvas bind:this={canvas5}></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="insights">
-        <h3>📊 Key Insights</h3>
-        <ul>
-          <li><strong>Total Loss:</strong> Over 1.5 million hectares lost since 2001</li>
-          <li><strong>Worst Year:</strong> 2018 with 151,531 ha lost</li>
-          <li><strong>Best Year:</strong> 2004 with only 17,628 ha lost</li>
-          <li><strong>Recent Trend:</strong> High variability with significant losses continuing</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+				<div class="legend-card">
+					<h4>Color Guide</h4>
+					<div class="legend-item">
+						<div class="legend-color high"></div>
+						<span>High Loss (100K+ ha)</span>
+					</div>
+					<div class="legend-item">
+						<div class="legend-color medium"></div>
+						<span>Medium Loss (50-100K ha)</span>
+					</div>
+					<div class="legend-item">
+						<div class="legend-color low"></div>
+						<span>Low Loss (0-50K ha)</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@400;500;600&display=swap');
+	.ghana-impact-section {
+		font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+		padding: 2rem;
+		background: none;
+		position: relative;
+		color: rgba(255, 248, 240, 0.94);
+		overflow-x: hidden;
+		width: 100%;
+		height: 100%;
+	}
 
-  .ghana-impact-section {
-    font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
-    padding: 4rem 2.5rem 6rem;
-    background: none;
-    position: relative;
-    color: rgba(255, 248, 240, 0.94);
-    overflow-x: hidden;
-  }
+	.container {
+		max-width: 1400px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+		height: 100%;
+	}
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
+	.main-layout {
+		display: grid;
+		grid-template-columns: 1fr 280px;
+		gap: 1.5rem;
+		height: 100%;
+	}
 
-  h1 {
-    font-family: 'Playfair Display', 'Times New Roman', serif;
-    color: rgba(255, 248, 240, 0.96);
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    letter-spacing: 0.04em;
-  }
+	.visualizations {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		overflow-y: auto;
+		max-height: calc(100vh - 120px);
+		padding-right: 0.5rem;
+	}
 
-  .subtitle {
-    color: rgba(255, 248, 240, 0.8);
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
+	.viz-card {
+		background: rgba(255, 255, 255, 0.98);
+		border-radius: 12px;
+		padding: 1.5rem;
+		box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
+		border: 2px solid rgba(141, 110, 99, 0.4);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+		flex-shrink: 0;
+	}
 
-  .button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
+	.viz-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 15px 40px rgba(62, 39, 35, 0.25);
+	}
 
-  .chart-button {
-    padding: 0.75rem 1.5rem;
-    background-color: #A1887F;
-    color: #3E2723;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    white-space: nowrap;
-  }
+	.viz-title {
+		font-family: 'Playfair Display', 'Times New Roman', serif;
+		color: #3E2723;
+		font-size: 1.4rem;
+		margin-bottom: 0.4rem;
+		font-weight: 600;
+	}
 
-  .chart-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
+	.viz-description {
+		color: #6D4C41;
+		margin-bottom: 1rem;
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
 
-  .chart-button.active {
-    background-color: #3E2723;
-    color: #FFF8E1;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
+	.canvas-wrapper {
+		position: relative;
+		height: 280px;
+	}
 
-  .visuals-layout {
-    display: flex;
-    gap: 2rem;
-    align-items: stretch;
-  }
+	.mountain-range {
+		position: relative;
+		height: 320px;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-around;
+		padding: 20px 10px;
+		background: linear-gradient(to top, rgba(188, 170, 164, 0.3) 0%, transparent 100%);
+		border-radius: 10px;
+		gap: 2px;
+	}
 
-  .chart-container {
-    background-color: white;
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 8px 16px rgba(62, 39, 35, 0.15);
-    border: 3px solid #8D6E63;
-    flex: 2;
-    position: relative;
-    overflow: hidden;
-  }
+	:global(.mountain) {
+		position: relative;
+		width: 28px;
+		min-width: 20px;
+		background: linear-gradient(145deg, #8D6E63, #6D4C41);
+		border-radius: 6px 6px 0 0;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 10px rgba(62, 39, 35, 0.3);
+	}
 
-  .chart-container::after {
-    content: '';
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    top: -60px;
-    right: -60px;
-    background: radial-gradient(circle, rgba(161, 136, 127, 0.25), transparent 60%);
-    pointer-events: none;
-  }
+	:global(.mountain:hover) {
+		transform: scale(1.08);
+		filter: brightness(1.1);
+	}
 
-  .chart-title {
-    color: #3E2723;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    font-family: 'Playfair Display', 'Times New Roman', serif;
-  }
+	:global(.mountain-label) {
+		position: absolute;
+		bottom: -22px;
+		left: 50%;
+		transform: translateX(-50%);
+		font-size: 0.6rem;
+		color: rgba(255, 248, 240, 0.85);
+		font-weight: bold;
+		white-space: nowrap;
+	}
 
-  .chart-description {
-    color: #6D4C41;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
+	:global(.mountain-value) {
+		position: absolute;
+		top: -28px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: #3E2723;
+		color: white;
+		padding: 4px 8px;
+		border-radius: 5px;
+		font-size: 0.7rem;
+		font-weight: bold;
+		white-space: nowrap;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		z-index: 10;
+	}
 
-  .canvas-wrapper {
-    position: relative;
-    height: 400px;
-    margin-bottom: 1rem;
-  }
+	:global(.mountain:hover .mountain-value) {
+		opacity: 1;
+	}
 
-  .insights {
-    padding: 1.1rem 1.2rem;
-    background-color: #BCAAA4;
-    border-radius: 10px;
-    color: #3E2723;
-    flex: 0 0 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 220px;
-    max-width: 320px;
-    box-shadow: inset 0 0 0 1px rgba(62, 39, 35, 0.1), 0 8px 16px rgba(0, 0, 0, 0.25);
-    background-image: linear-gradient(145deg, rgba(255,255,255,0.2), transparent);
-  }
+	.sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		position: sticky;
+		top: 2rem;
+		height: fit-content;
+	}
 
-  .insights h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-  }
+	.summary-card {
+		background: linear-gradient(145deg, rgba(109, 76, 65, 0.95), rgba(93, 64, 55, 0.95));
+		border-radius: 12px;
+		padding: 1.25rem;
+		color: white;
+		box-shadow: 0 8px 20px rgba(62, 39, 35, 0.3);
+		border: 1px solid rgba(255, 224, 189, 0.2);
+	}
 
-  .insights ul {
-    line-height: 1.8;
-    margin-left: 1.5rem;
-  }
+	.summary-card h3 {
+		font-family: 'Playfair Display', 'Times New Roman', serif;
+		font-size: 1.2rem;
+		margin-bottom: 0.75rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+		padding-bottom: 0.5rem;
+		color: rgba(255, 248, 240, 0.96);
+	}
 
-  .chart-view {
-    display: none;
-  }
+	.stat-item {
+		margin-bottom: 0.75rem;
+		padding: 0.6rem;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		transition: background 0.3s ease;
+	}
 
-  .chart-view.active {
-    display: block;
-  }
+	.stat-item:last-child {
+		margin-bottom: 0;
+	}
 
-  @media (max-width: 960px) {
-    .visuals-layout {
-      flex-direction: column;
-    }
+	.stat-item:hover {
+		background: rgba(255, 255, 255, 0.18);
+	}
 
-    .insights {
-      margin-top: 1.5rem;
-      max-width: 100%;
-    }
-  }
+	.stat-label {
+		font-size: 0.8rem;
+		opacity: 0.85;
+		margin-bottom: 0.2rem;
+	}
 
-  @media (max-width: 640px) {
-    .ghana-impact-section {
-      padding: 1.5rem;
-    }
+	.stat-value {
+		font-size: 1.1rem;
+		font-weight: bold;
+		color: rgba(255, 248, 240, 0.96);
+	}
 
-    h1 {
-      font-size: 1.8rem;
-    }
+	.legend-card {
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: 12px;
+		padding: 1.25rem;
+		box-shadow: 0 5px 15px rgba(62, 39, 35, 0.15);
+		border: 1px solid rgba(188, 170, 164, 0.5);
+	}
 
-    .subtitle {
-      font-size: 1rem;
-    }
+	.legend-card h4 {
+		font-family: 'Playfair Display', 'Times New Roman', serif;
+		color: #3E2723;
+		margin-bottom: 0.75rem;
+		font-size: 1rem;
+	}
 
-    .chart-container {
-      padding: 1.5rem;
-    }
+	.legend-item {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
 
-    .chart-button {
-      padding: 0.6rem 1.2rem;
-      font-size: 0.85rem;
-    }
-  }
+	.legend-item:last-child {
+		margin-bottom: 0;
+	}
+
+	.legend-item span {
+		color: #3E2723;
+		font-weight: 500;
+		font-size: 0.85rem;
+	}
+
+	.legend-color {
+		width: 24px;
+		height: 16px;
+		border-radius: 4px;
+		border: 1px solid #3E2723;
+	}
+
+	.legend-color.high {
+		background: #3E2723;
+	}
+
+	.legend-color.medium {
+		background: #6D4C41;
+	}
+
+	.legend-color.low {
+		background: #A1887F;
+	}
+
+	@media (max-width: 1100px) {
+		.main-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.sidebar {
+			flex-direction: row;
+			position: static;
+		}
+
+		.summary-card,
+		.legend-card {
+			flex: 1;
+		}
+
+		.visualizations {
+			max-height: none;
+			overflow-y: visible;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.ghana-impact-section {
+			padding: 1rem;
+		}
+
+		.sidebar {
+			flex-direction: column;
+		}
+
+		.viz-card {
+			padding: 1rem;
+		}
+
+		.viz-title {
+			font-size: 1.2rem;
+		}
+
+		.canvas-wrapper {
+			height: 220px;
+		}
+
+		.mountain-range {
+			height: 250px;
+		}
+
+		:global(.mountain) {
+			width: 12px;
+			min-width: 10px;
+		}
+
+		:global(.mountain-label) {
+			font-size: 0.5rem;
+		}
+	}
 </style>
