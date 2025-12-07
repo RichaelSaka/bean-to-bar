@@ -4,7 +4,7 @@
 	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
 	import CocoaProducers from "$components/CocoaProducers.svelte";
 	import ChocolateIncomeShareScrolly from "$components/ChocolateIncomeShareScrolly.svelte";
-	import GhanaTreeImpact from "$components/GhanaTreeImpact.svelte";
+	import GhanaTreeImpactScrolly from "$components/GhanaTreeImpactScrolly.svelte";
 
 	// Props for selected chocolate data
 	let { selectedChocolate = null } = $props();
@@ -157,18 +157,8 @@
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
-	<!-- Section 6: Environmental Impact -->
-	<div class="story-section">
-		<div class="section-content">
-			<div class="text-block">
-				<h2 class="section-title">The Hidden Cost of Your Chocolate Bar</h2>
-				<p class="section-copy">This visualization shows tree-cover loss in Ghana. As global demand for chocolate rises, forests shrink, impacting biodiversity, local communities, and the climate.</p>
-			</div>
-			<div class="viz-container environment-container">
-				<GhanaTreeImpact />
-			</div>
-		</div>
-	</div>
+	<!-- Section 6: Environmental Impact (Full-screen Scrollytelling) -->
+	<GhanaTreeImpactScrolly />
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
@@ -496,10 +486,6 @@
 		max-width: 1200px;
 	}
 
-	.environment-container {
-		min-height: 800px;
-	}
-
 	/* Ownership card styling */
 	.ownership-card {
 		background: rgba(10, 6, 4, 0.96);
@@ -636,15 +622,6 @@
 
 		.producers-container {
 			min-height: 500px;
-		}
-
-		.environment-container {
-			min-height: 600px;
-		}
-
-		.interaction-cue {
-			font-size: 0.8rem;
-			padding: 0.4rem 0.8rem;
 		}
 	}
 </style>
