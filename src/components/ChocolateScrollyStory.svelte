@@ -3,7 +3,7 @@
 	import chocolateData from "$data/chocolate-shelf-data.json";
 	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
 	import CocoaProducers from "$components/CocoaProducers.svelte";
-	import ChocolateIncomeShare from "$components/ChocolateIncomeShare.svelte";
+	import ChocolateIncomeShareScrolly from "$components/ChocolateIncomeShareScrolly.svelte";
 	import GhanaTreeImpact from "$components/GhanaTreeImpact.svelte";
 
 	// Props for selected chocolate data
@@ -142,23 +142,15 @@
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
-	<!-- Section 5: Income Share -->
-	<div class="story-section">
+	<!-- Section 5: Income Share (Scrollytelling) -->
+	<div class="story-section income-scrolly-section">
 		<div class="section-content">
 			<div class="text-block">
 				<h2 class="section-title">More Cocoa, More Land</h2>
-				<p class="section-copy">Of your <strong>{currency.format(price)}</strong> {brand}, farmers receive only a tiny fraction. When farmers earn so little, they often need to grow more cocoa to make ends meet. The fastest way is clearing more land, which puts forests at risk.</p>
+				<p class="section-copy">Of your <strong>{currency.format(price)}</strong> {brand}, farmers receive only a tiny fraction. Scroll to see where your money really goes.</p>
 			</div>
-			<div class="viz-container income-container">
-				<ChocolateIncomeShare price={price} />
-			</div>
-			<div class="scroll-cue">
-				<span class="scroll-text">Hover to see breakdown</span>
-				<div class="scroll-arrow">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 19V5M5 12l7-7 7 7"/>
-					</svg>
-				</div>
+			<div class="viz-container income-container-scrolly">
+				<ChocolateIncomeShareScrolly price={price} />
 			</div>
 		</div>
 	</div>
@@ -490,8 +482,18 @@
 		min-height: 700px;
 	}
 
-	.income-container {
-		min-height: 500px;
+	.income-container-scrolly {
+		min-height: auto;
+		width: 100%;
+	}
+
+	.income-scrolly-section {
+		min-height: auto;
+		padding-bottom: 0;
+	}
+
+	.income-scrolly-section .section-content {
+		max-width: 1200px;
 	}
 
 	.environment-container {
