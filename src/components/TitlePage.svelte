@@ -1,4 +1,6 @@
 <script>
+	import { base } from "$app/paths";
+
 	function scrollToIntro() {
 		const intro = document.querySelector('.intro');
 		if (intro) {
@@ -11,7 +13,7 @@
 	<div class="sticky-viz">
 		<section class="title-page">
 			<div class="homepage-image">
-				<img src="/assets/titlepage.svg" alt="Bean to Bar" />
+				<img src="{base}/assets/titlepage.svg" alt="Bean to Bar" />
 			</div>
 
 			<!-- Quote overlay (replaces original MS project quote) -->

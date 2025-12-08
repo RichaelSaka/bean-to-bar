@@ -237,8 +237,9 @@
   }
 
   .group-count {
-    font-size: 0.75rem;
-    color: rgba(255, 248, 240, 0.5);
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1rem;
+    color: rgba(255, 248, 240, 0.9);
     letter-spacing: 0.05em;
     font-weight: 400;
   }

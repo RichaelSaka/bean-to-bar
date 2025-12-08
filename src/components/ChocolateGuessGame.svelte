@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { fade, scale } from "svelte/transition";
   import { elasticOut } from "svelte/easing";
+  import { base } from "$app/paths";
 
   // Game state
   let userGuess = $state(0);
@@ -64,7 +65,7 @@
           disabled={hasRevealed || userGuess >= MAX_GUESS}
         >
           <img
-            src="/assets/cocoapod.png"
+            src="{base}/assets/cocoapod.png"
             alt="Cocoa pod"
             class="pod-image"
             class:bounce={isAnimating}
@@ -91,7 +92,7 @@
               class="pod-item"
               in:scale={{ duration: 300, easing: elasticOut, start: 0.3 }}
             >
-              <img src="/assets/cocoapod.png" alt="" />
+              <img src="{base}/assets/cocoapod.png" alt="" />
             </div>
           {/each}
         </div>
