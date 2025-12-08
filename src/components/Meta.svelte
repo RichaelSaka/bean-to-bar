@@ -1,7 +1,7 @@
 <script>
 	let {
-		title = "Title TK",
-		description = "Description TK",
+		title = "Bean to Bar",
+		description = "Exploring the hidden costs of chocolate production.",
 		url = "https://pudding.cool",
 		keywords = "",
 		preloadFont = []
