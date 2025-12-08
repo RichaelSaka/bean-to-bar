@@ -1,8 +1,11 @@
 <script>
 	import ChocolateShelf from "$components/ChocolateShelf.svelte";
 	import chocolateData from "$data/chocolate-shelf-data.json";
+	import ChocolateGuessGame from "$components/ChocolateGuessGame.svelte";
 	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
 	import CocoaProducers from "$components/CocoaProducers.svelte";
+	import CocoaProductionWaffle from "$components/CocoaProductionWaffle.svelte";
+	import CacaoBeanScrolly from "$components/CacaoBeanScrolly.svelte";
 	import ChocolateIncomeShareScrolly from "$components/ChocolateIncomeShareScrolly.svelte";
 	import GhanaTreeImpactScrolly from "$components/GhanaTreeImpactScrolly.svelte";
 
@@ -103,6 +106,11 @@
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
+	<!-- Section 2.5: Chocolate Consumption Guessing Game -->
+	<ChocolateGuessGame />
+
+	<div class="section-divider-wrap"><hr class="section-divider" /></div>
+
 	<!-- Section 3: Bean to Bar -->
 	<div class="story-section">
 		<div class="section-content">
@@ -118,7 +126,17 @@
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
-	<!-- Section 4: Cocoa Producers -->
+	<!-- Section 4: Cocoa Production Waffle Chart (Full Screen) -->
+	<CocoaProductionWaffle />
+
+	<div class="section-divider-wrap"><hr class="section-divider" /></div>
+
+	<!-- Section 5: Cacao Bean Equivalency Scrolly -->
+	<CacaoBeanScrolly />
+
+	<div class="section-divider-wrap"><hr class="section-divider" /></div>
+
+	<!-- Section 5: Cocoa Producers -->
 	<div class="story-section">
 		<div class="section-content">
 			<div class="text-block">
