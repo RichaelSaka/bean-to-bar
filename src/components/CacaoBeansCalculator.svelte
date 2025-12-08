@@ -4,10 +4,10 @@
 	const TREE_BEANS = 1200; // 1 cacao tree annual production = 1200 cacao beans
 	const POD_BEANS = 40; // 1 cacao pod = 40 cacao beans
 
-	// Grid settings - matching original exactly: size=12, groupSpacing=5, cellSpacing=1
-	const size = 12;
-	const cellSpacing = 1;
-	const groupSpacing = 5;
+	// Grid settings - larger for better visibility
+	const size = 18;
+	const cellSpacing = 2;
+	const groupSpacing = 8;
 
 	// Active mode state
 	let activeMode = $state("chocolate");
@@ -63,13 +63,11 @@
 	// Hover state
 	let hoveredBean = $state(null);
 
-	// Calculate SVG height based on mode
-	// Last bean (1199): y = 5*2 + 13*(9 + 20) = 10 + 377 = 387 + 12 (bean) + 30 (offset) = 429
-	// Last bean (499): y = 5*0 + 13*(9 + 0) = 117 + 12 + 30 = 159
-	// Last bean (39): y = 5*0 + 13*(3 + 0) = 39 + 12 + 30 = 81
-	// Add padding for explanation text
+	// Calculate SVG height based on mode (adjusted for larger grid)
+	// With size=18, cellSpacing=2, groupSpacing=8
+	// Each cell = 20px, groups add 8px spacing
 	let svgHeight = $derived(
-		activeMode === "tree" ? 530 : activeMode === "chocolate" ? 250 : 180
+		activeMode === "tree" ? 850 : activeMode === "chocolate" ? 420 : 250
 	);
 </script>
 
@@ -102,21 +100,21 @@
 		</div>
 
 		<!-- SVG with dynamic viewBox based on mode -->
-		<svg class="calculator-svg" viewBox="0 0 1100 {svgHeight}" preserveAspectRatio="xMinYMin meet">
+		<svg class="calculator-svg" viewBox="0 0 1500 {svgHeight}" preserveAspectRatio="xMinYMin meet">
 			<!-- Formula title text -->
 			<text x="20" y="45" class="formula-title">{title}</text>
 			{#if subtitle}
-				<text x="20" y="75" class="formula-subtitle">{subtitle}</text>
+				<text x="20" y="78" class="formula-subtitle">{subtitle}</text>
 			{/if}
 
-			<!-- Equals sign -->
-			<text x="270" y="45" class="formula-equals">=</text>
+			<!-- Equals sign - positioned after the longest text -->
+			<text x={subtitle ? "360" : "380"} y="45" class="formula-equals">=</text>
 
 			<!-- Bean count label -->
-			<text x="320" y="20" class="bean-label">{beanLabel}</text>
+			<text x={subtitle ? "410" : "430"} y="22" class="bean-label">{beanLabel}</text>
 
 			<!-- Beans grid -->
-			<g transform="translate(320, 30)">
+			<g transform="translate({subtitle ? 410 : 430}, 40)">
 				{#each beans as bean (bean.id)}
 					<rect
 						x={bean.x}
@@ -150,11 +148,7 @@
 
 	<div class="floating-explanation">
 		<p>
-			A healthy cacao tree can produce approximately 30 cocoa pods a year in average, and inside
-			each pod typically there are 40 cocoa beans. It's inevitable that there will be some losses
-			at each stage so roughly <b>1 pound of chocolate</b> needs <b>500 cocoa beans</b> as raw
-			materials. In a nutshell a whole year's yield from <b>one tree</b> can make
-			<b>2 pounds of chocolate</b>.
+A cacao tree produces about 30 pods a year, and each pod holds roughly 40 beans. After natural losses during processing, it takes about <b>400 cocoa beans</b> to make <b>1 pound of chocolate</b>. In the end, an entire year of harvest from <b>one tree</b> makes only about <b>2 pounds of chocolate</b>.
 		</p>
 	</div>
 </section>
@@ -182,8 +176,8 @@
 		font-family: "Courier New", courier-std, monospace;
 		font-style: normal;
 		font-weight: 800;
-		font-size: 14px;
-		margin: 0 0 20px 0;
+		font-size: 18px;
+		margin: 0 0 30px 0;
 	}
 
 	.button-group {
@@ -195,14 +189,14 @@
 
 	.calc-button {
 		border: 1px solid rgba(255, 248, 240, 0.6);
-		border-radius: 20px;
-		font-size: 12px;
-		font-weight: 400;
+		border-radius: 25px;
+		font-size: 14px;
+		font-weight: 500;
 		font-family: "Courier New", courier, monospace;
 		color: rgba(255, 248, 240, 0.85);
 		background: none;
-		width: 150px;
-		padding: 10px;
+		width: 180px;
+		padding: 14px 20px;
 		text-align: center;
 		cursor: pointer;
 		transition: all 0.2s ease;
@@ -226,29 +220,29 @@
 	}
 
 	.formula-title {
-		font-family: "gopher", sans-serif;
-		font-size: 24px;
+		font-family: "Courier New", courier-std, monospace;
+		font-size: 28px;
 		font-weight: 800;
 		fill: rgba(255, 248, 240, 0.96);
 	}
 
 	.formula-subtitle {
-		font-family: "gopher", sans-serif;
-		font-size: 24px;
+		font-family: "Courier New", courier-std, monospace;
+		font-size: 28px;
 		font-weight: 800;
 		fill: rgba(255, 248, 240, 0.96);
 	}
 
 	.formula-equals {
-		font-family: "gopher", sans-serif;
-		font-size: 24px;
+		font-family: "Courier New", courier-std, monospace;
+		font-size: 28px;
 		font-weight: 800;
 		fill: rgba(225, 176, 88, 1);
 	}
 
 	.bean-label {
 		font-family: "Courier New", courier, monospace;
-		font-size: 14px;
+		font-size: 20px;
 		font-weight: 800;
 		fill: rgba(255, 248, 240, 0.85);
 	}
@@ -266,7 +260,7 @@
 
 	.explanation-text {
 		font-family: "Courier New", courier, monospace;
-		font-size: 10px;
+		font-size: 14px;
 		font-weight: 800;
 		fill: rgba(255, 248, 240, 0.5);
 	}

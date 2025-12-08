@@ -1,7 +1,10 @@
 <script>
 	import Scrolly from "$components/helpers/Scrolly.svelte";
+	import { onMount } from "svelte";
 
 	let currentStep = $state(0);
+	let sectionInView = $state(false);
+	let sectionEl = $state(null);
 
 	const steps = [
 		{
@@ -81,9 +84,28 @@
 	let currentImage = $derived(steps[currentStep]?.src || steps[0].src);
 	let currentIrlImage = $derived(steps[currentStep]?.irlSrc || steps[0].irlSrc);
 	let showIrl = $state(false);
+
+	onMount(() => {
+		if (!sectionEl) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					sectionInView = entry.isIntersecting;
+				});
+			},
+			{ threshold: 0.1 }
+		);
+
+		observer.observe(sectionEl);
+
+		return () => {
+			observer.disconnect();
+		};
+	});
 </script>
 
-<section class="bean-to-bar-scrolly">
+<section class="bean-to-bar-scrolly" bind:this={sectionEl}>
 	<div class="scrolly-container">
 		<!-- Sticky visualization -->
 		<div class="sticky-viz">
@@ -136,11 +158,13 @@
 		</div>
 	</div>
 
-	<!-- Progress indicator -->
-	<div class="progress-bar">
-		<div class="progress-fill" style="width: {((currentStep + 1) / steps.length) * 100}%"></div>
-	</div>
-	<div class="progress-text">Step {currentStep + 1} of {steps.length}</div>
+	<!-- Progress indicator (only visible when section is in view) -->
+	{#if sectionInView}
+		<div class="progress-bar">
+			<div class="progress-fill" style="width: {((currentStep + 1) / steps.length) * 100}%"></div>
+		</div>
+		<div class="progress-text">Step {currentStep + 1} of {steps.length}</div>
+	{/if}
 </section>
 
 <style>

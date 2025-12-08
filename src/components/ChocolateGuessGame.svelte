@@ -135,7 +135,7 @@
 
 <style>
   .guess-game {
-    background: #1a1a1a;
+    background: #000000;
     min-height: 100vh;
     display: flex;
     align-items: center;

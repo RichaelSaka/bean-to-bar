@@ -43,7 +43,6 @@
 	.company-section-empty {
 		padding: 5rem 1.5rem 6rem;
 		background: none;
-		color: rgba(255, 248, 240, 0.94);
 		min-height: 60vh;
 		display: flex;
 		align-items: center;
@@ -53,31 +52,36 @@
 	}
 
 	.empty-state {
-		max-width: 560px;
+		max-width: 520px;
 		width: 100%;
 	}
 
 	.company-card {
-		background: rgba(10, 6, 4, 0.96);
-		border-radius: 4px;
-		border: 1px solid rgba(255, 224, 189, 0.35);
-		padding: 1.75rem 1.75rem 1.5rem;
-		box-shadow: 0 20px 50px rgba(5, 2, 1, 0.7);
+		background: #f5e6d3;
+		border-radius: 0;
+		border: none;
+		padding: 25px 30px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 		text-align: center;
 	}
 
 	.company__eyebrow {
-		font-size: 0.8rem;
-		letter-spacing: 0.14em;
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: rgba(255, 224, 189, 0.8);
-		margin-bottom: 0.5rem;
+		color: #1a1a1a;
+		margin: 0 0 12px 0;
 	}
 
 	.company__body {
 		margin: 0;
-		font-size: 0.95rem;
-		line-height: 1.6;
-		color: rgba(255, 245, 234, 0.9);
+		font-family: "gopher", Georgia, serif;
+		font-size: 1.25rem;
+		font-weight: 700;
+		font-style: italic;
+		line-height: 1.4;
+		color: #1a1a1a;
 	}
 </style>

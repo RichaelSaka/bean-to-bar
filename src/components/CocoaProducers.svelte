@@ -143,7 +143,7 @@
     { id: "cluster", layout: "cluster", headline: "WHERE DOES CHOCOLATE COME FROM?", copy: "Before you take your next bite, consider the supply chain. Every circle is a country, sized by its cocoa harvest in 2023.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
     { id: "reveal", layout: "highlight", headline: "TWO FARMS FEED THE WORLD.", copy: "<strong>Côte d'Ivoire</strong> and <strong>Ghana</strong> account for well over half of global cocoa.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
     { id: "continent", layout: "continent", headline: "AFRICA CARRIES THE HARVEST.", copy: "When we regroup by continent, <strong>Africa's cluster dwarfs the rest</strong>.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
-    { id: "map", layout: "map", headline: "EXPLORE THE GLOBAL COCOA MAP.", copy: "Drag the slider to watch production shift from 1963 to 2023. Click countries to see data.", year: CONFIG.START_YEAR, showSlider: true, vizType: "map" }
+    { id: "map", layout: "map", headline: "EXPLORE THE GLOBAL COCOA MAP.", copy: "Drag the slider to watch production shift from 1963 to 2023. <strong>Click countries to see data.</strong>", year: CONFIG.START_YEAR, showSlider: true, vizType: "map" }
   ];
 
   function animateBigNumber(targetValue: number) {
@@ -337,11 +337,11 @@
     const data = mapCocoaData[dataName]?.[mapCurrentYear];
     if (!data?.Production) { mapInfoPanel?.classList.remove("active"); return; }
     if (countryFlagEl) countryFlagEl.textContent = countryFlags[dataName] || countryFlags[displayName] || "🌍";
-    if (countryNameEl) countryNameEl.textContent = displayName || dataName;
+    if (countryNameEl) countryNameEl.textContent = (displayName || dataName).toUpperCase();
     if (dataGrid) dataGrid.innerHTML = `
-      <div class="data-item"><div class="data-label">Production</div><div class="data-value">${(data.Production * TONNES_TO_US_TONS).toLocaleString('en-US', {maximumFractionDigits: 0})} tons</div></div>
-      ${data['Area harvested'] ? `<div class="data-item"><div class="data-label">Area</div><div class="data-value">${(data['Area harvested'] * HECTARES_TO_ACRES).toLocaleString('en-US', {maximumFractionDigits: 0})} acres</div></div>` : ''}
-      ${data.Yield ? `<div class="data-item"><div class="data-label">Yield</div><div class="data-value">${(data.Yield * KG_PER_HA_TO_LBS_PER_ACRE).toLocaleString('en-US', {maximumFractionDigits: 0})} lbs/acre</div></div>` : ''}
+      <div class="data-item"><div class="data-label">PRODUCTION</div><div class="data-value">${(data.Production * TONNES_TO_US_TONS).toLocaleString('en-US', {maximumFractionDigits: 0})} tons</div></div>
+      ${data['Area harvested'] ? `<div class="data-item"><div class="data-label">AREA</div><div class="data-value">${(data['Area harvested'] * HECTARES_TO_ACRES).toLocaleString('en-US', {maximumFractionDigits: 0})} acres</div></div>` : ''}
+      ${data.Yield ? `<div class="data-item"><div class="data-label">YIELD</div><div class="data-value">${(data.Yield * KG_PER_HA_TO_LBS_PER_ACRE).toLocaleString('en-US', {maximumFractionDigits: 0})} lbs/acre</div></div>` : ''}
     `;
     mapInfoPanel?.classList.add("active");
   }
@@ -498,12 +498,12 @@
   .cocoa-producers-wrapper { width: 100%; position: relative; }
   .hidden { display: none !important; }
   .big-number-container { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-  .big-number { font-family: "gopher", sans-serif; font-size: 36px; font-weight: 800; color: tomato; }
+  .big-number { font-family: "Courier New", courier-std, monospace; font-size: 36px; font-weight: 800; color: tomato; }
   .subtitle { font-family: "Courier New", courier-std, monospace; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.6; }
   .subtitle.secondary { color: #000000; }
   .story { padding: 0 clamp(1.5rem, 5vw, 5rem); min-height: 100vh; }
   .story-layout { position: relative; display: flex; gap: clamp(2rem, 4vw, 3rem); max-width: 1800px; margin: 0 auto; }
-  .viz-shell { position: sticky; top: clamp(60px, 8vh, 100px); width: clamp(400px, 55%, 700px); min-height: clamp(400px, 50vh, 560px); max-height: 90vh; flex-shrink: 0; background: rgba(18,18,18,0.85); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(18px); box-shadow: 0 24px 60px rgba(0,0,0,0.45); overflow: hidden; }
+  .viz-shell { position: sticky; top: clamp(60px, 8vh, 100px); width: clamp(400px, 55%, 700px); min-height: clamp(400px, 50vh, 560px); max-height: 90vh; flex-shrink: 0; background: transparent; border: none; border-radius: 0; backdrop-filter: none; box-shadow: none; overflow: visible; }
   .viz-content { width: 100%; height: 100%; }
   .map-viz { position: relative; cursor: grab; }
   .map-container { width: 100%; height: 100%; overflow: hidden; }
@@ -512,41 +512,43 @@
   :global(.country:hover) { fill: #444; }
   :global(.bubble) { transition: all 0.3s; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
   :global(.bubble:hover) { filter: drop-shadow(0 4px 16px rgba(245,197,83,0.6)); }
-  .map-controls { position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100; }
-  .control-btn { width: 50px; height: 50px; background: rgba(28,17,13,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #b8864f; cursor: pointer; font-size: 24px; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
-  .control-btn:hover { background: rgba(164,115,0,0.9); color: #fff; transform: scale(1.05); }
-  .map-year-slider { position: absolute; top: 20px; left: 20px; background: rgba(28,17,13,0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; max-width: 300px; z-index: 100; }
-  .map-year-slider input { width: 100%; margin: 10px 0; -webkit-appearance: none; height: 8px; border-radius: 999px; background: linear-gradient(90deg, #6b5321, #e1b058); cursor: pointer; }
-  .map-year-slider input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid #a47300; cursor: pointer; }
-  .map-year-display { text-align: center; font-size: 20px; font-weight: 700; color: #e1b058; }
-  .map-info-panel { position: absolute; bottom: 20px; left: 20px; background: rgba(28,17,13,0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 25px; min-width: 300px; z-index: 100; display: none; }
+  .map-controls { position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+  .control-btn { width: 36px; height: 36px; background: #f5e6d3; border: none; border-radius: 0; color: #1a1a1a; cursor: pointer; font-family: "Courier New", Courier, monospace; font-size: 20px; font-weight: bold; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .control-btn:hover { background: #1a1a1a; color: #f5e6d3; }
+  .map-year-slider { position: absolute; top: 20px; left: 20px; background: #f5e6d3; border: none; border-radius: 0; padding: 20px 25px; max-width: 280px; z-index: 100; }
+  .map-year-slider input { width: 100%; margin: 12px 0 0 0; -webkit-appearance: none; height: 6px; border-radius: 0; background: #1a1a1a; cursor: pointer; }
+  .map-year-slider input::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #1a1a1a; border: 3px solid #f5e6d3; cursor: pointer; box-shadow: 0 0 0 2px #1a1a1a; }
+  .map-year-display { text-align: left; font-family: "gopher", Georgia, serif; font-size: 1.25rem; font-weight: 700; color: #1a1a1a; }
+  .map-info-panel { position: absolute; bottom: 20px; left: 20px; background: #f5e6d3; border: none; border-radius: 0; padding: 25px 30px; min-width: 320px; z-index: 100; display: none; }
   .map-info-panel:global(.active) { display: block; }
-  .info-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-  .flag { font-size: 52px; }
-  .country-name { font-size: 22px; font-weight: 800; background: linear-gradient(120deg, #e4c698, #b8864f, #704214); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-  :global(.data-grid) { display: grid; gap: 15px; }
-  :global(.data-item) { padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 3px solid #e1b058; }
-  :global(.data-label) { font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 600; }
-  :global(.data-value) { font-size: 22px; font-weight: 700; color: #e1b058; }
-  .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 28px; }
-  .map-legend { position: absolute; bottom: 20px; right: 20px; background: rgba(28,17,13,0.95); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 18px; z-index: 100; }
-  .legend-title { font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700; }
-  .legend-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; color: rgba(255,255,255,0.8); }
-  .legend-color { width: 24px; height: 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); }
+  .info-header { display: flex; align-items: center; gap: 15px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 2px solid #1a1a1a; }
+  .flag { font-size: 48px; }
+  .country-name { font-family: "gopher", Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #1a1a1a; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: unset; text-transform: uppercase; }
+  :global(.data-grid) { display: flex; flex-direction: column; gap: 12px; }
+  :global(.data-item) { padding: 12px 16px; background: #1a1a1a; border-radius: 0; border-left: none; }
+  :global(.data-label) { font-family: "Courier New", Courier, monospace; font-size: 0.7rem; text-transform: uppercase; color: rgba(255,248,240,0.7); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
+  :global(.data-value) { font-family: "gopher", Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #e1b058; }
+  .close-btn { position: absolute; top: 12px; right: 12px; background: none; border: none; color: #1a1a1a; cursor: pointer; font-size: 24px; opacity: 0.6; transition: opacity 0.2s; }
+  .close-btn:hover { opacity: 1; }
+  .map-legend { position: absolute; bottom: 20px; right: 20px; background: #f5e6d3; border: none; border-radius: 0; padding: 20px 25px; z-index: 100; }
+  .legend-title { font-family: "Courier New", Courier, monospace; font-size: 0.75rem; text-transform: uppercase; color: #1a1a1a; margin-bottom: 16px; font-weight: 700; letter-spacing: 0.05em; }
+  .legend-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-family: "Courier New", Courier, monospace; font-size: 0.85rem; color: #1a1a1a; font-weight: 500; }
+  .legend-item:last-child { margin-bottom: 0; }
+  .legend-color { width: 20px; height: 20px; border-radius: 4px; border: none; }
   .viz-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; font-size: 1.1rem; color: rgba(255,255,255,0.8); opacity: 0; transition: opacity 0.35s; z-index: 200; }
   .viz-overlay:global(.visible) { opacity: 1; }
   .narrative-scroller { flex-grow: 1; display: flex; flex-direction: column; padding-top: 40vh; padding-bottom: 50vh; gap: 0; }
-  :global(.story-panel) { padding: 20px; background: #fffaf0; display: flex; flex-direction: column; gap: 0; width: 450px; max-width: 90vw; align-self: flex-end; margin-bottom: 90vh; }
+  :global(.story-panel) { padding: 25px 30px; background: #f5e6d3; display: flex; flex-direction: column; gap: 0; width: 420px; max-width: 90vw; align-self: flex-end; margin-bottom: 90vh; }
   .intro-panel { align-items: flex-start; text-align: left; }
   :global(.step-count) { font-size: 12px; color: #000000; font-family: "Courier New", Courier, monospace; font-weight: 400; opacity: 0.6; }
   :global(.story-headline) { font-size: 15px; font-weight: 700; color: #000000; font-family: "Courier New", Courier, monospace; text-transform: uppercase; margin: 0 0 12px 0; letter-spacing: -0.01em; }
   :global(.story-copy) { font-size: 14px; color: #1a1a1a; font-family: "Courier New", Courier, monospace; font-weight: 500; line-height: 1.7; margin: 0; letter-spacing: -0.01em; }
   :global(.story-copy strong) { color: tomato; font-weight: 700; }
-  .tooltip { position: absolute; pointer-events: none; background: rgba(15,15,15,0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 0.75rem 1rem; box-shadow: 0 16px 40px rgba(0,0,0,0.45); transform: translate(-50%, -120%); min-width: 180px; z-index: 30; }
+  .tooltip { position: absolute; pointer-events: none; background: #f5e6d3; border: none; border-radius: 0; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translate(-50%, -120%); min-width: 160px; z-index: 30; }
   .tooltip.hidden { opacity: 0; visibility: hidden; }
-  .tooltip-country { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.35rem; }
-  .tooltip-production { font-size: 1rem; font-weight: 600; color: #f5c553; }
-  .tooltip-share { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+  .tooltip-country { font-family: "gopher", Georgia, serif; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.35rem; color: #1a1a1a; }
+  .tooltip-production { font-family: "Courier New", Courier, monospace; font-size: 0.85rem; font-weight: 600; color: tomato; }
+  .tooltip-share { font-family: "Courier New", Courier, monospace; font-size: 0.75rem; color: #1a1a1a; opacity: 0.7; }
   :global(.bubble-group circle) { transition: filter 0.3s, opacity 0.25s; stroke: rgba(255,255,255,0.12); stroke-width: 1.5px; }
   :global(.bubble-group circle:hover) { filter: brightness(1.15) drop-shadow(0 10px 24px rgba(0,0,0,0.55)); }
   :global(.bubble-group.muted circle) { opacity: 0.18; filter: grayscale(0.6); }

@@ -340,7 +340,7 @@
 	}
 
 	.commitment-title {
-		font-family: 'Playfair Display', 'Times New Roman', serif;
+		font-family: "gopher", Georgia, serif;
 		color: rgba(255, 248, 240, 0.96);
 		font-size: clamp(1.8rem, 4vw, 2.5rem);
 		margin: 0 0 1rem 0;

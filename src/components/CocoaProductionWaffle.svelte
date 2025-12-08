@@ -157,25 +157,28 @@
 			.attr("x", offsetX)
 			.attr("y", 40)
 			.attr("fill", "#FFFAF0")
-			.attr("font-family", "'Playfair Display', serif")
+			.attr("font-family", "'gopher', Georgia, serif")
 			.attr("font-size", "28px")
 			.attr("font-weight", "400")
+			.attr("font-style", "italic")
 			.text("Cocoa Bean Production in 2023");
 
 		svg.append("text")
 			.attr("x", offsetX)
 			.attr("y", 70)
 			.attr("fill", "#FFFAF0")
-			.attr("font-family", "monospace")
+			.attr("font-family", "'Courier New', Courier, monospace")
 			.attr("font-size", "14px")
+			.attr("font-weight", "700")
 			.text("Unit: 1,000 tons");
 
 		svg.append("text")
 			.attr("x", offsetX)
 			.attr("y", 110)
 			.attr("fill", "#FFFAF0")
-			.attr("font-family", "'Playfair Display', serif")
-			.attr("font-size", "18px")
+			.attr("font-family", "'Courier New', Courier, monospace")
+			.attr("font-size", "14px")
+			.attr("font-weight", "700")
 			.text("Total Amount:");
 
 		// Format total with commas (multiply back to actual tons)
@@ -183,10 +186,10 @@
 		svg.append("text")
 			.attr("x", offsetX)
 			.attr("y", 140)
-			.attr("fill", "#e8b962")
-			.attr("font-family", "'Playfair Display', serif")
+			.attr("fill", "tomato")
+			.attr("font-family", "'Courier New', courier-std, monospace")
 			.attr("font-size", "24px")
-			.attr("font-weight", "600")
+			.attr("font-weight", "700")
 			.text(`${totalDisplay} Tons`);
 
 		// Legend - square unit explanation
@@ -206,35 +209,28 @@
 			.attr("x", 15)
 			.attr("y", -32)
 			.attr("fill", "#FFFAF0")
+			.attr("font-family", "'Courier New', Courier, monospace")
 			.attr("font-size", "12px")
+			.attr("font-weight", "700")
 			.text("= 1,000 tons");
 
 		// Country list
 		const countryListGroup = svg.append("g")
 			.attr("transform", `translate(${offsetX + gridWidth + 40}, ${offsetY + 20})`);
 
-		// Tooltip text elements (positioned at the right edge of the waffle grid)
+		// Tooltip text elements (positioned below the Total Amount)
 		const tooltipGroup = svg.append("g")
-			.attr("transform", `translate(${offsetX + gridWidth - 140}, 145)`)
+			.attr("transform", `translate(${offsetX}, 170)`)
 			.style("opacity", 0);
 
-		const tooltipCountry = tooltipGroup.append("text")
-			.attr("class", "tooltip-country")
+		const tooltipText = tooltipGroup.append("text")
+			.attr("class", "tooltip-text")
 			.attr("x", 0)
 			.attr("y", 0)
 			.attr("fill", "#FFFAF0")
-			.attr("font-family", "'Playfair Display', serif")
-			.attr("font-size", "18px")
-			.attr("font-weight", "600")
-			.text("");
-
-		const tooltipValue = tooltipGroup.append("text")
-			.attr("class", "tooltip-value")
-			.attr("x", 0)
-			.attr("y", 24)
-			.attr("fill", "#FFFAF0")
-			.attr("font-family", "'Playfair Display', serif")
-			.attr("font-size", "16px")
+			.attr("font-family", "'Courier New', courier-std, monospace")
+			.attr("font-size", "14px")
+			.attr("font-weight", "700")
 			.text("");
 
 		countryListGroup.selectAll("text")
@@ -244,17 +240,24 @@
 			.attr("x", 0)
 			.attr("y", (d, i) => i * 18)
 			.attr("fill", "#FFFAF0")
-			.attr("font-family", "sans-serif")
+			.attr("font-family", "'Courier New', Courier, monospace")
 			.attr("font-size", "12px")
+			.attr("font-weight", "700")
 			.attr("cursor", "pointer")
 			.text(d => d.displayName)
 			.on("mouseenter", function(_, d) {
-				d3.select(this).attr("fill", "#7B3F00");
+				d3.select(this).attr("fill", "tomato");
 
-				// Show tooltip with country name and production value
+				// Show tooltip with country name and production value on one line
 				tooltipGroup.style("opacity", 1);
-				tooltipCountry.text(`${d.displayName} produced`);
-				tooltipValue.text(`${(d.tons * 1000).toLocaleString()} tons`);
+				// Clear and rebuild with tspans for different colors
+				tooltipText.text("");
+				tooltipText.append("tspan")
+					.attr("fill", "tomato")
+					.text(`${d.displayName}`);
+				tooltipText.append("tspan")
+					.attr("fill", "#FFFAF0")
+					.text(` produced ${(d.tons * 1000).toLocaleString()} tons`);
 
 				// Highlight squares from the top (index 0) up to the country's production
 				// This matches the MS-thesis behavior exactly

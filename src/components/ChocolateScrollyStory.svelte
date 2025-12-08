@@ -67,139 +67,273 @@
 		</div>
 	</div>
 
-	<!-- Section 2: Conglomerate Shelf -->
+	<!-- Section 2: Conglomerate Shelf Intro -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">One Company, Many Wrappers</h2>
+			<p class="intro-card-copy">This shelf shows all the brands owned by <strong>{conglomerate}</strong> and other major conglomerates. Different shapes and flavors, but often the same handful of corporations behind them all.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Horizontal swipe to see more shelves</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Section 2b: Conglomerate Shelf Visualization -->
 	<div class="story-section shelf-section">
-		<div class="section-content">
-			<div class="shelf-card-ms">
-				<div class="card-line"></div>
+		<div class="viz-container shelf-container">
+			<ChocolateShelf
+				data={chocolateData}
+				rows={4}
+				onhover={handleShelfHover}
+				highlightName={selectedChocolate?.name}
+				highlightParent={selectedChocolate?.parent}
+			/>
+		</div>
+	</div>
 
-				<h2 class="shelf-title">One Company, Many Wrappers</h2>
-				<p class="shelf-copy">This shelf shows all the brands owned by <strong>{conglomerate}</strong> and other major conglomerates. Different shapes and flavors, but often the same handful of corporations behind them all.</p>
+	<!-- Transition: From Ownership to Consumption -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
 
-				<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+			<h2 class="intro-card-title">A Global Appetite</h2>
+			<p class="intro-card-copy">These corporations dominate because the world <strong>loves</strong> chocolate. But how much do we actually consume? Let's find out.</p>
 
-				<p class="shelf-hint">→ <strong class="highlight">Swipe to explore</strong></p>
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
 
-				<div class="card-line bottom"></div>
-			</div>
-			<div class="viz-container shelf-container">
-				<ChocolateShelf
-					data={chocolateData}
-					rows={4}
-					onhover={handleShelfHover}
-					highlightName={selectedChocolate?.name}
-					highlightParent={selectedChocolate?.parent}
-				/>
-			</div>
+			<p class="intro-card-hint"><strong class="highlight">Test your knowledge</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
 		</div>
 	</div>
 
 	<!-- Section 2.5: Chocolate Consumption Guessing Game -->
 	<ChocolateGuessGame />
 
+	<!-- Transition: From Consumption to Production Process -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">From Bean to Bar</h2>
+			<p class="intro-card-copy">That's a lot of chocolate. But have you ever wondered how it's made? The journey from <strong>cocoa pod</strong> to <strong>chocolate bar</strong> involves nine careful steps—most of them done by hand.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Explore each step</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
 	<!-- Section 3: Bean to Bar (Scrollytelling) -->
 	<BeanToBarScrolly />
+
+	<!-- Transition: From Process to Scale -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">The Scale of Production</h2>
+			<p class="intro-card-copy">Each step requires countless cocoa beans. To meet global demand, farmers harvest <strong>millions of tons</strong> of cocoa every year. Let's explore the numbers.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">click on the buttons below to see</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
 
 	<!-- Section 3.5: Cacao Beans Calculator -->
 	<CacaoBeansCalculator />
 
+	<!-- Transition: Global Production Overview -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">Global Cocoa Production</h2>
+			<p class="intro-card-copy">In 2023, the world produced over <strong>5.5 million tons</strong> of cocoa beans. Each square in the next visualization represents <strong>1,000 tons</strong>—hover over countries to see their contribution.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Hover to explore</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
 	<!-- Section 4: Cocoa Production Waffle Chart (Full Screen) -->
 	<CocoaProductionWaffle />
 
-	<!-- Section 5: Cocoa Producers -->
-	<div class="story-section">
-		<div class="section-content">
-			<div class="text-block">
-				<h2 class="section-title">Who Produces the World's Cocoa?</h2>
-				<p class="section-copy">This visualization shows how cocoa production has shifted over time. Ghana and Côte d'Ivoire dominate the landscape and support millions of farming families.</p>
-			</div>
-			<div class="viz-container producers-container">
-				<CocoaProducers />
-			</div>
-			<div class="scroll-cue">
-				<span class="scroll-text">Tap bubbles to explore</span>
-				<div class="scroll-arrow">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="8"/>
-						<circle cx="12" cy="12" r="3"/>
-					</svg>
-				</div>
-			</div>
+	<!-- Section 5: Cocoa Producers Intro -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">Who Produces the World's Cocoa?</h2>
+			<p class="intro-card-copy">This visualization shows how cocoa production has shifted over time. <strong>Ghana</strong> and <strong>Côte d'Ivoire</strong> dominate the landscape and support millions of farming families.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Tap bubbles to explore</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
 		</div>
 	</div>
 
-	<!-- Section 5: Income Share (Scrollytelling) -->
+	<!-- Section 5b: Cocoa Producers Visualization -->
+	<div class="story-section producers-section">
+		<div class="producers-viz-full">
+			<CocoaProducers />
+		</div>
+	</div>
+
+	<!-- Section 6: Income Share Intro -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">Where Does Your Money Go?</h2>
+			<p class="intro-card-copy">Of your <strong>{currency.format(price)}</strong> {brand}, farmers receive only a tiny fraction. Scroll to see where your money really goes.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">scroll to explore</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Section 6b: Income Share Visualization -->
 	<div class="story-section income-scrolly-section">
-		<div class="section-content">
-			<div class="text-block">
-				<h2 class="section-title">More Cocoa, More Land</h2>
-				<p class="section-copy">Of your <strong>{currency.format(price)}</strong> {brand}, farmers receive only a tiny fraction. Scroll to see where your money really goes.</p>
-			</div>
-			<div class="viz-container income-container-scrolly">
-				<ChocolateIncomeShareScrolly price={price} />
-			</div>
+		<div class="income-viz-container">
+			<ChocolateIncomeShareScrolly price={price} chocolateName={brand} />
 		</div>
 	</div>
 
-	<!-- Section 6: Environmental Impact (Full-screen Scrollytelling) -->
+	<!-- Transition: Environmental Impact -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">The Cost of Cocoa</h2>
+			<p class="intro-card-copy">When farmers earn so little, they're forced to expand into forests to grow more cocoa. <strong>Ghana</strong> has lost significant tree cover as cocoa demand has grown. The environmental cost is staggering.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Scroll to see the impact</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Section 7: Environmental Impact (Full-screen Scrollytelling) -->
 	<GhanaTreeImpactScrolly />
 
-	<!-- Section 7: Company Commitment Table -->
+	<!-- Transition: Company Commitment -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<h2 class="intro-card-title">Who's Doing Better?</h2>
+			<p class="intro-card-copy">Some companies are taking steps toward <strong>ethical sourcing</strong> and <strong>fair pay</strong>. Others lag behind. See how the major chocolate brands stack up on key sustainability measures.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Click headers to sort</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Section 8: Company Commitment Table -->
 	<CompanyCommitmentTable {selectedChocolate} />
 
-	<!-- Section 8: What Can We Do -->
-	<div class="story-section what-can-we-do-section">
-		<div class="what-can-we-do-content">
-			<div class="what-can-we-do-left">
-				<p class="what-can-we-do-eyebrow">As customers what can we do?</p>
-				<h2 class="what-can-we-do-headline">Chocolate tastes sweet, but we can do our part to ensure the system behind it isn't so bitter.</h2>
-			</div>
-			<div class="what-can-we-do-right">
-				<div class="action-item">
-					<div class="action-icon">
-						<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-							<rect x="8" y="16" width="32" height="20" rx="2" />
-							<line x1="8" y1="22" x2="40" y2="22" />
-							<line x1="16" y1="16" x2="16" y2="36" stroke-dasharray="2 2" />
-							<line x1="24" y1="16" x2="24" y2="36" stroke-dasharray="2 2" />
-							<line x1="32" y1="16" x2="32" y2="36" stroke-dasharray="2 2" />
-							<line x1="4" y1="12" x2="44" y2="40" stroke-width="2" />
-						</svg>
-					</div>
-					<div class="action-text">
-						<h3 class="action-title">Say NO to Chocolate Waste</h3>
-						<p class="action-description">Treat chocolate as a precious product of months of farm labor and buy only what you'll truly eat.</p>
-					</div>
-				</div>
-				<div class="action-item">
-					<div class="action-icon">
-						<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-							<rect x="8" y="12" width="32" height="24" rx="2" />
-							<line x1="8" y1="20" x2="40" y2="20" />
-							<path d="M16 28h16M16 32h10" />
-							<circle cx="36" cy="16" r="8" fill="none" />
-							<path d="M33 16l2 2 4-4" />
-						</svg>
-					</div>
-					<div class="action-text">
-						<h3 class="action-title">Pay Attention to Cocoa Sources</h3>
-						<p class="action-description">Check where your cocoa comes from and choose brands that are transparent and committed to fair pay for farmers.</p>
-					</div>
-				</div>
-				<div class="action-item">
-					<div class="action-icon">
-						<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-							<circle cx="24" cy="24" r="16" />
-							<path d="M24 16v8l6 4" />
-							<path d="M36 12l4-4M12 12l-4-4M36 36l4 4M12 36l-4 4" />
-						</svg>
-					</div>
-					<div class="action-text">
-						<h3 class="action-title">Share This Information</h3>
-						<p class="action-description">Spread what you've learned so more people understand the true cost of chocolate and can make informed choices.</p>
-					</div>
-				</div>
-			</div>
+	<!-- Section 8: What Can We Do - Intro -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<p class="intro-card-eyebrow">As customers what can we do?</p>
+			<h2 class="intro-card-title">Chocolate tastes sweet, but we can do our part to ensure the system behind it isn't so bitter.</h2>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			<p class="intro-card-hint"><strong class="highlight">Here are three things you can do</strong></p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Action 1: Say NO to Chocolate Waste -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<p class="intro-card-step">01</p>
+			<h2 class="intro-card-title">Say NO to Chocolate Waste</h2>
+			<p class="intro-card-copy">Treat chocolate as a precious product of months of farm labor and buy only what you'll truly eat.</p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Action 2: Pay Attention to Cocoa Sources -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<p class="intro-card-step">02</p>
+			<h2 class="intro-card-title">Pay Attention to Cocoa Sources</h2>
+			<p class="intro-card-copy">Check where your cocoa comes from and choose brands that are transparent and committed to fair pay for farmers.</p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(scroll to continue)</p>
+		</div>
+	</div>
+
+	<!-- Action 3: Share This Information -->
+	<div class="story-section intro-card-section">
+		<div class="intro-card-ms">
+			<div class="card-line"></div>
+
+			<p class="intro-card-step">03</p>
+			<h2 class="intro-card-title">Share This Information</h2>
+			<p class="intro-card-copy">Spread what you've learned so more people understand the true cost of chocolate and can make informed choices.</p>
+
+			<div class="card-line bottom"></div>
+
+			<p class="scroll-hint-ms">(end of story)</p>
 		</div>
 	</div>
 
@@ -208,6 +342,9 @@
 		<div class="credits-content">
 			<div class="credits-left">
 				<p class="credits-about"><strong>Bean to Bar</strong> was created by Nhaomi Lartey, Winifred Ofori-Manu, and Richael Saka for CS 1710 at Harvard University.</p>
+
+				<h3 class="credits-heading">Acknowledgements</h3>
+				<p class="credits-text">Special thanks to <strong>Professor Waldo</strong>, our wonderful teaching staff, and our TF <strong>Richard</strong> for their guidance and support throughout this project.</p>
 
 				<div class="credits-divider">- - - - - - - - - - - - - - - - - - -</div>
 
@@ -304,13 +441,14 @@
 	.what-can-we-do-eyebrow {
 		font-family: 'Courier New', courier-std, monospace;
 		font-size: 0.85rem;
+		font-weight: 700;
 		color: rgba(255, 248, 240, 0.8);
 		margin: 0 0 1.5rem 0;
 		letter-spacing: 0.02em;
 	}
 
 	.what-can-we-do-headline {
-		font-family: 'Playfair Display', 'Times New Roman', serif;
+		font-family: "gopher", Georgia, serif;
 		font-size: clamp(2rem, 4vw, 3.5rem);
 		font-weight: 700;
 		color: #ffffff;
@@ -345,7 +483,7 @@
 	}
 
 	.action-title {
-		font-family: 'Playfair Display', 'Times New Roman', serif;
+		font-family: "gopher", Georgia, serif;
 		font-size: 1.25rem;
 		font-weight: 600;
 		color: #ffffff;
@@ -356,6 +494,7 @@
 	.action-description {
 		font-family: 'Courier New', courier-std, monospace;
 		font-size: 0.85rem;
+		font-weight: 700;
 		color: rgba(255, 248, 240, 0.75);
 		line-height: 1.7;
 		margin: 0;
@@ -512,22 +651,108 @@
 		overflow: hidden;
 	}
 
-	.producers-container {
-		min-height: 700px;
-	}
-
-	.income-container-scrolly {
-		min-height: auto;
-		width: 100%;
-	}
-
+	/* Income scrolly section - visualization only */
 	.income-scrolly-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2rem;
 		min-height: auto;
-		padding-bottom: 0;
 	}
 
-	.income-scrolly-section .section-content {
+	.income-viz-container {
+		width: 100%;
 		max-width: 1200px;
+	}
+
+	@media (max-width: 600px) {
+		.income-scrolly-section {
+			padding: 1rem;
+		}
+	}
+
+	/* Generic intro card section - full page cards before visualizations */
+	.intro-card-section {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4rem 2rem;
+	}
+
+	.intro-card-ms {
+		max-width: 520px;
+		margin: 0 auto;
+		padding: 25px 30px;
+		background: #f5e6d3;
+		text-align: left;
+	}
+
+	.intro-card-title {
+		font-family: "gopher", Georgia, serif;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0 0 12px 0;
+		line-height: 1.2;
+	}
+
+	.intro-card-copy {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.9rem;
+		font-weight: 500;
+		line-height: 1.6;
+		margin: 0;
+		color: #1a1a1a;
+	}
+
+	.intro-card-copy strong {
+		font-weight: 700;
+		color: tomato;
+	}
+
+	.intro-card-hint {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: #1a1a1a;
+		margin: 0;
+	}
+
+	.intro-card-hint .highlight {
+		color: tomato;
+	}
+
+	.intro-card-eyebrow {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0 0 1rem 0;
+		letter-spacing: 0.02em;
+	}
+
+	.intro-card-step {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: tomato;
+		margin: 0 0 0.5rem 0;
+		letter-spacing: 0.05em;
+	}
+
+	@media (max-width: 600px) {
+		.intro-card-section {
+			padding: 2rem 1rem;
+		}
+
+		.intro-card-ms {
+			padding: 20px;
+		}
+
+		.intro-card-title {
+			font-size: 1.25rem;
+		}
 	}
 
 	/* MS Project style ownership card */
@@ -673,107 +898,34 @@
 		}
 	}
 
-	/* MS Project style shelf card */
-	.shelf-card-ms {
-		max-width: 520px;
-		margin: 0 auto 2rem auto;
-		padding: 25px 30px;
-		background: #f5e6d3;
-		text-align: left;
+	/* Shelf section - visualization only */
+	.shelf-section {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	.shelf-title {
-		font-family: "gopher", Georgia, serif;
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: #1a1a1a;
-		margin: 0 0 12px 0;
-		line-height: 1.2;
-	}
-
-	.shelf-copy {
-		font-family: "Courier New", Courier, monospace;
-		font-size: 0.9rem;
-		font-weight: 500;
-		line-height: 1.6;
-		margin: 0;
-		color: #1a1a1a;
-	}
-
-	.shelf-copy strong {
-		font-weight: 700;
-		color: tomato;
-	}
-
-	.shelf-hint {
-		font-family: "Courier New", Courier, monospace;
-		font-size: 0.85rem;
-		font-weight: 500;
-		color: #1a1a1a;
-		margin: 0;
-	}
-
-	.shelf-hint .highlight {
-		color: tomato;
-	}
-
-	@media (max-width: 600px) {
-		.shelf-card-ms {
-			padding: 20px;
-		}
-	}
-
-	/* Scroll cues */
-	.scroll-cue {
+	/* Producers section - visualization only */
+	.producers-section {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.5rem;
-		margin-top: 2rem;
-		animation: bounce 2s infinite;
+		padding: 2rem;
 	}
 
-	.scroll-text {
-		color: rgba(255, 248, 240, 0.6);
-		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
+	.producers-viz-full {
+		width: 100%;
+		min-height: 700px;
 	}
 
-	.scroll-arrow {
-		color: rgba(225, 176, 88, 0.7);
-	}
-
-	.scroll-arrow.horizontal {
-		animation: swipe 2s infinite;
-	}
-
-	.scroll-cue.cue-above {
-		margin-top: 0;
-		margin-bottom: 1rem;
-	}
-
-	@keyframes bounce {
-		0%, 20%, 50%, 80%, 100% {
-			transform: translateY(0);
+	@media (max-width: 600px) {
+		.producers-section {
+			padding: 1rem;
 		}
-		40% {
-			transform: translateY(8px);
-		}
-		60% {
-			transform: translateY(4px);
-		}
-	}
 
-	@keyframes swipe {
-		0%, 20%, 50%, 80%, 100% {
-			transform: translateX(0);
-		}
-		40% {
-			transform: translateX(8px);
-		}
-		60% {
-			transform: translateX(4px);
+		.producers-viz-full {
+			min-height: 500px;
 		}
 	}
 
@@ -793,10 +945,6 @@
 
 		.shelf-container {
 			min-height: 400px;
-		}
-
-		.producers-container {
-			min-height: 500px;
 		}
 	}
 </style>

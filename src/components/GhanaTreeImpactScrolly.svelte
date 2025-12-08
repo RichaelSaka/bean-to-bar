@@ -600,7 +600,7 @@
     top: 0;
     width: 100%;
     height: 100vh;
-    background: #1a0f0a;
+    background: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -674,19 +674,19 @@
     filter: drop-shadow(0 2px 8px rgba(143, 188, 143, 0.7));
   }
 
-  /* Labels */
+  /* Labels - MS Project style */
   .value-label {
     fill: rgba(255, 248, 240, 0.95);
     font-size: 14px;
     font-weight: 700;
-    font-family: var(--sans);
+    font-family: "Courier New", Courier, monospace;
   }
 
   .cumulative-label {
     fill: rgba(255, 248, 240, 0.95);
     font-size: 14px;
     font-weight: 700;
-    font-family: var(--sans);
+    font-family: "Courier New", Courier, monospace;
     transition: x 0.8s cubic-bezier(0.4, 0, 0.2, 1),
                 y 0.8s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.4s ease;
@@ -694,34 +694,35 @@
 
   .axis-label {
     fill: rgba(255, 248, 240, 0.8);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    font-family: var(--sans);
+    font-family: "Courier New", Courier, monospace;
     transition: opacity 0.5s ease;
   }
 
   .chart-title {
     fill: rgba(255, 248, 240, 0.95);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    font-family: var(--serif);
+    font-family: "gopher", Georgia, serif;
   }
 
   .mode-indicator {
-    fill: rgba(255, 248, 240, 0.6);
-    font-size: 12px;
-    font-weight: 500;
-    font-family: var(--sans);
+    fill: rgba(255, 248, 240, 0.5);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: "Courier New", Courier, monospace;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     transition: opacity 0.5s ease;
   }
 
-  /* Axes styling */
+  /* Axes styling - MS Project style */
   :global(#ghana-chart-svg .x-axis text),
   :global(#ghana-chart-svg .y-axis text) {
-    font-family: var(--sans);
-    font-size: 12px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+    font-weight: 500;
     fill: rgba(255, 248, 240, 0.7);
     transition: fill 0.4s ease, opacity 0.4s ease;
   }
@@ -751,15 +752,15 @@
     opacity: 0;
   }
 
-  /* Scroll steps - floating cards on the right */
+  /* Scroll steps - MS Project style cards */
   .step {
-    width: 450px;
+    width: 420px;
     max-width: 90vw;
     margin-left: auto;
     margin-right: 2rem;
     margin-bottom: 90vh;
-    padding: 20px;
-    background: #fffaf0;
+    padding: 25px 30px;
+    background: #f5e6d3;
     opacity: 0.4;
     transition: opacity 0.6s ease;
     z-index: 100;
@@ -770,14 +771,13 @@
   }
 
   .step-title {
-    color: #000000;
-    font-family: "Courier New", Courier, monospace;
+    color: #1a1a1a;
+    font-family: "gopher", Georgia, serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 1.25rem;
     margin: 0 0 12px 0;
     line-height: 1.3;
-    letter-spacing: -0.01em;
   }
 
   .step-text {
@@ -785,15 +785,14 @@
     font-family: "Courier New", Courier, monospace;
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 0.9rem;
     line-height: 1.7;
     margin: 0;
-    letter-spacing: -0.01em;
   }
 
   :global(.step-text strong) {
     color: tomato;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   /* First step needs top margin to push it down */
@@ -842,57 +841,58 @@
     }
   }
 
-  /* Tooltip styles */
+  /* Tooltip styles - MS Project style */
   .tooltip {
     position: absolute;
-    background: rgba(10, 6, 4, 0.95);
-    border: 1px solid rgba(255, 224, 189, 0.4);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
+    background: #f5e6d3;
+    border: none;
+    border-radius: 0;
+    padding: 20px 25px;
     pointer-events: none;
     z-index: 200;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    min-width: 180px;
-    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
   }
 
   .tooltip-year {
-    font-family: var(--serif);
-    font-size: 1.1rem;
+    font-family: "gopher", Georgia, serif;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #f4c96b;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 224, 189, 0.2);
-    padding-bottom: 0.4rem;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 12px;
   }
 
   .tooltip-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.3rem;
+    align-items: baseline;
+    margin-bottom: 8px;
   }
 
   .tooltip-label {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    color: rgba(255, 248, 240, 0.7);
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.8rem;
+    color: #1a1a1a;
+    font-weight: 500;
   }
 
   .tooltip-value {
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgba(255, 248, 240, 0.95);
+    font-family: "gopher", Georgia, serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
   }
 
   .tooltip-context {
-    font-family: var(--sans);
+    font-family: "Courier New", Courier, monospace;
     font-size: 0.8rem;
-    color: rgba(143, 188, 143, 0.9);
-    margin-top: 0.5rem;
-    padding-top: 0.4rem;
-    border-top: 1px solid rgba(255, 224, 189, 0.15);
+    color: tomato;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #1a1a1a;
     font-style: italic;
+    font-weight: 600;
   }
 </style>

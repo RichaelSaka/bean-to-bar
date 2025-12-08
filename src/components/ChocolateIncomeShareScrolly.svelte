@@ -5,8 +5,8 @@
   let container: HTMLDivElement | null = null;
   let svgContainer: HTMLDivElement | null = null;
 
-  // Price of the chosen chocolate bar in dollars
-  let { price = 1 } = $props();
+  // Price of the chosen chocolate bar in dollars and name
+  let { price = 1, chocolateName = "bar" } = $props();
 
   // Current scroll step (0-indexed)
   let currentStep = $state(0);
@@ -47,8 +47,8 @@
       highlight: "middlemen"
     },
     {
-      title: "Farmers Get the Smallest Piece",
-      description: "Cocoa farmers receive only 6.6% of the final price. They do the hardest work—growing, harvesting, fermenting—yet earn the least.",
+      title: "Farmers make a barely liveable wage",
+      description: "Cocoa farmers receive only 6.6% of the final price. They do the back breaking work, growing, harvesting, fermenting, yet earn pennies a day for this work.",
       highlight: "farmers"
     },
     {
@@ -184,21 +184,23 @@
       return w < 80 || h < 40;
     };
 
-    // Tooltip
+    // Tooltip - MS Project style
     tooltip = rootSelection
       .append("div")
       .attr("class", "income-tooltip")
       .style("position", "fixed")
       .style("pointer-events", "none")
       .style("opacity", "0")
-      .style("padding", "0.5rem 0.75rem")
-      .style("background", "rgba(15, 8, 4, 0.96)")
-      .style("border-radius", "4px")
-      .style("border", "1px solid rgba(255, 224, 189, 0.6)")
-      .style("color", "#fdf5e6")
-      .style("font-size", "0.8rem")
-      .style("box-shadow", "0 8px 20px rgba(0, 0, 0, 0.6)")
-      .style("max-width", "260px")
+      .style("padding", "15px 20px")
+      .style("background", "#f5e6d3")
+      .style("border-radius", "0")
+      .style("border", "none")
+      .style("color", "#1a1a1a")
+      .style("font-family", "'Courier New', Courier, monospace")
+      .style("font-size", "0.85rem")
+      .style("font-weight", "700")
+      .style("box-shadow", "0 8px 32px rgba(0, 0, 0, 0.4)")
+      .style("max-width", "280px")
       .style("z-index", "999");
 
     // Base rectangles
@@ -226,15 +228,17 @@
       .attr("opacity", 0.55)
       .style("transition", "opacity 0.8s ease");
 
-    // Labels
+    // Labels - MS Project style
     nodes
       .append("text")
       .attr("class", "chunk-label-name")
-      .attr("x", 8)
-      .attr("y", 18)
-      .attr("fill", "#fdf1dd")
-      .attr("font-size", 11)
-      .attr("font-weight", 600)
+      .attr("x", 10)
+      .attr("y", 22)
+      .attr("fill", "#f5e6d3")
+      .attr("font-family", "'gopher', Georgia, serif")
+      .attr("font-size", 13)
+      .attr("font-weight", 700)
+      .attr("font-style", "italic")
       .style("pointer-events", "none")
       .style("transition", "opacity 0.4s ease")
       .text((d: any) => (isSmallRect(d) ? "" : d.data.name));
@@ -242,10 +246,12 @@
     nodes
       .append("text")
       .attr("class", "chunk-label-value")
-      .attr("x", 8)
-      .attr("y", (d: any) => (isSmallRect(d) ? 18 : 34))
-      .attr("fill", "#fdf5e6")
-      .attr("font-size", 11)
+      .attr("x", 10)
+      .attr("y", (d: any) => (isSmallRect(d) ? 20 : 40))
+      .attr("fill", "#f5e6d3")
+      .attr("font-family", "'Courier New', Courier, monospace")
+      .attr("font-size", 12)
+      .attr("font-weight", 700)
       .style("pointer-events", "none")
       .style("transition", "opacity 0.4s ease")
       .text((d: any) => (isSmallRect(d) ? "" : currency.format(d.data.value)));
@@ -259,14 +265,14 @@
 
         let extra = "";
         if (name === "Farmers") {
-          extra = " Farmers grow the cocoa but receive only 6.6% of the final bar.";
+          extra = "<br/><span style='color: #1a1a1a; font-weight: 500;'>Farmers grow the cocoa but receive only 6.6% of the final bar.</span>";
         }
 
         tooltip!
           .style("opacity", "1")
           .html(
-            `<strong>${name}</strong>  ${pct}% of the final chocolate price (${dollars})` +
-              (extra ? `<br/><span>${extra}</span>` : "")
+            `<span style="color: tomato; font-weight: 700;">${name}</span> ${pct}% of the final chocolate price (${dollars})` +
+              extra
           );
       })
       .on("mousemove", function (event: MouseEvent) {
@@ -300,11 +306,11 @@
           .attr("stroke", "#2d1509")
           .attr("stroke-width", 1.2);
       } else if (dataGroup === highlightGroup) {
-        // Highlight this group with yellow outline
+        // Highlight this group with tomato outline (MS Project style)
         group.selectAll(".chunk-rect")
           .style("opacity", 1)
-          .attr("stroke", "#f4c96b")
-          .attr("stroke-width", 2.5);
+          .attr("stroke", "tomato")
+          .attr("stroke-width", 3);
         group.selectAll(".chunk-gradient").style("opacity", 0.55);
         group.selectAll("text").style("opacity", 1);
       } else {
@@ -375,7 +381,7 @@
           {#if i === 4}
             <div class="farmer-callout">
               <span class="callout-amount">{currency.format(price * 0.066)}</span>
-              <span class="callout-label">of your {currency.format(price)} bar goes to farmers</span>
+              <span class="callout-label">of your {currency.format(price)} {chocolateName} goes to farmers</span>
             </div>
           {/if}
         </div>
@@ -437,21 +443,20 @@
   }
 
   .step-content {
-    background: #fffaf0;
-    padding: 20px;
+    background: #f5e6d3;
+    padding: 25px 30px;
     width: 450px;
     max-width: 100%;
   }
 
   .step-title {
-    color: #000000;
-    font-family: "Courier New", Courier, monospace;
+    color: #1a1a1a;
+    font-family: "gopher", Georgia, serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 1.25rem;
     margin: 0 0 12px 0;
     line-height: 1.3;
-    letter-spacing: -0.01em;
   }
 
   .step-description {
@@ -481,7 +486,7 @@
 
   .callout-amount {
     display: block;
-    font-family: "gopher", sans-serif;
+    font-family: "Courier New", courier-std, monospace;
     font-size: 2rem;
     font-weight: 800;
     color: tomato;
@@ -518,13 +523,13 @@
     }
 
     .step-content {
-      background: rgba(10, 6, 4, 0.95);
+      background: #f5e6d3;
     }
   }
 
   @media (max-width: 600px) {
     .step-title {
-      font-size: 14px;
+      font-size: 1.1rem;
     }
 
     .step-description {

@@ -228,6 +228,7 @@
   }
 
   .group-name {
+    font-family: "gopher", Georgia, serif;
     font-size: 1rem;
     color: rgba(255, 248, 240, 0.9);
     letter-spacing: 0.08em;

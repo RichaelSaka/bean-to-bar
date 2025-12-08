@@ -66,13 +66,12 @@
     position: fixed;
     z-index: 9999;
     pointer-events: none;
-    width: 110px;
-    background: rgba(20, 12, 8, 0.92);
-    border-radius: 8px;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    padding: 0.5rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+    width: 130px;
+    background: #f5e6d3;
+    border: none;
+    border-radius: 0;
+    padding: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     transform: translateZ(0);
     will-change: left, top;
     overflow: visible;
@@ -82,7 +81,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     overflow: visible;
   }
 
@@ -97,45 +96,51 @@
 
   .tooltip-info {
     text-align: center;
+    border-top: 2px solid #1a1a1a;
+    padding-top: 0.5rem;
   }
 
   .tooltip-name {
-    margin: 0 0 0.1rem;
-    color: #d4af37;
-    font-size: 0.7rem;
-    font-weight: 600;
-    line-height: 1.1;
+    margin: 0 0 0.25rem;
+    color: #1a1a1a;
+    font-family: "gopher", Georgia, serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    font-style: italic;
   }
 
   .tooltip-owner {
     margin: 0;
-    font-size: 0.6rem;
-    color: rgba(255, 248, 240, 0.8);
-    line-height: 1.2;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1.3;
   }
 
   /* Highlighted tooltip for selected chocolate */
   .tooltip.highlighted {
-    border: 2px solid rgba(212, 175, 55, 0.9);
     box-shadow:
-      0 0 20px rgba(212, 175, 55, 0.5),
+      0 0 0 3px tomato,
       0 8px 32px rgba(0, 0, 0, 0.5);
   }
 
   .tooltip.highlighted::after {
     content: 'Your pick!';
     position: absolute;
-    top: -8px;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #d4af37, #f0d060);
-    color: #1a1410;
-    font-size: 0.5rem;
+    background: tomato;
+    color: #ffffff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.55rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    padding: 1px 6px;
-    border-radius: 3px;
+    padding: 2px 8px;
+    border-radius: 0;
     white-space: nowrap;
   }
 </style>
