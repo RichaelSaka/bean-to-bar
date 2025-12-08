@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   import * as topojson from "topojson-client";
+  import { base } from "$app/paths";
 
   // --- Configuration ---
   const CONFIG = {
@@ -415,7 +416,7 @@
   }
 
   function loadData() {
-    d3.csv(CONFIG.DATA_FILE, (d: any) => {
+    d3.csv(`${base}${CONFIG.DATA_FILE}`, (d: any) => {
       if (d.Element !== "Production") return null;
       return { year: +d.Year, country: d.Area.trim(), production: +d.Value * TONNES_TO_POUNDS };
     }).then((data: any) => {
@@ -430,7 +431,7 @@
       animateBigNumber(yearTotals.get(CONFIG.DEFAULT_YEAR) || 0);
       dataReady = true;
       dataReadyResolvers.forEach(fn => fn());
-      d3.csv(CONFIG.DATA_FILE).then((rows: any) => parseMapCSVData(rows));
+      d3.csv(`${base}${CONFIG.DATA_FILE}`).then((rows: any) => parseMapCSVData(rows));
       initializeStory();
     }).catch(e => { console.error(e); if (vizPrompt) { vizPrompt.textContent = "Error loading data"; vizPrompt.classList.add("visible"); } });
   }

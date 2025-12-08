@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
+	import { base } from "$app/paths";
 
 	// Country to continent mapping
 	const countryToContinent: Record<string, string> = {
@@ -104,7 +105,7 @@
 		if (!svgElement) return;
 
 		// Load and parse CSV data
-		const csvData = await d3.csv("/data/cocoa_data.csv");
+		const csvData = await d3.csv(`${base}/data/cocoa_data.csv`);
 
 		// Filter for 2023 production data
 		const production2023 = csvData
