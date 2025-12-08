@@ -61,7 +61,7 @@
 body {
 	min-height: 100vh;
 	margin: 0;
-	background: linear-gradient(180deg, #352610 0%, #1a1308 50%, #0d0a04 100%);
+	background: #000000;
 	color: var(--cream);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

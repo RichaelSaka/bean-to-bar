@@ -445,22 +445,24 @@
 
   .step-title {
     color: #000000;
-    font-family: "Courier New", courier-std, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-style: normal;
-    font-weight: 800;
-    font-size: 14px;
-    margin: 0 0 10px 0;
+    font-weight: 700;
+    font-size: 15px;
+    margin: 0 0 12px 0;
     line-height: 1.3;
+    letter-spacing: -0.01em;
   }
 
   .step-description {
-    color: #000000;
-    font-family: "Courier New", courier-std, monospace;
+    color: #1a1a1a;
+    font-family: "Courier New", Courier, monospace;
     font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.6;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.7;
     margin: 0;
+    letter-spacing: -0.01em;
   }
 
   :global(.step-description b),
@@ -522,11 +524,11 @@
 
   @media (max-width: 600px) {
     .step-title {
-      font-size: 1.1rem;
+      font-size: 14px;
     }
 
     .step-description {
-      font-size: 0.95rem;
+      font-size: 13px;
     }
 
     .callout-amount {

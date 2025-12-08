@@ -536,12 +536,12 @@
   .viz-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; font-size: 1.1rem; color: rgba(255,255,255,0.8); opacity: 0; transition: opacity 0.35s; z-index: 200; }
   .viz-overlay:global(.visible) { opacity: 1; }
   .narrative-scroller { flex-grow: 1; display: flex; flex-direction: column; padding-top: 40vh; padding-bottom: 50vh; gap: 0; }
-  :global(.story-panel) { padding: 20px; background: #fffaf0; display: flex; flex-direction: column; gap: 10px; width: 450px; max-width: 90vw; align-self: flex-end; margin-bottom: 90vh; }
+  :global(.story-panel) { padding: 20px; background: #fffaf0; display: flex; flex-direction: column; gap: 0; width: 450px; max-width: 90vw; align-self: flex-end; margin-bottom: 90vh; }
   .intro-panel { align-items: flex-start; text-align: left; }
-  :global(.step-count) { font-size: 12px; color: #000000; font-family: "Courier New", courier-std, monospace; font-weight: 400; opacity: 0.6; }
-  :global(.story-headline) { font-size: 14px; font-weight: 800; color: #000000; font-family: "Courier New", courier-std, monospace; text-transform: uppercase; }
-  :global(.story-copy) { font-size: 12px; color: #000000; font-family: "Courier New", courier-std, monospace; font-weight: 400; line-height: 1.6; }
-  :global(.story-copy strong) { color: tomato; font-weight: 800; }
+  :global(.step-count) { font-size: 12px; color: #000000; font-family: "Courier New", Courier, monospace; font-weight: 400; opacity: 0.6; }
+  :global(.story-headline) { font-size: 15px; font-weight: 700; color: #000000; font-family: "Courier New", Courier, monospace; text-transform: uppercase; margin: 0 0 12px 0; letter-spacing: -0.01em; }
+  :global(.story-copy) { font-size: 14px; color: #1a1a1a; font-family: "Courier New", Courier, monospace; font-weight: 500; line-height: 1.7; margin: 0; letter-spacing: -0.01em; }
+  :global(.story-copy strong) { color: tomato; font-weight: 700; }
   .tooltip { position: absolute; pointer-events: none; background: rgba(15,15,15,0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 0.75rem 1rem; box-shadow: 0 16px 40px rgba(0,0,0,0.45); transform: translate(-50%, -120%); min-width: 180px; z-index: 30; }
   .tooltip.hidden { opacity: 0; visibility: hidden; }
   .tooltip-country { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.35rem; }

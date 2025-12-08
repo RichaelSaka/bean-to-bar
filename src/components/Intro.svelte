@@ -3,13 +3,16 @@
 	import { selectedChocolateId } from "$runes/selectedChocolate.svelte.js";
 
 	let selectedId = $state(null);
+	let selectedName = $state(null);
 
 	$effect(() => {
 		const unsubscribe = selectedChocolateId.subscribe((value) => {
 			selectedId = value;
-			// Enable scrolling once a bar is selected
-			if (value && typeof document !== 'undefined') {
-				document.body.style.overflow = 'auto';
+			if (value) {
+				const chocolate = chocolates.find(c => c.id === value);
+				selectedName = chocolate?.name || null;
+			} else {
+				selectedName = null;
 			}
 		});
 
@@ -22,21 +25,8 @@
 		// Ensure we start at the top of the page
 		if (typeof window !== 'undefined') {
 			window.scrollTo(0, 0);
-			// Lock scroll until chocolate is selected
-			document.body.style.overflow = 'hidden';
-			document.body.style.position = 'relative';
 		}
-
-		return () => {
-			if (typeof document !== 'undefined') {
-				document.body.style.overflow = 'auto';
-				document.body.style.position = '';
-			}
-		};
 	});
-
-	const subtitle = "We're curious which chocolate you love most. Tap your favorite bar to begin.";
-	const hint = "Tap on a bar to start, horizontal scroll for more options";
 
 	const chocolates = [
 		{
@@ -121,6 +111,7 @@
 
 	function handleSelect(chocolate) {
 		selectedId = chocolate.id;
+		selectedName = chocolate.name;
 		selectedChocolateId.set(chocolate.id);
 		console.log("Selected chocolate bar:", chocolate.id, chocolate.name);
 	}
@@ -128,28 +119,25 @@
 
 <section class="intro" aria-label="Choose your favorite chocolate bar">
 	<div class="intro__inner">
-		<header class="intro__copy" aria-label="Story intro">
-			<p class="intro__subtitle">{subtitle}</p>
-			<p class="intro__hint">
-				<span class="intro__hint-icon" aria-hidden="true">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="none"
-					>
-						<path d="M5 12h12" stroke="#f9b44c" stroke-width="2" stroke-linecap="round" />
-						<path
-							d="M13 7l4 5-4 5"
-							stroke="#f9b44c"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</span>
-				<span class="intro__hint-text">{hint}</span>
-			</p>
-		</header>
+		<div class="intro__card">
+			<div class="card-line"></div>
+
+			<p class="intro__subtitle">We're curious which chocolate you love most. Tap your favorite bar to begin.</p>
+
+			<div class="card-divider">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+
+			{#if selectedId}
+				<p class="selection-text">You selected <strong>{selectedName}</strong></p>
+				<p class="selection-hint">(scroll to start)</p>
+			{:else}
+				<p class="intro__hint">
+					<span class="intro__hint-icon" aria-hidden="true">→</span>
+					<span class="intro__hint-text">Tap on a bar to start, <strong class="highlight">horizontal scroll for more options</strong></span>
+				</p>
+			{/if}
+
+			<div class="card-line bottom"></div>
+		</div>
 
 		<section class="intro__choices" aria-label="Choose your favorite chocolate bar">
 			{#each railItems as chocolate, i (i)}
@@ -167,17 +155,7 @@
 			{/each}
 		</section>
 
-		{#if selectedId}
-			<div class="scroll-cue">
-				<span class="scroll-text">Scroll to explore</span>
-				<div class="scroll-arrow">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 5v14M5 12l7 7 7-7"/>
-					</svg>
-				</div>
 			</div>
-		{/if}
-	</div>
 </section>
 
 <style>
@@ -196,41 +174,67 @@
 		text-align: center;
 	}
 
-	.intro__copy {
-		max-width: 560px;
+	/* MS Project style card */
+	.intro__card {
+		max-width: 480px;
 		margin: 1.75rem auto 1.75rem;
-		padding: 1.75rem 1.5rem;
-		background: rgba(10, 6, 4, 0.96);
-		border-radius: 4px;
-		border: 1px solid rgba(255, 224, 189, 0.35);
-		box-shadow: 0 20px 50px rgba(5, 2, 1, 0.7);
+		padding: 25px 30px;
+		background: #f5e6d3;
 		text-align: left;
 	}
 
+	.card-line {
+		height: 2px;
+		background: #1a1a1a;
+		margin-bottom: 20px;
+	}
+
+	.card-line.bottom {
+		margin-top: 20px;
+		margin-bottom: 0;
+	}
+
+	.card-divider {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.6rem;
+		color: #1a1a1a;
+		margin: 16px 0;
+		letter-spacing: -0.05em;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
 	.intro__subtitle {
-		font-size: 1.05rem;
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.95rem;
+		font-weight: 700;
 		line-height: 1.6;
-		margin-bottom: 1.25rem;
-		color: rgba(255, 255, 255, 0.9);
+		margin: 0;
+		color: #1a1a1a;
 	}
 
 	.intro__hint {
-		display: inline-flex;
-		align-items: center;
+		display: flex;
+		align-items: flex-start;
 		gap: 0.5rem;
-		font-size: 0.9rem;
-		color: #f9b44c;
-		font-weight: 500;
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.8rem;
+		color: #1a1a1a;
+		font-weight: 400;
+		margin: 0;
 	}
 
-	.intro__hint-icon svg {
-		display: block;
-		width: 1.1rem;
-		height: 1.1rem;
+	.intro__hint-icon {
+		font-weight: 700;
+		flex-shrink: 0;
 	}
 
 	.intro__hint-text {
 		display: inline-block;
+	}
+
+	.intro__hint-text .highlight {
+		color: tomato;
 	}
 
 	.intro__choices {
@@ -308,7 +312,7 @@
 			padding-top: 2.5rem;
 		}
 
-		.intro__copy {
+		.intro__card {
 			margin-bottom: 2.25rem;
 		}
 
@@ -329,41 +333,54 @@
 			padding-inline: 1.25rem;
 		}
 
+		.intro__card {
+			padding: 20px;
+		}
+
 		.intro__choices {
 			gap: 0.5rem;
 		}
 	}
 
-	/* Scroll cue */
-	.scroll-cue {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		margin-top: 0.10rem;
-		animation: bounce 2s infinite;
+	/* Selection text (shown inside card when chocolate is selected) */
+	.selection-text {
+		font-family: "Courier New", Courier, monospace;
+		font-size: 0.95rem;
+		font-weight: 500;
+		color: #1a1a1a;
+		margin: 0 0 8px 0;
 	}
 
-	.scroll-text {
-		color: rgba(255, 248, 240, 0.6);
+	.selection-text strong {
+		font-weight: 700;
+	}
+
+	.selection-hint {
+		font-family: "Courier New", Courier, monospace;
 		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0;
+		animation: blink 1.5s ease-in-out infinite;
 	}
 
-	.scroll-arrow {
-		color: rgba(225, 176, 88, 0.7);
-	}
-
-	@keyframes bounce {
-		0%, 20%, 50%, 80%, 100% {
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
 			transform: translateY(0);
 		}
-		40% {
-			transform: translateY(8px);
+	}
+
+	@keyframes blink {
+		0%, 100% {
+			opacity: 1;
 		}
-		60% {
-			transform: translateY(4px);
+		50% {
+			opacity: 0.3;
 		}
 	}
 </style>

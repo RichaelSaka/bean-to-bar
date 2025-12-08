@@ -291,15 +291,30 @@
 	});
 </script>
 
-<div class="waffle-container">
-	<svg bind:this={svgElement} class="waffle-chart"></svg>
+<div class="waffle-section">
+	<div class="sticky-viz">
+		<svg bind:this={svgElement} class="waffle-chart"></svg>
+	</div>
+	<div class="scroll-steps">
+		<div class="scroll-step">
+			<div class="step-content">
+				<p class="step-text">Hover over country names to see how many cocoa beans they produced</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
-	.waffle-container {
-		width: 100%;
-		min-height: 100vh;
+	.waffle-section {
 		position: relative;
+		width: 100%;
+	}
+
+	.sticky-viz {
+		position: sticky;
+		top: 0;
+		width: 100%;
+		height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -317,10 +332,54 @@
 		transition: fill 0.15s ease, opacity 0.15s ease;
 	}
 
+	.scroll-steps {
+		position: relative;
+		z-index: 10;
+		pointer-events: none;
+	}
+
+	.scroll-step {
+		min-height: 90vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+
+	.step-content {
+		background: rgba(0, 0, 0, 0.9);
+		padding: 20px 25px;
+		max-width: 500px;
+		pointer-events: auto;
+	}
+
+	.step-text {
+		color: #fffaf0;
+		font-family: "Courier New", Courier, monospace;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 1.7;
+		margin: 0;
+		letter-spacing: -0.01em;
+	}
+
+	.step-text strong {
+		color: tomato;
+		font-weight: 700;
+	}
+
 	@media (max-width: 768px) {
-		.waffle-container {
+		.sticky-viz {
 			padding: 1rem;
-			min-height: auto;
+		}
+
+		.scroll-step {
+			padding: 1rem;
+		}
+
+		.step-content {
+			max-width: 90%;
 		}
 	}
 </style>

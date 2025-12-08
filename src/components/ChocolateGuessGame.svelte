@@ -1,13 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade, fly, scale } from "svelte/transition";
-  import { cubicOut, elasticOut } from "svelte/easing";
+  import { fade, scale } from "svelte/transition";
+  import { elasticOut } from "svelte/easing";
 
   // Game state
   let userGuess = $state(0);
   let hasRevealed = $state(false);
   let isAnimating = $state(false);
-  let mounted = $state(false);
 
   // The correct answer: ~10 pounds per year
   const CORRECT_ANSWER = 10;
@@ -15,13 +14,6 @@
 
   // Calculate how close the guess is
   let guessDifference = $derived(Math.abs(userGuess - CORRECT_ANSWER));
-  let guessAccuracy = $derived(
-    userGuess === 0 ? "" :
-    guessDifference === 0 ? "exact" :
-    guessDifference <= 2 ? "close" :
-    guessDifference <= 4 ? "warm" :
-    "far"
-  );
 
   // Feedback messages
   let feedbackMessage = $derived.by(() => {
@@ -53,153 +45,85 @@
     hasRevealed = false;
     userGuess = 0;
   }
-
-  // Generate bar segments for visualization
-  let barSegments = $derived(
-    Array.from({ length: MAX_GUESS }, (_, i) => ({
-      index: i,
-      filled: i < userGuess,
-      isCorrect: i < CORRECT_ANSWER,
-      isUserGuess: i < userGuess
-    }))
-  );
-
-  onMount(() => {
-    mounted = true;
-  });
 </script>
 
-<section class="guess-game" aria-label="Chocolate consumption guessing game">
+<section class="guess-game">
   <div class="game-container">
-    <header class="game-header">
+    <!-- Left side: Question and interaction -->
+    <div class="game-left">
       <h2 class="game-title">How Much Chocolate?</h2>
-      <p class="game-subtitle">
+      <p class="game-question">
         How many pounds of chocolate do you think the average American eats per year?
       </p>
-      <p class="game-instruction">
-        Click the cocoa pod to add to your guess
-      </p>
-    </header>
 
-    <div class="game-content">
-      <!-- Clickable cocoa pod -->
-      <div class="pod-area">
+      <div class="interaction-area">
         <button
           class="pod-button"
           class:disabled={hasRevealed || userGuess >= MAX_GUESS}
           onclick={addPod}
-          aria-label="Add one pound to your guess"
           disabled={hasRevealed || userGuess >= MAX_GUESS}
         >
           <img
             src="/assets/cocoapod.png"
-            alt="Cocoa pod - click to add"
+            alt="Cocoa pod"
             class="pod-image"
             class:bounce={isAnimating}
           />
-          {#if !hasRevealed && userGuess < MAX_GUESS}
-            <span class="pod-hint">+1 lb</span>
-          {/if}
         </button>
 
+        <p class="click-instruction">Click to add pounds</p>
+
         {#if userGuess > 0 && !hasRevealed}
-          <button
-            class="remove-button"
-            onclick={removePod}
-            aria-label="Remove one pound from your guess"
-          >
-            -1 lb
+          <button class="remove-btn" onclick={removePod}>
+            Remove
           </button>
         {/if}
       </div>
+    </div>
 
-      <!-- Bar chart visualization -->
-      <div class="chart-area">
-        <div class="chart-label-left">0 lbs</div>
-
-        <div class="bar-container">
-          <!-- Background bar showing scale -->
-          <div class="bar-background">
-            {#each barSegments as segment (segment.index)}
-              <div
-                class="bar-segment"
-                class:filled={segment.filled && !hasRevealed}
-                class:correct={hasRevealed && segment.isCorrect}
-                class:over-guess={hasRevealed && segment.isUserGuess && !segment.isCorrect}
-                class:under-guess={hasRevealed && segment.isCorrect && !segment.isUserGuess}
-              ></div>
-            {/each}
-          </div>
-
-          <!-- Animated pods on the bar -->
-          <div class="pods-on-bar">
-            {#each Array(userGuess) as _, i (i)}
-              <div
-                class="pod-on-bar"
-                style="left: {((i + 0.5) / MAX_GUESS) * 100}%"
-                in:scale={{ duration: 300, easing: elasticOut, start: 0.5 }}
-              >
-                <img src="/assets/cocoapod.png" alt="" />
-              </div>
-            {/each}
-          </div>
-
-          <!-- Correct answer marker (shown after reveal) -->
-          {#if hasRevealed}
+    <!-- Right side: Visualization -->
+    <div class="game-right">
+      <div class="guess-visual">
+        <!-- Cocoa pods grid -->
+        <div class="pods-grid">
+          {#each Array(userGuess) as _, i (i)}
             <div
-              class="correct-marker"
-              style="left: {(CORRECT_ANSWER / MAX_GUESS) * 100}%"
-              in:fly={{ y: -20, duration: 500, easing: cubicOut }}
+              class="pod-item"
+              in:scale={{ duration: 300, easing: elasticOut, start: 0.3 }}
             >
-              <span class="marker-label">{CORRECT_ANSWER} lbs</span>
-              <div class="marker-line"></div>
+              <img src="/assets/cocoapod.png" alt="" />
             </div>
-          {/if}
-
-          <!-- User guess marker -->
-          {#if userGuess > 0}
-            <div
-              class="guess-marker"
-              style="left: {(userGuess / MAX_GUESS) * 100}%"
-            >
-              <div class="marker-line guess-line"></div>
-              <span class="guess-label">{userGuess} lbs</span>
-            </div>
-          {/if}
+          {/each}
         </div>
 
-        <div class="chart-label-right">{MAX_GUESS} lbs</div>
+        <!-- Number display -->
+        <div class="guess-number-display">
+          <span class="big-number">{userGuess}</span>
+          <span class="unit">lbs</span>
+        </div>
       </div>
 
-      <!-- Current guess display -->
-      <div class="guess-display">
-        <span class="guess-number">{userGuess}</span>
-        <span class="guess-unit">pounds</span>
-      </div>
-
-      <!-- Action buttons -->
+      <!-- Action area -->
       <div class="action-area">
         {#if !hasRevealed}
           <button
-            class="reveal-button"
+            class="reveal-btn"
             onclick={revealAnswer}
             disabled={userGuess === 0}
             class:disabled={userGuess === 0}
           >
-            Reveal the Answer
+            Reveal Answer
           </button>
         {:else}
-          <div class="result-area" in:fade={{ duration: 400 }}>
-            <p class="result-text">
-              The average American eats about <strong>{CORRECT_ANSWER} pounds</strong> of chocolate per year!
+          <div class="result-card" in:fade={{ duration: 400 }}>
+            <p class="result-answer">
+              The average American eats <span class="highlight">{CORRECT_ANSWER} pounds</span> of chocolate per year.
             </p>
-            <p class="feedback-text" class:exact={guessAccuracy === 'exact'} class:close={guessAccuracy === 'close'}>
-              {feedbackMessage}
+            <p class="result-feedback">{feedbackMessage}</p>
+            <p class="result-context">
+              That's roughly 120 chocolate bars annually.
             </p>
-            <p class="context-text">
-              That's roughly equivalent to 120 standard chocolate bars annually, or one bar every 3 days.
-            </p>
-            <button class="reset-button" onclick={resetGame}>
+            <button class="try-again-btn" onclick={resetGame}>
               Try Again
             </button>
           </div>
@@ -211,91 +135,76 @@
 
 <style>
   .guess-game {
+    background: #1a1a1a;
     min-height: 100vh;
-    background: #1a0f0a;
-    color: rgba(255, 248, 240, 0.94);
-    padding: 4rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 4rem 2rem;
   }
 
   .game-container {
-    max-width: 800px;
+    max-width: 1000px;
     width: 100%;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
   }
 
-  .game-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
+  /* Left side */
+  .game-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .game-title {
-    font-family: var(--serif);
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-family: "gopher", Georgia, serif;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: rgba(255, 248, 240, 0.95);
-    margin: 0 0 1rem 0;
+    color: #fffaf0;
+    margin: 0;
+    line-height: 1.2;
   }
 
-  .game-subtitle {
-    font-family: var(--sans);
+  .game-question {
+    font-family: "Courier New", Courier, monospace;
     font-size: 1.1rem;
+    color: rgba(255, 250, 240, 0.8);
     line-height: 1.6;
-    color: rgba(255, 248, 240, 0.8);
-    margin: 0 0 0.75rem 0;
-  }
-
-  .game-instruction {
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    color: #f4c96b;
     margin: 0;
   }
 
-  .game-content {
+  .interaction-area {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  /* Pod clicking area */
-  .pod-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
+    margin-top: 1rem;
   }
 
   .pod-button {
-    background: rgba(255, 248, 240, 0.05);
-    border: 2px dashed rgba(255, 224, 189, 0.3);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
+    background: transparent;
+    border: 2px dashed rgba(255, 250, 240, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    position: relative;
   }
 
   .pod-button:hover:not(.disabled) {
-    background: rgba(255, 248, 240, 0.1);
-    border-color: rgba(255, 224, 189, 0.5);
-    transform: scale(1.05);
-  }
-
-  .pod-button:active:not(.disabled) {
-    transform: scale(0.98);
+    border-color: tomato;
+    background: rgba(255, 99, 71, 0.1);
   }
 
   .pod-button.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 
   .pod-image {
-    width: 120px;
+    width: 100px;
     height: auto;
     display: block;
     transition: transform 0.2s ease;
@@ -307,327 +216,207 @@
 
   @keyframes pod-bounce {
     0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
+    50% { transform: scale(1.2); }
     100% { transform: scale(1); }
   }
 
-  .pod-hint {
-    position: absolute;
-    bottom: -0.5rem;
-    right: -0.5rem;
-    background: #4a7c59;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-family: var(--sans);
+  .click-instruction {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.9rem;
+    color: rgba(255, 250, 240, 0.5);
+    margin: 0;
+    font-style: italic;
   }
 
-  .remove-button {
-    background: rgba(180, 90, 90, 0.3);
-    border: 1px solid rgba(180, 90, 90, 0.5);
-    color: rgba(255, 200, 200, 0.9);
+  .remove-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 250, 240, 0.3);
+    color: rgba(255, 250, 240, 0.6);
+    font-family: "Courier New", Courier, monospace;
     font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
+    padding: 0.4rem 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: var(--sans);
   }
 
-  .remove-button:hover {
-    background: rgba(180, 90, 90, 0.5);
+  .remove-btn:hover {
+    border-color: rgba(255, 250, 240, 0.5);
+    color: rgba(255, 250, 240, 0.8);
   }
 
-  /* Chart area */
-  .chart-area {
-    width: 100%;
+  /* Right side */
+  .game-right {
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .guess-visual {
+    background: #fffaf0;
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1rem;
-  }
-
-  .chart-label-left,
-  .chart-label-right {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    color: rgba(255, 248, 240, 0.6);
-    white-space: nowrap;
-  }
-
-  .bar-container {
-    flex: 1;
-    height: 80px;
+    justify-content: center;
     position: relative;
   }
 
-  .bar-background {
+  .pods-grid {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    max-width: 280px;
+    min-height: 100px;
+  }
+
+  .pod-item {
+    width: 40px;
     height: 40px;
-    background: rgba(255, 248, 240, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
   }
 
-  .bar-segment {
-    flex: 1;
-    border-right: 1px solid rgba(255, 248, 240, 0.1);
-    transition: background-color 0.3s ease;
-  }
-
-  .bar-segment:last-child {
-    border-right: none;
-  }
-
-  .bar-segment.filled {
-    background: linear-gradient(180deg, #6b4423 0%, #4a2f18 100%);
-  }
-
-  .bar-segment.correct {
-    background: linear-gradient(180deg, #4a7c59 0%, #3d6b4a 100%);
-  }
-
-  .bar-segment.over-guess {
-    background: linear-gradient(180deg, #8b5a3c 0%, #6b4423 100%);
-  }
-
-  .bar-segment.under-guess {
-    background: linear-gradient(180deg, #4a7c59 0%, #3d6b4a 100%);
-    opacity: 0.5;
-  }
-
-  /* Pods on bar */
-  .pods-on-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-
-  .pod-on-bar {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
-  }
-
-  .pod-on-bar img {
+  .pod-item img {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
 
-  /* Markers */
-  .correct-marker,
-  .guess-marker {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
+  .guess-number-display {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
   }
 
-  .correct-marker {
-    top: -5px;
-  }
-
-  .guess-marker {
-    bottom: -5px;
-    top: auto;
-  }
-
-  .marker-label {
-    font-family: var(--sans);
-    font-size: 0.85rem;
+  .big-number {
+    font-family: "gopher", Georgia, serif;
+    font-size: 4rem;
     font-weight: 700;
-    color: #4a7c59;
-    background: rgba(10, 6, 4, 0.9);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    white-space: nowrap;
-  }
-
-  .marker-line {
-    width: 2px;
-    height: 15px;
-    background: #4a7c59;
-  }
-
-  .guess-label {
-    font-family: var(--sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #f4c96b;
-    background: rgba(10, 6, 4, 0.9);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    white-space: nowrap;
-  }
-
-  .guess-line {
-    background: #f4c96b;
-    order: -1;
-  }
-
-  /* Guess display */
-  .guess-display {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .guess-number {
-    font-family: var(--serif);
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #f4c96b;
+    color: #1a1a1a;
     line-height: 1;
   }
 
-  .guess-unit {
-    font-family: var(--sans);
-    font-size: 1rem;
-    color: rgba(255, 248, 240, 0.6);
+  .unit {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.2rem;
+    color: #666;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
 
-  /* Action buttons */
+  /* Action area */
   .action-area {
-    width: 100%;
     text-align: center;
   }
 
-  .reveal-button {
-    background: linear-gradient(180deg, #6b4423 0%, #4a2f18 100%);
-    border: 2px solid rgba(255, 224, 189, 0.4);
-    color: rgba(255, 248, 240, 0.95);
-    font-family: var(--sans);
-    font-size: 1.1rem;
+  .reveal-btn {
+    background: tomato;
+    border: none;
+    color: #fffaf0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
+    padding: 0.9rem 2.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  .reveal-button:hover:not(.disabled) {
-    background: linear-gradient(180deg, #7d5030 0%, #5a3a20 100%);
+  .reveal-btn:hover:not(.disabled) {
+    background: #ff5533;
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
 
-  .reveal-button.disabled {
-    opacity: 0.4;
+  .reveal-btn.disabled {
+    opacity: 0.3;
     cursor: not-allowed;
   }
 
   /* Results */
-  .result-area {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background: rgba(10, 6, 4, 0.8);
-    border: 1px solid rgba(255, 224, 189, 0.3);
-    border-radius: 12px;
+  .result-card {
+    background: #fffaf0;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
   }
 
-  .result-text {
-    font-family: var(--sans);
-    font-size: 1.15rem;
+  .result-answer {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1rem;
+    color: #1a1a1a;
     line-height: 1.6;
-    color: rgba(255, 248, 240, 0.95);
     margin: 0 0 1rem 0;
   }
 
-  .result-text strong {
-    color: #f4c96b;
+  .result-answer .highlight {
+    color: tomato;
+    font-weight: 700;
   }
 
-  .feedback-text {
-    font-family: var(--sans);
-    font-size: 1rem;
-    color: rgba(255, 248, 240, 0.8);
-    margin: 0 0 1rem 0;
-  }
-
-  .feedback-text.exact {
-    color: #8fbc8f;
+  .result-feedback {
+    font-family: "gopher", Georgia, serif;
+    font-size: 1.3rem;
     font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem 0;
   }
 
-  .feedback-text.close {
-    color: #8fbc8f;
-  }
-
-  .context-text {
-    font-family: var(--sans);
+  .result-context {
+    font-family: "Courier New", Courier, monospace;
     font-size: 0.9rem;
-    color: rgba(255, 248, 240, 0.6);
+    color: #666;
     margin: 0 0 1.5rem 0;
     font-style: italic;
   }
 
-  .reset-button {
+  .try-again-btn {
     background: transparent;
-    border: 1px solid rgba(255, 224, 189, 0.4);
-    color: rgba(255, 248, 240, 0.8);
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    font-weight: 500;
+    border: 2px solid #1a1a1a;
+    color: #1a1a1a;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.9rem;
     padding: 0.6rem 1.5rem;
-    border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  .reset-button:hover {
-    background: rgba(255, 248, 240, 0.1);
-    border-color: rgba(255, 224, 189, 0.6);
+  .try-again-btn:hover {
+    background: #1a1a1a;
+    color: #fffaf0;
   }
 
-  @media (max-width: 600px) {
-    .guess-game {
-      padding: 3rem 1rem;
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .game-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
-    .pod-image {
-      width: 100px;
+    .game-title {
+      font-size: 2rem;
     }
 
-    .guess-number {
-      font-size: 2.5rem;
+    .guess-visual {
+      min-height: 220px;
+      padding: 1.5rem;
     }
 
-    .chart-area {
-      flex-direction: column;
-      gap: 0.5rem;
+    .big-number {
+      font-size: 3rem;
     }
 
-    .chart-label-left,
-    .chart-label-right {
-      display: none;
+    .pods-grid {
+      max-width: 220px;
     }
 
-    .bar-container {
-      width: 100%;
-    }
-
-    .pod-on-bar {
-      width: 20px;
-      height: 20px;
+    .pod-item {
+      width: 32px;
+      height: 32px;
     }
   }
 </style>
