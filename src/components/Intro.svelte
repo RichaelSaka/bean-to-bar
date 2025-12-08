@@ -354,6 +354,7 @@
 
 	.selection-text strong {
 		font-weight: 700;
+		color: tomato;
 	}
 
 	.selection-hint {
