@@ -122,17 +122,24 @@
 		productionData = production2023;
 		totalTons = production2023.reduce((sum, d) => sum + d.tons, 0);
 
-		const containerWidth = svgElement.parentElement?.clientWidth || 1400;
-		width = Math.min(containerWidth, 1400);
+		// Calculate grid dimensions
+		const gridWidth = 10 * (10 * (size + cellSpacing) + groupSpacing);
+		const legendWidth = 180; // Space for country list on right
+		const minPadding = 20;
+
+		// Total content width needed
+		const contentWidth = gridWidth + legendWidth + minPadding * 2;
+
+		// Use fixed viewBox width to ensure consistent layout
+		width = Math.max(contentWidth, 1200);
 		height = 700;
 
 		const svg = d3.select(svgElement)
 			.attr("viewBox", `0 0 ${width} ${height}`)
 			.attr("preserveAspectRatio", "xMidYMid meet");
 
-		// Calculate offset to center the grid
-		const gridWidth = 10 * (10 * (size + cellSpacing) + groupSpacing);
-		const offsetX = (width - gridWidth - 300) / 2 + 20;
+		// Calculate offset - ensure minimum left padding
+		const offsetX = Math.max(minPadding, (width - gridWidth - legendWidth) / 2);
 		const offsetY = 180;
 
 		// Create squares group
@@ -194,8 +201,9 @@
 			.text(`${totalDisplay} Tons`);
 
 		// Legend - square unit explanation
+		const legendX = offsetX + gridWidth + 30;
 		const legendGroup = svg.append("g")
-			.attr("transform", `translate(${offsetX + gridWidth + 40}, ${offsetY})`);
+			.attr("transform", `translate(${legendX}, ${offsetY})`);
 
 		// Single square = 1,000 tons legend
 		legendGroup.append("rect")
@@ -217,7 +225,7 @@
 
 		// Country list
 		const countryListGroup = svg.append("g")
-			.attr("transform", `translate(${offsetX + gridWidth + 40}, ${offsetY + 20})`);
+			.attr("transform", `translate(${legendX}, ${offsetY + 20})`);
 
 		// Tooltip text elements (positioned below the Total Amount)
 		const tooltipGroup = svg.append("g")
@@ -280,11 +288,9 @@
 					.attr("fill", "#FFFAF0");
 			});
 
-		// Resize handler
+		// Resize handler - viewBox stays fixed for consistent layout
 		const handleResize = () => {
-			const newWidth = svgElement.parentElement?.clientWidth || 1400;
-			width = Math.min(newWidth, 1400);
-			svg.attr("viewBox", `0 0 ${width} ${height}`);
+			// ViewBox remains fixed, SVG scales naturally via CSS
 		};
 
 		window.addEventListener("resize", handleResize);
