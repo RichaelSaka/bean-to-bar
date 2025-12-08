@@ -88,7 +88,13 @@ Our hope is that *Bean to Bar* transforms chocolate from a mindless indulgence i
 
 ![Title Page](static/assets/title_page.png)
 
-![Chocolate Selection](static/assets/Intro-Shot.png)
+![Screen 1](static/assets/screen1.png)
+
+![Screen 2](static/assets/screen2.png)
+
+![Screen 3](static/assets/screen3.png)
+
+![Screen 4](static/assets/screen4.png)
 
 ## Tech Stack
 
