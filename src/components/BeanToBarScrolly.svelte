@@ -1,6 +1,7 @@
 <script>
 	import Scrolly from "$components/helpers/Scrolly.svelte";
 	import { onMount } from "svelte";
+	import { base } from "$app/paths";
 
 	let currentStep = $state(0);
 	let sectionInView = $state(false);
@@ -8,72 +9,72 @@
 
 	const steps = [
 		{
-			src: "/assets/Cocoa-Production/Harvesting.png",
-			irlSrc: "/assets/Cocoa-Production/Harvesting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Harvesting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Harvesting-irl.png`,
 			alt: "Harvesting cocoa pods",
 			title: "Harvesting",
 			stepNumber: "01",
 			description: "Farmers carefully cut the ripe cocoa pods from the tree by hand. Each pod contains 20-50 cocoa beans surrounded by sweet white pulp."
 		},
 		{
-			src: "/assets/Cocoa-Production/Fermenting.png",
-			irlSrc: "/assets/Cocoa-Production/Fermenting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Fermenting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Fermenting-irl.png`,
 			alt: "Fermenting cocoa beans",
 			title: "Fermenting",
 			stepNumber: "02",
 			description: "Fresh beans are scooped out and left to ferment for several days. This transforms their flavor and color, developing the chocolate taste we love."
 		},
 		{
-			src: "/assets/Cocoa-Production/Drying.png",
-			irlSrc: "/assets/Cocoa-Production/Drying-irl.png",
+			src: `${base}/assets/Cocoa-Production/Drying.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Drying-irl.png`,
 			alt: "Drying cocoa beans",
 			title: "Drying",
 			stepNumber: "03",
 			description: "After fermenting, the beans are dried under the sun on wooden trays. Workers turn them regularly to ensure even drying over 5-7 days."
 		},
 		{
-			src: "/assets/Cocoa-Production/Sorting-and-Roasting.png",
-			irlSrc: "/assets/Cocoa-Production/Sorting-and-Roasting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Sorting-and-Roasting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Sorting-and-Roasting-irl.png`,
 			alt: "Sorting and roasting cocoa beans",
 			title: "Sorting & Roasting",
 			stepNumber: "04",
 			description: "At the factory, beans are sorted by quality and roasted to bring out their chocolate aroma. Temperature and time are carefully controlled."
 		},
 		{
-			src: "/assets/Cocoa-Production/Winnowing.png",
-			irlSrc: "/assets/Cocoa-Production/Winnowing-irl.png",
+			src: `${base}/assets/Cocoa-Production/Winnowing.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Winnowing-irl.png`,
 			alt: "Winnowing cocoa beans",
 			title: "Winnowing",
 			stepNumber: "05",
 			description: "Roasted beans are cracked open, and the shells are removed, leaving behind pure cocoa nibs—the essence of chocolate."
 		},
 		{
-			src: "/assets/Cocoa-Production/Grinding-and-Conching.png",
-			irlSrc: "/assets/Cocoa-Production/Grinding-and-Conching-irl.png",
+			src: `${base}/assets/Cocoa-Production/Grinding-and-Conching.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Grinding-and-Conching-irl.png`,
 			alt: "Grinding and conching chocolate",
 			title: "Grinding & Conching",
 			stepNumber: "06",
 			description: "The nibs are ground into cocoa liquor and conched for hours until smooth and silky. This process can take 24-72 hours for premium chocolate."
 		},
 		{
-			src: "/assets/Cocoa-Production/Tempering.png",
-			irlSrc: "/assets/Cocoa-Production/Tempering-irl.png",
+			src: `${base}/assets/Cocoa-Production/Tempering.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Tempering-irl.png`,
 			alt: "Tempering chocolate",
 			title: "Tempering",
 			stepNumber: "07",
 			description: "The warm chocolate is cooled and reheated in a special way to make it shiny and snappy. This gives chocolate its satisfying break."
 		},
 		{
-			src: "/assets/Cocoa-Production/Molding.png",
-			irlSrc: "/assets/Cocoa-Production/Molding-irl.png",
+			src: `${base}/assets/Cocoa-Production/Molding.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Molding-irl.png`,
 			alt: "Molding chocolate bars",
 			title: "Molding",
 			stepNumber: "08",
 			description: "The tempered chocolate is poured into molds and cooled until it sets into solid bars. Vibration removes any air bubbles."
 		},
 		{
-			src: "/assets/Cocoa-Production/Wrapping.png",
-			irlSrc: "/assets/Cocoa-Production/Wrapping-irl.png",
+			src: `${base}/assets/Cocoa-Production/Wrapping.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Wrapping-irl.png`,
 			alt: "Wrapping chocolate bars",
 			title: "Wrapping",
 			stepNumber: "09",

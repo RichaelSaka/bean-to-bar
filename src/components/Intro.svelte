@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { base } from "$app/paths";
 	import { selectedChocolateId } from "$runes/selectedChocolate.svelte.js";
 
 	let selectedId = $state(null);
@@ -32,77 +33,77 @@
 		{
 			id: "cadbury",
 			name: "Cadbury Dairy Milk",
-			src: "/assets/chocolate-bars/Cadburry dairy milk.png"
+			src: `${base}/assets/chocolate-bars/Cadburry dairy milk.png`
 		},
 		{
 			id: "ferrero",
 			name: "Ferrero Rocher",
-			src: "/assets/chocolate-bars/Ferrero Rocher.png"
+			src: `${base}/assets/chocolate-bars/Ferrero Rocher.png`
 		},
 		{
 			id: "hersheys",
 			name: "Hershy's Bar",
-			src: "/assets/chocolate-bars/Hershy's Bar.png"
+			src: `${base}/assets/chocolate-bars/Hershy's Bar.png`
 		},
 		{
 			id: "kinder",
 			name: "Kinder",
-			src: "/assets/chocolate-bars/Kinder.png"
+			src: `${base}/assets/chocolate-bars/Kinder.png`
 		},
 		{
 			id: "kitkat",
 			name: "KitKat",
-			src: "/assets/chocolate-bars/KitKat.png"
+			src: `${base}/assets/chocolate-bars/KitKat.png`
 		},
 		{
 			id: "lindt",
 			name: "Lindt",
-			src: "/assets/chocolate-bars/Lindt.png"
+			src: `${base}/assets/chocolate-bars/Lindt.png`
 		},
 		{
 			id: "mm",
 			name: "M&M",
-			src: "/assets/chocolate-bars/M&M.png"
+			src: `${base}/assets/chocolate-bars/M&M.png`
 		},
 		{
 			id: "milka",
 			name: "Milka",
-			src: "/assets/chocolate-bars/Milka.png"
+			src: `${base}/assets/chocolate-bars/Milka.png`
 		},
 		{
 			id: "milky-way",
 			name: "Milky Way",
-			src: "/assets/chocolate-bars/Milky Way.png"
+			src: `${base}/assets/chocolate-bars/Milky Way.png`
 		},
 		{
 			id: "nutella",
 			name: "Nutella",
-			src: "/assets/chocolate-bars/Nutella.png"
+			src: `${base}/assets/chocolate-bars/Nutella.png`
 		},
 		{
 			id: "oreo",
 			name: "Oreo",
-			src: "/assets/chocolate-bars/Oreo.png"
+			src: `${base}/assets/chocolate-bars/Oreo.png`
 		},
 		{
 			id: "reeses",
 			name: "Reese's",
-			src: "/assets/chocolate-bars/Reese's.png"
+			src: `${base}/assets/chocolate-bars/Reese's.png`
 		},
 		{
 			id: "snickers",
 			name: "Snickers",
-			src: "/assets/chocolate-bars/Snickers.png"
+			src: `${base}/assets/chocolate-bars/Snickers.png`
 		},
 		{
 			id: "toblerone",
 			name: "Toblerone",
-			src: "/assets/chocolate-bars/Toblerone.png"
+			src: `${base}/assets/chocolate-bars/Toblerone.png`
 		},
 		{
 			id: "twix",
 			name: "Twix",
-			src: "/assets/chocolate-bars/Twix.png"
+			src: `${base}/assets/chocolate-bars/Twix.png`
 		}
 	];
 

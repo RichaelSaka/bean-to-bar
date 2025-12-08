@@ -1,5 +1,6 @@
 <script>
 	import { onMount, tick } from "svelte";
+	import { base } from "$app/paths";
 	import arrowLeft from "$svg/arrow-left.svg";
 	import arrowRight from "$svg/arrow-right.svg";
 
@@ -26,64 +27,64 @@
 
 	const examples = [
 		{
-			src: "/assets/Cocoa-Production/Harvesting.png",
-			irlSrc: "/assets/Cocoa-Production/Harvesting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Harvesting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Harvesting-irl.png`,
 			alt: "Harvesting cocoa pods",
 			title: "Harvesting",
 			description: "Farmers carefully cut the ripe cocoa pods from the tree by hand."
 		},
 		{
-			src: "/assets/Cocoa-Production/Fermenting.png",
-			irlSrc: "/assets/Cocoa-Production/Fermenting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Fermenting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Fermenting-irl.png`,
 			alt: "Fermenting cocoa beans",
 			title: "Fermenting",
 			description: "Fresh beans are scooped out and left to ferment for several days. This transforms their flavor and color."
 		},
 		{
-			src: "/assets/Cocoa-Production/Drying.png",
-			irlSrc: "/assets/Cocoa-Production/Drying-irl.png",
+			src: `${base}/assets/Cocoa-Production/Drying.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Drying-irl.png`,
 			alt: "Drying cocoa beans",
 			title: "Drying",
 			description: "After fermenting, the beans are dried under the sun on wooden trays."
 		},
 		{
-			src: "/assets/Cocoa-Production/Sorting-and-Roasting.png",
-			irlSrc: "/assets/Cocoa-Production/Sorting-and-Roasting-irl.png",
+			src: `${base}/assets/Cocoa-Production/Sorting-and-Roasting.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Sorting-and-Roasting-irl.png`,
 			alt: "Sorting and roasting cocoa beans",
 			title: "Sorting & Roasting",
 			description: "At the factory, beans are sorted and roasted to bring out their chocolate aroma."
 		},
 		{
-			src: "/assets/Cocoa-Production/Winnowing.png",
-			irlSrc: "/assets/Cocoa-Production/Winnowing-irl.png",
+			src: `${base}/assets/Cocoa-Production/Winnowing.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Winnowing-irl.png`,
 			alt: "Winnowing cocoa beans",
 			title: "Winnowing",
 			description: "Roasted beans are cracked open, and the shells are removed, leaving behind pure cocoa nibs."
 		},
 		{
-			src: "/assets/Cocoa-Production/Grinding-and-Conching.png",
-			irlSrc: "/assets/Cocoa-Production/Grinding-and-Conching-irl.png",
+			src: `${base}/assets/Cocoa-Production/Grinding-and-Conching.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Grinding-and-Conching-irl.png`,
 			alt: "Grinding and conching chocolate",
 			title: "Grinding & Conching",
 			description: "The nibs are ground into cocoa liquor and conched for hours until smooth and silky."
 		},
 		{
-			src: "/assets/Cocoa-Production/Tempering.png",
-			irlSrc: "/assets/Cocoa-Production/Tempering-irl.png",
+			src: `${base}/assets/Cocoa-Production/Tempering.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Tempering-irl.png`,
 			alt: "Tempering chocolate",
 			title: "Tempering",
 			description: "The warm chocolate is cooled and reheated in a special way to make it shiny and snappy."
 		},
 		{
-			src: "/assets/Cocoa-Production/Molding.png",
-			irlSrc: "/assets/Cocoa-Production/Molding-irl.png",
+			src: `${base}/assets/Cocoa-Production/Molding.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Molding-irl.png`,
 			alt: "Molding chocolate bars",
 			title: "Molding",
 			description: "The tempered chocolate is poured into molds and cooled until it sets into solid bars."
 		},
 		{
-			src: "/assets/Cocoa-Production/Wrapping.png",
-			irlSrc: "/assets/Cocoa-Production/Wrapping-irl.png",
+			src: `${base}/assets/Cocoa-Production/Wrapping.png`,
+			irlSrc: `${base}/assets/Cocoa-Production/Wrapping-irl.png`,
 			alt: "Wrapping chocolate bars",
 			title: "Wrapping",
 			description: "Finally, the finished chocolate bars are wrapped and packaged, ready to be enjoyed."

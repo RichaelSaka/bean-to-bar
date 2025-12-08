@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from "$app/paths";
+
   interface ChocolateBar {
     id: string;
     name: string;
@@ -18,6 +20,11 @@
     y: number;
     highlighted?: boolean;
   } = $props();
+
+  // Prepend base path to image URL if it starts with /assets/
+  let imageSrc = $derived(
+    bar.image.startsWith('/assets/') ? `${base}${bar.image}` : bar.image
+  );
 
   // Offset tooltip to the side of the cursor
   const OFFSET_X = 20;
@@ -53,7 +60,7 @@
   style="left: {tooltipX()}px; top: {tooltipY()}px;"
 >
   <div class="tooltip-image">
-    <img src={bar.image} alt={bar.name} />
+    <img src={imageSrc} alt={bar.name} />
   </div>
   <div class="tooltip-info">
     <h4 class="tooltip-name">{bar.name}</h4>

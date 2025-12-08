@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from "$app/paths";
+
   interface ChocolateBar {
     id: string;
     name: string;
@@ -29,6 +31,11 @@
     highlighted?: boolean;
   } = $props();
 
+  // Prepend base path to image URL if it starts with /assets/
+  let imageSrc = $derived(
+    bar.image.startsWith('/assets/') ? `${base}${bar.image}` : bar.image
+  );
+
   function handleMouseEnter(e: MouseEvent) {
     onhover?.({ detail: { bar, x: e.clientX, y: e.clientY } });
   }
@@ -56,7 +63,7 @@
 >
   <img
     class="bar-img"
-    src={bar.image}
+    src={imageSrc}
     alt={`${bar.name} chocolate bar`}
     loading="lazy"
     draggable="false"

@@ -1,4 +1,5 @@
 <script>
+	import { base } from "$app/paths";
 	import ChocolateShelf from "$components/ChocolateShelf.svelte";
 	import chocolateData from "$data/chocolate-shelf-data.json";
 	import ChocolateGuessGame from "$components/ChocolateGuessGame.svelte";
@@ -12,6 +13,11 @@
 
 	// Props for selected chocolate data
 	let { selectedChocolate = null } = $props();
+
+	// Helper to prepend base path to asset URLs
+	function withBase(path) {
+		return path?.startsWith('/assets/') ? `${base}${path}` : path;
+	}
 
 	// Hover state for shelf (tooltip is now built into ChocolateShelf)
 	let hoveredBar = $state(null);
@@ -48,7 +54,7 @@
 					<div class="ownership-details-ms">
 						<div class="selected-bar-visual-ms">
 							<img
-								src={selectedChocolate.bar}
+								src={withBase(selectedChocolate.bar)}
 								alt={selectedChocolate.name}
 								loading="lazy"
 								class="selected-bar-img-ms"
