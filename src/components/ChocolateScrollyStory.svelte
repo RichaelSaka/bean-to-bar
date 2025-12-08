@@ -5,9 +5,9 @@
 	import CocoaStepsSwiper from "$components/CocoaStepsSwiper.svelte";
 	import CocoaProducers from "$components/CocoaProducers.svelte";
 	import CocoaProductionWaffle from "$components/CocoaProductionWaffle.svelte";
-	import CacaoBeanScrolly from "$components/CacaoBeanScrolly.svelte";
 	import ChocolateIncomeShareScrolly from "$components/ChocolateIncomeShareScrolly.svelte";
 	import GhanaTreeImpactScrolly from "$components/GhanaTreeImpactScrolly.svelte";
+	import CacaoBeansCalculator from "$components/CacaoBeansCalculator.svelte";
 
 	// Props for selected chocolate data
 	let { selectedChocolate = null } = $props();
@@ -126,13 +126,15 @@
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 
+	<!-- Section 3.5: Cacao Beans Calculator -->
+	<CacaoBeansCalculator />
+
+	<div class="section-divider-wrap"><hr class="section-divider" /></div>
+
 	<!-- Section 4: Cocoa Production Waffle Chart (Full Screen) -->
 	<CocoaProductionWaffle />
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
-
-	<!-- Section 5: Cacao Bean Equivalency Scrolly -->
-	<CacaoBeanScrolly />
 
 	<div class="section-divider-wrap"><hr class="section-divider" /></div>
 

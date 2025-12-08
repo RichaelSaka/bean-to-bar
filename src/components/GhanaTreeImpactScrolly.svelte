@@ -753,16 +753,13 @@
 
   /* Scroll steps - floating cards on the right */
   .step {
-    width: 20em;
+    width: 450px;
     max-width: 90vw;
     margin-left: auto;
     margin-right: 2rem;
     margin-bottom: 90vh;
-    padding: 1rem 1.5rem;
-    background: rgba(10, 6, 4, 0.92);
-    border: 1px solid rgba(255, 224, 189, 0.3);
-    border-radius: 6px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    background: #fffaf0;
     opacity: 0.4;
     transition: opacity 0.6s ease;
     z-index: 100;
@@ -773,25 +770,28 @@
   }
 
   .step-title {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: rgba(255, 248, 240, 0.95);
-    margin: 0 0 0.5rem 0;
+    color: #000000;
+    font-family: "Courier New", courier-std, monospace;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    margin: 0 0 10px 0;
     line-height: 1.3;
   }
 
   .step-text {
-    font-family: var(--sans);
-    font-size: 0.95rem;
+    color: #000000;
+    font-family: "Courier New", courier-std, monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
     line-height: 1.6;
-    color: rgba(255, 248, 240, 0.8);
     margin: 0;
   }
 
   :global(.step-text strong) {
-    color: #f4c96b;
-    font-weight: 600;
+    color: tomato;
+    font-weight: 800;
   }
 
   /* First step needs top margin to push it down */

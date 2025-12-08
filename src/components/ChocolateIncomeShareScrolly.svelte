@@ -437,49 +437,60 @@
   }
 
   .step-content {
-    background: rgba(10, 6, 4, 0.85);
-    border: 1px solid rgba(255, 224, 189, 0.25);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    background: #fffaf0;
+    padding: 20px;
+    width: 450px;
+    max-width: 100%;
   }
 
   .step-title {
-    font-family: 'Playfair Display', 'Times New Roman', serif;
-    color: rgba(255, 248, 240, 0.96);
-    font-size: 1.3rem;
-    margin: 0 0 0.75rem 0;
+    color: #000000;
+    font-family: "Courier New", courier-std, monospace;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    margin: 0 0 10px 0;
     line-height: 1.3;
   }
 
   .step-description {
-    color: rgba(255, 248, 240, 0.8);
-    font-size: 1rem;
+    color: #000000;
+    font-family: "Courier New", courier-std, monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
     line-height: 1.6;
     margin: 0;
+  }
+
+  :global(.step-description b),
+  :global(.step-description strong) {
+    color: tomato;
+    font-weight: 800;
   }
 
   .farmer-callout {
     margin-top: 1rem;
     padding: 1rem;
-    background: rgba(244, 201, 107, 0.1);
-    border: 1px solid rgba(244, 201, 107, 0.4);
-    border-radius: 6px;
+    background: transparent;
+    border: none;
     text-align: center;
   }
 
   .callout-amount {
     display: block;
+    font-family: "gopher", sans-serif;
     font-size: 2rem;
-    font-weight: 700;
-    color: #f4c96b;
+    font-weight: 800;
+    color: tomato;
     line-height: 1.2;
   }
 
   .callout-label {
     display: block;
-    font-size: 0.9rem;
-    color: rgba(255, 248, 240, 0.7);
+    font-family: "Courier New", courier-std, monospace;
+    font-size: 12px;
+    color: #000000;
     margin-top: 0.25rem;
   }
 

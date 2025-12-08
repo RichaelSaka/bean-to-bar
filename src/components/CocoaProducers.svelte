@@ -142,19 +142,14 @@
   const steps = [
     { id: "cluster", layout: "cluster", headline: "WHERE DOES CHOCOLATE COME FROM?", copy: "Before you take your next bite, consider the supply chain. Every circle is a country, sized by its cocoa harvest in 2023.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
     { id: "reveal", layout: "highlight", headline: "TWO FARMS FEED THE WORLD.", copy: "<strong>Côte d'Ivoire</strong> and <strong>Ghana</strong> account for well over half of global cocoa.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
-    { id: "continent", layout: "continent", headline: "AFRICA CARRIES THE HARVEST.", copy: "When we regroup by continent, <strong style='color: #F5C553;'>Africa's cluster dwarfs the rest</strong>.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
+    { id: "continent", layout: "continent", headline: "AFRICA CARRIES THE HARVEST.", copy: "When we regroup by continent, <strong>Africa's cluster dwarfs the rest</strong>.", year: CONFIG.DEFAULT_YEAR, vizType: "bubble" },
     { id: "map", layout: "map", headline: "EXPLORE THE GLOBAL COCOA MAP.", copy: "Drag the slider to watch production shift from 1963 to 2023. Click countries to see data.", year: CONFIG.START_YEAR, showSlider: true, vizType: "map" }
   ];
 
   function animateBigNumber(targetValue: number) {
     if (!bigNumberValue) return;
-    const sel = d3.select(bigNumberValue);
-    sel.interrupt().text(formatTons(0));
-    sel.transition().duration(2000).ease(d3.easeCubicOut)
-      .tween("text", () => {
-        const interp = d3.interpolateNumber(0, targetValue);
-        return (t: number) => sel.text(formatTons(interp(t)));
-      });
+    // Fixed value of 5.6M tons
+    bigNumberValue.textContent = "5.6M";
   }
 
   function resize() {
@@ -369,7 +364,7 @@
       const panel = document.createElement("aside");
       panel.className = "story-panel story-step";
       panel.setAttribute("data-step-index", String(i));
-      panel.innerHTML = `<p class="step-count">Step ${i + 1} of ${steps.length}</p><h2 class="story-headline">${step.headline}</h2><p class="story-copy">${step.copy}</p>`;
+      panel.innerHTML = `<h2 class="story-headline">${step.headline}</h2><p class="story-copy">${step.copy}</p>`;
       narrativeScroller.appendChild(panel);
     });
     observer = new IntersectionObserver((entries) => {
@@ -483,10 +478,9 @@
       </div>
       <div bind:this={narrativeScroller} class="narrative-scroller">
         <aside class="story-panel intro-panel">
-          <p class="step-count">Introduction</p>
           <div class="big-number-container">
-            <div bind:this={bigNumberValue} class="big-number">0</div>
-            <div class="subtitle">Tons of global cocoa harvested in 2023</div>
+            <div bind:this={bigNumberValue} class="big-number">5.6M</div>
+            <div class="subtitle">tons of global cocoa harvested in 2023</div>
             <div class="subtitle secondary">Two countries provide most of it.</div>
           </div>
         </aside>
@@ -503,10 +497,10 @@
 <style>
   .cocoa-producers-wrapper { width: 100%; position: relative; }
   .hidden { display: none !important; }
-  .big-number-container { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .big-number { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 900; background: linear-gradient(120deg, #fef2c0 0%, #f5c553 50%, #a47300 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .subtitle { font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,0.78); }
-  .subtitle.secondary { color: rgba(255,255,255,0.65); }
+  .big-number-container { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .big-number { font-family: "gopher", sans-serif; font-size: 36px; font-weight: 800; color: tomato; }
+  .subtitle { font-family: "Courier New", courier-std, monospace; font-size: 12px; font-weight: 400; color: #000000; line-height: 1.6; }
+  .subtitle.secondary { color: #000000; }
   .story { padding: 0 clamp(1.5rem, 5vw, 5rem); min-height: 100vh; }
   .story-layout { position: relative; display: flex; gap: clamp(2rem, 4vw, 3rem); max-width: 1800px; margin: 0 auto; }
   .viz-shell { position: sticky; top: clamp(60px, 8vh, 100px); width: clamp(400px, 55%, 700px); min-height: clamp(400px, 50vh, 560px); max-height: 90vh; flex-shrink: 0; background: rgba(18,18,18,0.85); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(18px); box-shadow: 0 24px 60px rgba(0,0,0,0.45); overflow: hidden; }
@@ -541,13 +535,13 @@
   .legend-color { width: 24px; height: 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); }
   .viz-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; font-size: 1.1rem; color: rgba(255,255,255,0.8); opacity: 0; transition: opacity 0.35s; z-index: 200; }
   .viz-overlay:global(.visible) { opacity: 1; }
-  .narrative-scroller { flex-grow: 1; display: flex; flex-direction: column; padding-top: clamp(30vh, 50vh, 50vh); padding-bottom: clamp(30vh, 50vh, 50vh); gap: clamp(40vh, 60vh, 60vh); }
-  :global(.story-panel) { padding: clamp(1.5rem, 3vw, 2.5rem); background: rgba(16,16,16,0.78); border: 1px solid rgba(255,255,255,0.07); border-radius: 28px; box-shadow: 0 16px 48px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 1.5rem; max-width: clamp(400px, 600px, 600px); align-self: flex-end; }
+  .narrative-scroller { flex-grow: 1; display: flex; flex-direction: column; padding-top: 40vh; padding-bottom: 50vh; gap: 0; }
+  :global(.story-panel) { padding: 20px; background: #fffaf0; display: flex; flex-direction: column; gap: 10px; width: 450px; max-width: 90vw; align-self: flex-end; margin-bottom: 90vh; }
   .intro-panel { align-items: flex-start; text-align: left; }
-  :global(.step-count) { font-size: 0.9rem; color: rgba(255,255,255,0.5); font-weight: 600; }
-  :global(.story-headline) { font-size: clamp(1.8rem, 3vw, 2.3rem); font-weight: 800; color: #fef2c0; text-transform: uppercase; }
-  :global(.story-copy) { font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,0.78); }
-  :global(.story-copy strong) { color: #f5c553; font-weight: 600; }
+  :global(.step-count) { font-size: 12px; color: #000000; font-family: "Courier New", courier-std, monospace; font-weight: 400; opacity: 0.6; }
+  :global(.story-headline) { font-size: 14px; font-weight: 800; color: #000000; font-family: "Courier New", courier-std, monospace; text-transform: uppercase; }
+  :global(.story-copy) { font-size: 12px; color: #000000; font-family: "Courier New", courier-std, monospace; font-weight: 400; line-height: 1.6; }
+  :global(.story-copy strong) { color: tomato; font-weight: 800; }
   .tooltip { position: absolute; pointer-events: none; background: rgba(15,15,15,0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 0.75rem 1rem; box-shadow: 0 16px 40px rgba(0,0,0,0.45); transform: translate(-50%, -120%); min-width: 180px; z-index: 30; }
   .tooltip.hidden { opacity: 0; visibility: hidden; }
   .tooltip-country { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.35rem; }
@@ -563,7 +557,10 @@
   @media (max-width: 1024px) {
     .story-layout { flex-direction: column; gap: 1rem; }
     .viz-shell { position: relative; top: auto; width: 100%; min-height: clamp(400px, 50vh, 480px); order: -1; }
-    .narrative-scroller { padding-top: 1rem; padding-bottom: 3rem; gap: 2rem; }
-    :global(.story-panel) { max-width: 100%; align-self: center; }
+    .narrative-scroller { padding-top: 1rem; padding-bottom: 3rem; }
+    :global(.story-panel) { max-width: 100%; align-self: center; margin-bottom: 85vh; }
+  }
+  @media (max-width: 700px) {
+    :global(.story-panel) { width: 85vw; margin-left: auto; margin-right: auto; }
   }
 </style>
