@@ -546,7 +546,7 @@
   :global(.story-copy strong) { color: tomato; font-weight: 700; }
   .tooltip { position: absolute; pointer-events: none; background: #f5e6d3; border: none; border-radius: 0; padding: 12px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translate(-50%, -120%); min-width: 160px; z-index: 30; }
   .tooltip.hidden { opacity: 0; visibility: hidden; }
-  .tooltip-country { font-family: "gopher", Georgia, serif; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.35rem; color: #1a1a1a; }
+  .tooltip-country { font-family: "Courier New", Courier, monospace; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.35rem; color: #1a1a1a; }
   .tooltip-production { font-family: "Courier New", Courier, monospace; font-size: 0.85rem; font-weight: 600; color: tomato; }
   .tooltip-share { font-family: "Courier New", Courier, monospace; font-size: 0.75rem; color: #1a1a1a; opacity: 0.7; }
   :global(.bubble-group circle) { transition: filter 0.3s, opacity 0.25s; stroke: rgba(255,255,255,0.12); stroke-width: 1.5px; }
