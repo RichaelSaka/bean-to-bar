@@ -350,7 +350,7 @@
 				<p class="credits-about"><strong>Bean to Bar</strong> was created by Nhaomi Lartey, Winifred Ofori-Manu, and Richael Saka for CS 1710 at Harvard University.</p>
 
 				<h3 class="credits-heading">Acknowledgements</h3>
-				<p class="credits-text">Special thanks to <strong>Professor Waldo</strong>, our wonderful teaching staff, and our TF <strong>Richard</strong> for their guidance and support throughout this project.</p>
+				<p class="credits-text">Special thanks to <strong>Professor Hanspiter</strong>, our wonderful teaching staff, and our TF <strong>Richard</strong> for their guidance and support throughout this project.</p>
 
 				<div class="credits-divider">- - - - - - - - - - - - - - - - - - -</div>
 

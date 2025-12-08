@@ -145,7 +145,7 @@ npm run build
 
 *Bean to Bar* was created by Nhaomi Lartey, Winifred Ofori-Manu, and Richael Saka for CS 1710 at Harvard University.
 
-Special thanks to **Professor Waldo**, our wonderful teaching staff, and our TF **Richard** for their guidance and support throughout this project.
+Special thanks to **Professor Hanspiter**, our wonderful teaching staff, and our TF **Richard** for their guidance and support throughout this project.
 
 ---
 
